@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "BK-2024": {
+    "angular-firebase-accelerator": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -117,16 +117,16 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "ftp": {
-              "buildTarget": "BK-2024:build:ftp"
+              "buildTarget": "angular-firebase-accelerator:build:ftp"
             },
             "firebase": {
-              "buildTarget": "BK-2024:build:firebase"
+              "buildTarget": "angular-firebase-accelerator:build:firebase"
             },
             "gh-pages": {
-              "buildTarget": "BK-2024:build:gh-pages"
+              "buildTarget": "angular-firebase-accelerator:build:gh-pages"
             },
             "local": {
-              "buildTarget": "BK-2024:build:local"
+              "buildTarget": "angular-firebase-accelerator:build:local"
             }
           },
           "defaultConfiguration": "local"
@@ -135,7 +135,7 @@
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
             "outputPath": "src/i18n",
-            "buildTarget": "BK-2024:build"
+            "buildTarget": "angular-firebase-accelerator:build"
           }
         },
         "test": {

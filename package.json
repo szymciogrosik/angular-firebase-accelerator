@@ -1,5 +1,5 @@
 {
-  "name": "BK-2024",
+  "name": "angular-firebase-accelerator",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build",
     "build-ftp": "ng build --configuration=ftp --base-href=/",
     "build-firebase": "ng build --configuration=firebase --base-href=/",
-    "build-gh-pages": "ng build --configuration=gh-pages --base-href=/BK-2024/",
+    "build-gh-pages": "ng build --configuration=gh-pages --base-href=/angular-firebase-accelerator/",
     "watch": "ng build --watch --configuration=local",
     "test": "ng test"
   },
