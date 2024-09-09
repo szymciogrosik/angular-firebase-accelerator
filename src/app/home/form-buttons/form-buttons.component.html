@@ -1,0 +1,86 @@
+<div class="registration-container">
+  <div class="registration-column registration-column-young">
+    <img src="assets/images/registration/young.jpg" class="side-image left-image bk-border-element" alt="young">
+    <div class="content-wrapper">
+      <h1 class="registration-scroll-target" #registrationHeader></h1>
+      <h1 class="title-overlay" >{{ 'bk.buttons.youngRegistrationHeader' | translate }}</h1>
+      <div class="rectangle">
+        <div class="rectangle-main-text">
+          {{ 'bk.buttons.youngRegistrationText' | translate }}
+          <div class="dialog-text">
+            <p><b>{{ 'bk.conferenceDetails.conferenceCostName' | translate }}</b>&nbsp;</p>
+            <p [ngClass]="{'standard-price': this.price.promoEnabled}">{{ this.price.standardPrice }}{{ 'bk.conferenceDetails.conferenceCost' | translate }}</p>&nbsp;
+            <p *ngIf="this.price.promoEnabled">{{ this.price.promoPrice }}{{ 'bk.conferenceDetails.conferenceCost' | translate }}</p>&nbsp;
+            <p *ngIf="this.price.promoEnabled">**&nbsp;</p>
+            <p *ngIf="this.price.promoEnabled">**({{ 'bk.conferenceDetails.conferencePromoInfo1' | translate }}</p>&nbsp;
+            <p *ngIf="this.price.promoEnabled">{{ this.price.promoEndDatePrice }})</p>
+          </div>
+          <div class="rectangle-more-info">
+            <br/>
+            <button mat-button class="go-to-details-button" (click)="openRegistrationDetailsYoung();">
+              <span>
+                <mat-icon class="beach-icon">beach_access</mat-icon>&nbsp;&nbsp;<b>{{ 'bk.buttons.youngRegistrationDetailsButton' | translate }}</b>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="rectangle-button">
+          <div *ngIf="countdownToStartRegistration && !this.registrationEnabled" class="counter-down">
+            <h1>{{ countdownToStartRegistration.hours }}H : {{ countdownToStartRegistration.minutes }}M : {{ countdownToStartRegistration.seconds }}S</h1>
+          </div>
+          <button mat-raised-button class="young-button registration-button" *ngIf="this.registrationEnabled"
+                  (click)="redirectTo(RedirectionEnum.REGISTRATION_YOUNG);">
+            {{ 'bk.buttons.youngRegistration' | translate }}<br/>13-18
+          </button>
+        </div>
+        <div class="rectangle-statute">
+          <button mat-button (click)="redirectTo(RedirectionEnum.STATUE_YOUNG);">
+            {{ 'bk.buttons.statute' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="registration-column registration-column-adult">
+    <div class="content-wrapper">
+      <h1 class="title-overlay">{{ 'bk.buttons.adultRegistrationHeader' | translate }}</h1>
+      <div class="rectangle">
+        <div class="rectangle-main-text">
+          {{ 'bk.buttons.adultRegistrationText1' | translate }}<br/><br/>
+          {{ 'bk.buttons.adultRegistrationText2' | translate }}
+          <div class="dialog-text">
+            <p><b>{{ 'bk.conferenceDetails.conferenceCostName' | translate }}</b>&nbsp;</p>
+            <p [ngClass]="{'standard-price': this.price.promoEnabled}">{{ this.price.standardPrice }}{{ 'bk.conferenceDetails.conferenceCost' | translate }}</p>&nbsp;
+            <p *ngIf="this.price.promoEnabled">{{ this.price.promoPrice }}{{ 'bk.conferenceDetails.conferenceCost' | translate }}</p>&nbsp;
+            <p *ngIf="this.price.promoEnabled">**&nbsp;</p>
+            <p *ngIf="this.price.promoEnabled">**({{ 'bk.conferenceDetails.conferencePromoInfo1' | translate }}</p>&nbsp;
+            <p *ngIf="this.price.promoEnabled">{{ this.price.promoEndDatePrice }})</p>
+          </div>
+          <div class="rectangle-more-info">
+            <br/>
+            <button mat-button class="go-to-details-button" (click)="openRegistrationDetailsAdult();">
+              <span>
+                <mat-icon class="beach-icon">beach_access</mat-icon>&nbsp;&nbsp;<b>{{ 'bk.buttons.adultRegistrationDetailsButton' | translate }}</b>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="rectangle-button">
+          <div *ngIf="countdownToStartRegistration && !this.registrationEnabled" class="counter-down">
+            <h1>{{ countdownToStartRegistration.hours }}H : {{ countdownToStartRegistration.minutes }}M : {{ countdownToStartRegistration.seconds }}S</h1>
+          </div>
+          <button mat-raised-button class="adult-button registration-button" *ngIf="this.registrationEnabled"
+                  (click)="redirectTo(RedirectionEnum.REGISTRATION_ADULT);">
+            {{ 'bk.buttons.adultRegistration' | translate }}<br/>19-26
+          </button>
+        </div>
+        <div class="rectangle-statute">
+          <button mat-button (click)="redirectTo(RedirectionEnum.STATUE_ADULT);">
+            {{ 'bk.buttons.statute' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <img src="assets/images/registration/adult.jpg" class="side-image right-image bk-border-element" alt="adult">
+  </div>
+</div>

@@ -1,0 +1,232 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+@use 'sass:map';
+@import '@angular/material/theming';
+@import "src/environments/variables.scss";
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+
+$bk-light-blue-color: #83cfcb;
+$bk-purple-color: #a796ca;
+$bk-blue-color: #3c75bc;
+$bk-yellow-color: #fcc535;
+$bk-red-color: #e04036;
+$bk-green-color: #06a650;
+
+$bk-primary-color: $bk-light-blue-color;
+//$bk-accent-color: #da6f75;
+$bk-accent-color: $bk-yellow-color;
+$bk-warn-color: $bk-red-color;
+$bk-young-color: $bk-yellow-color;
+$bk-adult-color: $bk-yellow-color;
+$bk-background-color: $bk-purple-color;
+$navbar-element-color: black;
+$footer-element-color: black;
+$main-font-color: black;
+
+$bk-main-palette: (
+  50: #e0f2f1,
+  100: #b2dfdb,
+  200: #80cbc4,
+  300: #4db6ac,
+  400: #26a69a,
+  500: $bk-primary-color,  // Primary color
+  600: #00897b,
+  700: #00796b,
+  800: #00695c,
+  900: #004d40,
+  A100: #a7ffeb,
+  A200: #64ffda,
+  A400: #1de9b6,
+  A700: #00bfa5,
+  contrast: (
+    500: #000000,
+  )
+);
+
+$bk-accent-palette: (
+  50: #f3e5f5,
+  100: #e1bee7,
+  200: #ce93d8,
+  300: #ba68c8,
+  400: #ab47bc,
+  500: $bk-accent-color,  // Accent color
+  600: #8e24aa,
+  700: #7b1fa2,
+  800: #6a1b9a,
+  900: #4a148c,
+  A100: #ea80fc,
+  A200: #e040fc,
+  A400: #d500f9,
+  A700: #aa00ff,
+  contrast: (
+    500: #000000,
+  )
+);
+
+$bk-warn-palette: (
+  50: #fff3e0,
+  100: #ffe0b2,
+  200: #ffcc80,
+  300: #ffb74d,
+  400: #ffa726,
+  500: $bk-warn-color,  // Warn color
+  600: #fb8c00,
+  700: #f57c00,
+  800: #ef6c00,
+  900: #e65100,
+  A100: #ffd180,
+  A200: #ffab40,
+  A400: #ff9100,
+  A700: #ff6d00,
+  contrast: (
+    500: #000000,
+  )
+);
+
+$light-theme: mat.define-light-theme((
+    color: (
+      primary: mat.define-palette($bk-main-palette),
+      accent: mat.define-palette($bk-accent-palette),
+      warn: mat.define-palette($bk-warn-palette)
+    )
+));
+
+@include mat.all-component-themes($light-theme);
+
+@font-face {
+  font-family: RetroGaming;
+  src: url(./assets/font/RetroGaming.ttf) format("opentype");
+}
+
+@font-face {
+  font-family: NeueHaasDisplayBold;
+  src: url(./assets/font/neue-haas-grotesk/NeueHaasDisplayBold.ttf) format("opentype");
+}
+
+@font-face {
+  font-family: NeueHaasDisplayBoldItalic;
+  src: url(./assets/font/neue-haas-grotesk/NeueHaasDisplayBoldItalic.ttf) format("opentype");
+}
+
+@font-face {
+  font-family: NeueHaasDisplayRomanItalic;
+  src: url(./assets/font/neue-haas-grotesk/NeueHaasDisplayRomanItalic.ttf) format("opentype");
+}
+
+/* You can add global styles to this file, and also import other style files */
+
+html {
+  scroll-behavior: smooth;
+}
+html, body {
+  height: 100%;
+}
+//body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: NeueHaasDisplayRomanItalic, sans-serif;
+  font-size: 1.2rem;
+  color: $main-font-color;
+}
+h1 {
+  font-family: RetroGaming, sans-serif;
+}
+
+.short-page-content {
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+/* mat-card general styles */
+mat-card-title {
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 20px;
+}
+mat-card-content {
+  padding-top: 16px !important;
+}
+mat-card {
+  padding: 10px;
+}
+mat-form-field {
+  width: 100%;
+}
+mat-spinner {
+  margin: 0 auto;
+}
+mat-hint {
+  font-size: 0.75rem;
+}
+mat-error {
+  font-size: 0.9rem;
+}
+
+/*
+Neon
+*/
+.neon {
+  font-family: 'RetroGaming', cursive;
+  color: #fff;
+  text-shadow: 0 0 5px #fcc535, 0 0 10px #fcc535, 0 0 15px #fcc535, 0 0 20px #fcc535, 0 0 30px #e04036, 0 0 40px #e04036;
+}
+.neon-image {
+  box-shadow: 0 0 3px #fcc535, 0 0 6px #fcc535, 0 0 9px #fcc535, 0 0 12px #fcc535, 0 0 15px #e04036, 0 0 18px #e04036;
+}
+
+/*
+Photo gallery styles
+*/
+.photo-container {
+  padding: 0 20px;
+}
+
+/*
+Shadow
+*/
+.top-shadow {
+  box-shadow: 0 -3px 5px -1px rgba(0, 0, 0, 0.03), 0 -6px 10px rgba(0, 0, 0, 0.14), 0 -1px 18px rgba(0, 0, 0, 0.12);
+}
+.bottom-shadow {
+  box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+}
+
+.margin-between-elements {
+  margin-top: 60px;
+}
+
+.padding-between-elements {
+  padding-top: 10px;
+}
+
+.bk-border-element {
+  border-style: solid;
+  border-width: thin;
+  border-color: gray;
+}
+
+// Settings tab
+.settings-date-time-input {
+  max-width: 250px !important;
+  margin-right: 20px;
+}
+
+.settings-update-button {
+  height: 55px !important;
+}
+
+.settings-element {
+  margin-top: 40px;
+}

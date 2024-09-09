@@ -1,0 +1,11 @@
+<div class="margin-between-elements">
+  <owl-carousel-o [options]="customOptions">
+    <ng-container *ngFor="let slide of slides">
+      <ng-template carouselSlide [id]="slide.id.toString()">
+        <div class="photo-container">
+          <img class="bk-border-element" [src]="slide.src">
+        </div>
+      </ng-template>
+    </ng-container>
+  </owl-carousel-o>
+</div>

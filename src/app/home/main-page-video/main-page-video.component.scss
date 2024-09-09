@@ -1,0 +1,141 @@
+#videoContainer {
+  position: relative;
+}
+
+.myVideo {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  z-index: -1;
+  object-fit: cover;
+}
+
+#videoOverlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  //background: rgba(0, 0, 0, 0.5); /* 50% transparent black */
+  z-index: 0;
+}
+
+#videoOverlayText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  text-align: center;
+}
+
+#videoOverlayConferenceInfo {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+#videoOverlayConferenceIcon {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.progress-graphic {
+  text-align: center;
+}
+
+.bottom-progress-graphic {
+  text-align: right;
+}
+
+.progress-graphic-size {
+  width: 65vw;
+  height: auto;
+}
+
+.conference-info {
+  height: auto;
+  margin-left: 40px;
+  margin-bottom: 5px;
+}
+
+.conference-logo {
+  height: auto;
+  margin-top: 30px;
+  margin-left: 30px;
+}
+
+.registration-button {
+  color: black !important;
+  font-weight: bold;
+  margin-top: 5vh;
+  margin-right: 4vw;
+  font-size: 1.5rem;
+  height: 40px;
+}
+
+@media (max-width: 760px) {
+  .registration-button-visibility {
+    visibility: hidden;
+  }
+  .videoOverlayText-margin {
+    margin-top: 40px;
+  }
+  .conference-info-size {
+    width: 70vw;
+  }
+  .conference-logo-size {
+    width: 15vw;
+  }
+  .conference-logo {
+    margin-top: 10px;
+    margin-left: 10px;
+  }
+  .right-color-image-size {
+    width: 8vw;
+    margin-right: 40px;
+  }
+  #largeVideo {
+    display: none;
+  }
+}
+
+@media (min-width: 761px) {
+  .registration-button-visibility {
+    visibility: visible;
+  }
+  .videoOverlayText-margin {
+    margin-top: 0;
+  }
+  .conference-info-size {
+    width: 40vw;
+  }
+  .conference-logo-size {
+    width: 10vw;
+  }
+  .right-color-image-size {
+    width: 5vw;
+    margin-right: 120px;
+  }
+  #smallVideo {
+    display: none;
+  }
+}
+
+#rightColorImageContainer {
+  position: absolute;
+  bottom: -16%; // Moves the container down so that half of it is outside the parent div
+  right: 0;
+  overflow: visible; // Ensures the part outside the parent div is not hidden
+}
+
+.right-color-image {
+  height: auto;
+  width: 5vw; // Adjust width as needed
+}
+
+

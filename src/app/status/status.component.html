@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row">
+    <div class="status-content">
+      <mat-card class="short-page-content">
+        <mat-card-title>
+          <h2>{{ 'status.lastBuildTime' | translate }}</h2>
+        </mat-card-title>
+        <mat-card-content>
+          <div *ngIf="lastDeployTime" [innerHTML]="lastDeployTime" style="text-align: center;">
+          </div>
+          <div *ngIf="!lastDeployTime">
+            <mat-spinner [diameter]="80"></mat-spinner>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+@import "src/styles.scss";
+
+button:focus {
+  outline: none;
+}
+
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+@media (max-width: 760px) {
+  .full-menu {
+    display: none;
+  }
+}
+
+@media (min-width: 761px) {
+  .short-menu {
+    display: none;
+  }
+}
+
+.navbar-style {
+  color: $navbar-element-color;
+  font-size: 1rem;
+}
+
+.navbar-home-page {
+  background-color:transparent;
+}
+
+.navbar-home-page-absolute {
+  position: absolute;
+}
+
+.on-bottom-video {
+  z-index: 1;
+}
+
+.navbar-button {
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+.registration-button {
+  color: black !important;
+  font-family: RetroGaming, sans-serif;
+}

@@ -1,0 +1,16 @@
+<div class="settings-div">
+  <mat-tab-group dynamicHeight *ngIf="isAuthorized">
+    <mat-tab label="{{ 'bk.admin.panel.tab.header.settings.registration' | translate }}">
+      <app-settings-registration></app-settings-registration>
+    </mat-tab>
+    <mat-tab label="{{ 'bk.admin.panel.tab.header.settings.price' | translate }}">
+      <app-settings-price></app-settings-price>
+    </mat-tab>
+    <mat-tab label="{{ 'bk.admin.panel.tab.header.settings.users' | translate }}">
+      <app-users></app-users>
+    </mat-tab>
+    <mat-tab label="{{ 'bk.admin.panel.tab.header.settings.backup' | translate }}">
+      <app-settings-backup></app-settings-backup>
+    </mat-tab>
+  </mat-tab-group>
+</div>

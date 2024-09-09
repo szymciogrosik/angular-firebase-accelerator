@@ -1,0 +1,34 @@
+@import "src/styles.scss";
+
+.image {
+  margin-bottom: 10px;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 100%;
+  color: $footer-element-color;
+  background: $bk-background-color url($asset-scss-base-path + 'assets/icon/graphic/wave.2.png') no-repeat bottom center;
+  background-size: 100% auto;  /* Adjust the width to 100% and height automatically */
+  min-height: 40vw;
+}
+
+.footer-content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; // Align items to the bottom
+  margin-top: auto; // Push content to the bottom
+}
+
+.icons-container {
+  margin-bottom: 8px;
+}
+
+.copyrights {
+  margin-right: 10px;
+  margin-bottom: 15px;
+}

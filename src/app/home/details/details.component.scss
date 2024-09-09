@@ -1,0 +1,13 @@
+@import "src/app/_shared-components/dialog/dialog.component.scss";
+
+.dialog-text {
+  margin-top: 20px;
+  p {
+    display: inline-block;
+    margin-bottom: 0;
+  }
+}
+
+.standard-price {
+  text-decoration: line-through;
+}

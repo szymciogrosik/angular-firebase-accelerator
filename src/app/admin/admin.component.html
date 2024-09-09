@@ -1,0 +1,45 @@
+<div class="admin-div">
+  <mat-card class="short-page-content">
+    <mat-card-title>
+      <h1>{{ 'bk.admin.panel.header' | translate }}</h1>
+      <h5>{{ 'bk.admin.panel.helloMessage' | translate }}{{ this.loggedUserName }}!</h5>
+    </mat-card-title>
+    <mat-card-content>
+      <div *ngIf="!environment.production" class="alert alert-warning" role="alert" style="margin-bottom: 30px;">
+        {{ 'bk.nonProdMode.warning' | translate }}
+      </div>
+      <mat-tab-group dynamicHeight>
+        <mat-tab *ngIf="statisticVisible" label="{{ 'bk.admin.panel.tab.header.statistic' | translate }}">
+          <div class="admin-tab-content">
+            <app-statistics></app-statistics>
+          </div>
+        </mat-tab>
+        <mat-tab *ngIf="registrationDataYoungVisible" label="{{ 'bk.admin.panel.tab.header.young' | translate }}">
+          <div class="admin-tab-content">
+            <app-young-table></app-young-table>
+          </div>
+        </mat-tab>
+        <mat-tab *ngIf="registrationDataAdultVisible" label="{{ 'bk.admin.panel.tab.header.adult' | translate }}">
+          <div class="admin-tab-content">
+            <app-adult-table></app-adult-table>
+          </div>
+        </mat-tab>
+        <mat-tab *ngIf="registrationDataStaffVisible" label="{{ 'bk.admin.panel.tab.header.staff' | translate }}">
+          <div class="admin-tab-content">
+            <app-staff-table></app-staff-table>
+          </div>
+        </mat-tab>
+        <mat-tab *ngIf="exportVisible" label="{{ 'bk.admin.panel.tab.header.export' | translate }}">
+          <div class="admin-tab-content">
+            <app-export></app-export>
+          </div>
+        </mat-tab>
+        <mat-tab *ngIf="settingsVisible" label="{{ 'bk.admin.panel.tab.header.settings' | translate }}">
+          <div class="admin-tab-content">
+            <app-settings></app-settings>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>

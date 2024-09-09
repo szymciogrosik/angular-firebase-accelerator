@@ -1,0 +1,22 @@
+<div class="registration-container">
+  <div *ngIf="youngRegistrationData" class="registration-column">
+    <h1>{{ youngRegistrationData.length }}</h1>
+    <p>{{ 'bk.admin.panel.statistics.registeredYoung' | translate }}</p>
+  </div>
+  <div *ngIf="adultRegistrationData" class="registration-column">
+    <h1>{{ adultRegistrationData.length }}</h1>
+    <p>{{ 'bk.admin.panel.statistics.registeredAdult' | translate }}</p>
+  </div>
+  <div *ngIf="stuffRegistrationData" class="registration-column">
+    <h1>{{ stuffRegistrationData.length }}</h1>
+    <p>{{ 'bk.admin.panel.statistics.registeredStuff' | translate }}</p>
+  </div>
+</div>
+<div class="chart-style">
+  <h5>{{ 'bk.admin.panel.statistics.chartPerDay' | translate }}</h5>
+  <canvas id="registrationChart"></canvas>
+</div>
+<div class="chart-sum-per-day-style">
+  <h5>{{ 'bk.admin.panel.statistics.chartSumPerDay' | translate }}</h5>
+  <canvas id="registrationChartCumulativeSum"></canvas>
+</div>

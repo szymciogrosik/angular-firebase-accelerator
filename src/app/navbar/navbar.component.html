@@ -1,0 +1,70 @@
+<mat-toolbar class="navbar-style navbar-home-page" color="primary" [class.navbar-home-page-absolute]="this.activeTabService.isHomePageActive()">
+
+  <button mat-button routerLink="{{ rp.SEP + rp.HOME }}"
+          *ngIf="!this.activeTabService.isHomePageActive()">
+    <mat-icon>beach_access</mat-icon>&nbsp;{{ 'navbar.tab.applicationName' | translate }}
+  </button>
+<!--   This fills the remaining space of the current row-->
+  <span class="fill-remaining-space"></span>
+
+  <!-- Full menu navbar -->
+  <div class="full-menu">
+    <!-- Add new link here part 1/2 -->
+    <!-- Home tab -->
+    <button mat-raised-button color="primary" class="on-bottom-video navbar-button" *ngIf="this.activeTabService.isHomePageActive()"
+            (click)="scrollToWhatBKIs()">
+      {{ 'bk.navbar.whatIsBkConf' | translate }}
+    </button>
+    <button mat-raised-button color="primary" class="on-bottom-video navbar-button" *ngIf="this.activeTabService.isHomePageActive()"
+            (click)="scrollToBKProgress()">
+      {{ 'bk.navbar.whatIsBkProgress' | translate }}
+    </button>
+    <button mat-raised-button color="warn" class="on-bottom-video navbar-button registration-button" *ngIf="this.activeTabService.isHomePageActive()"
+            (click)="scrollToRegistrationBoth()">
+      {{ 'bk.navbar.registration' | translate }}
+    </button>
+    <button mat-raised-button color="primary" class="on-bottom-video navbar-button" *ngIf="this.activeTabService.isHomePageActive()"
+            (click)="scrollToSupportUs()">
+      {{ 'bk.navbar.supportUs' | translate }}
+    </button>
+    <button mat-raised-button color="primary" class="on-bottom-video navbar-button"
+            *ngIf="this.activeTabService.isAdminPageActive() && (this.authService.isAuthenticated() | async)"
+            (click)="logout()">
+      {{ 'bk.login.button.logout' | translate }}
+    </button>
+    <!-- Choose language tab -->
+    <button mat-raised-button color="primary" class="on-bottom-video navbar-button" [matMenuTriggerFor]="languageMenu">
+      <mat-icon style="margin: 0;">language</mat-icon>
+    </button>
+  </div>
+
+  <!-- Short menu navbar -->
+  <div class="short-menu">
+    <button mat-raised-button color="primary" class="on-bottom-video" [matMenuTriggerFor]="menu">
+      <mat-icon style="margin: 0;">menu</mat-icon>
+    </button>
+  </div>
+
+</mat-toolbar>
+
+<mat-menu xPosition="before" #menu="matMenu">
+  <!-- Add new link here part 2/2 -->
+  <!-- Home tab -->
+  <button mat-menu-item *ngIf="this.activeTabService.isHomePageActive()" (click)="scrollToWhatBKIs()">{{ 'bk.navbar.whatIsBkConf' | translate }}</button>
+  <button mat-menu-item *ngIf="this.activeTabService.isHomePageActive()" (click)="scrollToBKProgress()">{{ 'bk.navbar.whatIsBkProgress' | translate }}</button>
+  <button mat-menu-item *ngIf="this.activeTabService.isHomePageActive()" (click)="scrollToRegistrationBoth()">{{ 'bk.navbar.registration' | translate }}</button>
+  <button mat-menu-item *ngIf="this.activeTabService.isHomePageActive()" (click)="scrollToSupportUs()">{{ 'bk.navbar.supportUs' | translate }}</button>
+  <button mat-menu-item
+          *ngIf="this.activeTabService.isAdminPageActive() && (this.authService.isAuthenticated() | async)"
+          (click)="logout()">
+    {{ 'bk.login.button.logout' | translate }}
+  </button>
+  <!-- Choose language tab -->
+  <button mat-menu-item [matMenuTriggerFor]="languageMenu"><mat-icon>language</mat-icon></button>
+</mat-menu>
+
+<!-- Language sub-menu -->
+<mat-menu xPosition="before" #languageMenu="matMenu">
+  <button mat-menu-item (click)="this.translateService.setLanguage(LanguageEnum.POLISH)">{{ 'language.polish' | translate }}</button>
+  <button mat-menu-item (click)="this.translateService.setLanguage(LanguageEnum.ENGLISH)">{{ 'language.english' | translate }}</button>
+</mat-menu>

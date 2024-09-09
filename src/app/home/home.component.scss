@@ -1,0 +1,20 @@
+@import "src/styles.scss";
+
+.home-content {
+  flex: 1 0 auto; // Takes available space, pushing the footer down
+  overflow-y: auto; // Adds scroll to content if needed
+}
+
+.page-element {
+  margin-top: 30px;
+}
+
+.last-page-element {
+  margin-top: 40px;
+  margin-bottom: 0;
+}
+
+.background-progress {
+  background: url($asset-scss-base-path + 'assets/icon/graphic/progres.png') no-repeat center right;
+  background-size: 100% auto;  /* Adjust the width to 100% and height automatically */
+}

@@ -1,0 +1,51 @@
+<div class="registration-content">
+  <mat-card class="short-page-content">
+    <mat-card-title>
+      <h1>{{ 'bk.login.header' | translate }}</h1>
+      <h5>{{ 'bk.login.header2' | translate }}</h5>
+    </mat-card-title>
+    <mat-card-content>
+      <div *ngIf="!checkingIfUserIsAlreadyLoggedIn">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <p>
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'bk.login.enterEmail' | translate }}</mat-label>
+              <input matInput type="email" placeholder="{{ 'bk.login.exampleEmail' | translate }}" formControlName="email" required>
+              <mat-error>{{this.getErrorMessage('email')}}</mat-error>
+            </mat-form-field>
+          </p>
+
+          <p>
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'bk.login.enterPassword' | translate }}</mat-label>
+              <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
+              <button mat-icon-button matSuffix class="register-button"
+                      (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error>{{this.getErrorMessage('password')}}</mat-error>
+            </mat-form-field>
+          </p>
+
+          <div>
+            <button *ngIf="!loading" mat-flat-button type="submit" color="primary" class="register-button">
+              {{ 'bk.login.approve.button' | translate }}
+            </button>
+            <mat-spinner *ngIf="loading" [diameter]="30"></mat-spinner>
+          </div>
+        </form>
+
+        <div class="separation-line"></div>
+
+        <div>
+          <button *ngIf="!loading" mat-flat-button color="accent" class="register-button login-with-google" (click)="openPopupIfEmbeddedBrowserOpenOtherwiseOpenPopup()">
+            {{ 'bk.login.googleSso' | translate }}
+          </button>
+        </div>
+      </div>
+      <div *ngIf="checkingIfUserIsAlreadyLoggedIn" class="checking-if-user-is-logged-in">
+        <mat-spinner [diameter]="200"></mat-spinner>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

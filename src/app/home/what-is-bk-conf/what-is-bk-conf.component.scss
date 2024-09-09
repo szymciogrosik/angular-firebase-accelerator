@@ -1,0 +1,90 @@
+@import "src/styles.scss";
+
+.rectangle-what-is-bk-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rectangle-what-is-bk {
+  position: absolute;
+  background-color: $bk-yellow-color; // Primary rectangle color
+}
+
+.rectangle-what-is-bk.shadow {
+  background-color: black; // Shadow color
+  z-index: -1;
+}
+
+.rectangle-text {
+  margin: 20px;
+}
+
+/*
+This section needs to be always adjusted after content length change
+*/
+@media (max-width: 400px) {
+  .dynamic-size-of-container {
+    height: 720px;
+  }
+  .dynamic-size-of-rectangle {
+    width: 300px;
+    height: 720px;
+  }
+  .rectangle-what-is-bk.shadow {
+    transform: translate(-15px, 15px); // Move shadow to the left and slightly down
+  }
+}
+
+@media (min-width: 401px) and (max-width: 700px) {
+  .dynamic-size-of-container {
+    height: 680px;
+  }
+  .dynamic-size-of-rectangle {
+    width: 350px;
+    height: 680px;
+  }
+  .rectangle-what-is-bk.shadow {
+    transform: translate(-15px, 15px); // Move shadow to the left and slightly down
+  }
+}
+
+@media (min-width: 701px) and (max-width: 1000px) {
+  .dynamic-size-of-container {
+    height: 450px;
+  }
+  .dynamic-size-of-rectangle {
+    width: 600px;
+    height: 450px;
+  }
+  .rectangle-what-is-bk.shadow {
+    transform: translate(-30px, 30px); // Move shadow to the left and slightly down
+  }
+}
+
+@media (min-width: 1001px) and (max-width: 1200px) {
+  .dynamic-size-of-container {
+    height: 400px;
+  }
+  .dynamic-size-of-rectangle {
+    width: 700px;
+    height: 400px;
+  }
+  .rectangle-what-is-bk.shadow {
+    transform: translate(-30px, 30px); // Move shadow to the left and slightly down
+  }
+}
+
+@media (min-width: 1201px) {
+  .dynamic-size-of-container {
+    height: 350px;
+  }
+  .dynamic-size-of-rectangle {
+    width: 900px;
+    height: 350px;
+  }
+  .rectangle-what-is-bk.shadow {
+    transform: translate(-30px, 30px); // Move shadow to the left and slightly down
+  }
+}

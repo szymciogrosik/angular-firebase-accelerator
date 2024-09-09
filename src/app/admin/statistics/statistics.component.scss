@@ -1,0 +1,34 @@
+.registration-container {
+  display: flex;
+  flex-direction: column; // Stack vertically by default
+
+  @media (min-width: 570px) {
+    flex-direction: row; // Horizontal layout on larger screens
+  }
+
+  .registration-column {
+    flex: 1; // Each column takes equal space
+    display: flex;
+    flex-direction: column;
+    justify-content: center; // Vertically center content
+    align-items: center; // Horizontally center content
+    text-align: center;
+
+    h1 {
+      font-size: 5rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-top: -10px;
+    }
+  }
+}
+
+.chart-style {
+  margin-top: 20px;
+}
+
+.chart-sum-per-day-style {
+  margin-top: 40px;
+}

@@ -1,0 +1,24 @@
+name: CI - gh-pages - Step 3 - Merge gh-pages-release to gh-pages-deployment branch
+
+on:
+  workflow_run:
+    workflows: ['CI - gh-pages - Step 2 - Build gh-pages-release']
+    types: [completed]
+    branches:
+#      - 'release/gh-pages'
+      - 'DISABLED/DISABLED_DISABLED_DISABLED'
+
+jobs:
+  sync-branch:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Merge gh-pages-release -> gh-pages-deployment
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          from_branch: release/gh-pages
+          target_branch: deploy/gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}

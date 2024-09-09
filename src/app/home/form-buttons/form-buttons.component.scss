@@ -1,0 +1,228 @@
+@import "src/styles.scss";
+
+$registrationTitleLocationFromTheTop: -30px;
+
+.registration-container {
+  margin-top: 200px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 150px; // Add padding to prevent overlap with images
+
+  .registration-column {
+    flex: 1;
+    display: flex;
+    position: relative;
+
+    .content-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      width: 100%;
+      z-index: 2; // Higher z-index for content over images
+      padding-bottom: 158px; // Increased padding to ensure space for button and statute at the bottom
+
+      .rectangle {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        background-color: inherit; // Ensure the rectangle has a background
+
+        > * {
+          width: 100%; // Ensure full width for children
+          text-align: center; // Center text for all children
+        }
+
+        .rectangle-main-text {
+          margin: 40px 0 60px 0; // Add margin for spacing
+          padding: 0 40px;
+          text-align: left;
+        }
+
+        .rectangle-button {
+          position: absolute;
+          bottom: 60px; // Adjusted to make room for statute below
+          width: calc(100% - 40px); // Adjust width to account for padding
+          margin-bottom: 30px;
+        }
+
+        .rectangle-statute {
+          position: absolute;
+          bottom: 10px; // Position statute at the very bottom of content-wrapper
+          width: calc(100% - 40px); // Adjust width to fit the content area
+          margin-top: 60px;
+        }
+      }
+
+      .title-overlay {
+        position: absolute;
+        top: $registrationTitleLocationFromTheTop;
+        left: -30px;
+        padding: 0 10px;
+        color: $bk-yellow-color;
+        font-size: 3rem;
+      }
+
+      .registration-scroll-target {
+        position: absolute;
+        top: -120px;
+      }
+    }
+
+    .side-image {
+      width: 300px; // Set static width
+      height: 225px; // Set static height
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%); // Center vertically
+      z-index: 1; // Lower z-index to be below text and buttons
+
+      &.left-image {
+        left: -260px; // Adjust position to the left
+        top: 175px;
+      }
+
+      &.right-image {
+        right: -240px; // Adjust position to the right
+        top: 0;
+      }
+    }
+  }
+
+  .young-button {
+    background-color: $bk-young-color !important;
+  }
+
+  .adult-button {
+    background-color: $bk-adult-color !important;
+  }
+
+  .registration-button {
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 20vw; // Adjust this width as appropriate
+    min-width: 320px;
+    height: 100px !important;
+    color: black !important;
+    font-family: RetroGaming, sans-serif !important;
+    font-size: 2rem;
+  }
+}
+
+// Colors for rectangles
+.registration-column-young {
+  background-color: $bk-light-blue-color;
+  margin-right: 20px;
+}
+
+.registration-column-adult {
+  background-color: $bk-red-color;
+  margin-left: 20px;
+}
+
+.rectangle-statute {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.go-to-details-button {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  width: 100%;
+
+  .beach-icon {
+    padding-top: 3px;
+  }
+}
+
+.counter-down {
+  margin-bottom: 30px;
+}
+
+// Media queries for responsiveness
+@media (max-width: 1500px) and (min-width: 1201px) {
+  .registration-column .side-image {
+    display: none; // Hide images when column width is between 1001px and 1500px
+  }
+  .registration-scroll-target {
+    top: $registrationTitleLocationFromTheTop !important;
+  }
+}
+
+@media (max-width: 1200px) and (min-width: 1001px) {
+  .registration-column .side-image {
+    display: none; // Hide images when column width is between 1001px and 1500px
+  }
+  .registration-container {
+    padding: 0;
+  }
+  .registration-scroll-target {
+    top: $registrationTitleLocationFromTheTop !important;
+  }
+}
+
+@media (max-width: 1000px) and (min-width: 601px) {
+  .registration-container {
+    flex-direction: column; // Stack columns vertically
+    padding: 0;
+  }
+  .registration-column {
+    width: 100%; // Full width for each column
+    margin: 0; // Reset margins
+
+    .side-image {
+      display: none; // Hide images when column width is less than 1000px
+    }
+  }
+  .registration-column-young {
+    margin-bottom: 100px;
+  }
+  .registration-scroll-target {
+    top: $registrationTitleLocationFromTheTop !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .registration-container {
+    flex-direction: column; // Stack columns vertically
+    padding: 0;
+  }
+  .registration-column {
+    width: 100%; // Full width for each column
+    margin: 0; // Reset margins
+
+    .side-image {
+      display: none; // Hide images when column width is less than 1000px
+    }
+  }
+  .registration-column-young {
+    margin-bottom: 100px;
+  }
+  .title-overlay {
+    left: -10px !important;
+  }
+  .rectangle-main-text {
+    padding: 0 10px !important;
+  }
+  .registration-scroll-target {
+    top: $registrationTitleLocationFromTheTop !important;
+  }
+  .registration-button {
+    font-size: 1.4rem !important;
+    min-width: 220px !important;
+  }
+}
+
+.dialog-text {
+  margin-top: 20px;
+  p {
+    display: inline-block;
+    margin-bottom: 0;
+  }
+}
+
+.standard-price {
+  text-decoration: line-through;
+}

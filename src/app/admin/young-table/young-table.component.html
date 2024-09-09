@@ -1,0 +1,83 @@
+<div class="button-toggle-row">
+  <p class="button-toggle-label">
+    {{ 'bk.admin.panel.table.showOnly' | translate }}
+  </p>
+  <mat-button-toggle-group class="sticky-toggle-group" [(ngModel)]="selectedAdditionsToFilter" (click)="filterOriginalData()" multiple>
+    <mat-button-toggle value="somePayed">{{ 'bk.admin.panel.table.missingSomePayed' | translate }}</mat-button-toggle>
+    <mat-button-toggle value="allPayed">{{ 'bk.admin.panel.table.missingFullPayed' | translate }}</mat-button-toggle>
+    <mat-button-toggle value="onlyDeleted">{{ 'bk.admin.panel.table.onlyDeleted' | translate }}</mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+
+<div>
+  <mat-form-field appearance="outline">
+    <mat-label>{{ 'bk.admin.panel.table.filter' | translate }}</mat-label>
+    <input matInput type="text" (keyup)="applyFilter($event)" placeholder="{{ 'bk.admin.panel.table.filter.placeholder' | translate }}" #input>
+  </mat-form-field>
+</div>
+
+<div class="enable-vertical-scrolling">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef> {{ 'bk.admin.panel.table.header.no' | translate }} </th>
+      <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'bk.admin.panel.table.header.name' | translate }} </th>
+      <td mat-cell *matCellDef="let element"> {{element.question1}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="age">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'bk.admin.panel.table.header.age' | translate }} </th>
+      <td mat-cell *matCellDef="let element"> {{calculateFullYears(element.question2)}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="advancePayed">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'bk.admin.panel.table.header.somePayed' | translate }} </th>
+      <td mat-cell *matCellDef="let element"> {{this.presentBooleanField(element.advancePayed) | translate}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fullAmountPayed">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'bk.admin.panel.table.header.fullPayed' | translate }} </th>
+      <td mat-cell *matCellDef="let element"> {{this.presentBooleanField(element.fullAmountPayed) | translate}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="creationTimestamp">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'bk.admin.panel.table.header.registrationDate' | translate }} </th>
+      <td mat-cell *matCellDef="let element"> {{ this.dateService.presentDateTime(DateTime.fromISO(element.creationTimestamp)) }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="id" *ngIf="isAuthorisedToEdit">
+      <th mat-header-cell *matHeaderCellDef> {{ 'bk.admin.panel.table.header.details' | translate }} </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-raised-button color="accent" (click)="openRegistrationDetailsYoung(element.id)">
+          {{ 'bk.admin.panel.table.header.see' | translate }}
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="markDeleted" *ngIf="isAuthorisedToEdit">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        @if (element.deleted) {
+          <button mat-raised-button color="primary" (click)="restoreDeleted(element.id)">
+            {{ 'bk.admin.panel.table.header.restore' | translate }}
+          </button>
+        } @else {
+          <button mat-raised-button color="warn" (click)="markAsDeleted(element.id)">
+            {{ 'bk.admin.panel.table.header.delete' | translate }}
+          </button>
+        }
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">{{ 'bk.admin.panel.table.filter.noResult' | translate }} "{{input.value}}"</td>
+    </tr>
+  </table>
+</div>
