@@ -25,3 +25,13 @@ npm cache verify
 npm install -g @angular/cli@wished.version.here
 
 ng version
+
+## Setup firebase
+
+- Create a project
+- Enable authentication (email and google with default settings)
+- Add dummy logged user
+
+- Generate firebase config (main page -> </> -> with hosting)
+- Add firebase config to codebase (without api key ofc)
+
