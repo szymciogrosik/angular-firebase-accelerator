@@ -1,4 +1,4 @@
-name: Deploy to Firebase Hosting on merge
+name: CI - firebase - Step 2 - Build and deploy to firebase
 
 on:
   push:
