@@ -75,5 +75,9 @@ service cloud.firestore {
  }
 }
 ```
+- Firebase Settings -> Project settings -> FIREBASE_SERVICE_ACCOUNT_BK_2024
 
+- GH settings -> Workflow permissions -> Read and write permissions
+- + Allow GitHub Actions to create and approve pull requests
+- GH settings -> pages -> enable from GitHub Actions
 - 
