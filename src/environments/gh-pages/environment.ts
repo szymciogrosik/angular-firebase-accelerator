@@ -7,8 +7,8 @@ export const environment = {
     authDomain: "angular-firebase-accelerator.firebaseapp.com",
     projectId: "angular-firebase-accelerator",
     storageBucket: "angular-firebase-accelerator.appspot.com",
-    messagingSenderId: "566355017803",
-    appId: "1:566355017803:web:61f3ec6b526bdf708d8dce",
-    measurementId: "G-4X9MD7YMM7"
+    messagingSenderId: "874906824655",
+    appId: "1:874906824655:web:c03eee1f08435734ffecba",
+    measurementId: "G-2XSMFF38ZS"
   }
 };
