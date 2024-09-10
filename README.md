@@ -30,7 +30,14 @@ ng version
 
 - Create a project
 - Enable authentication (email and google with default settings)
-- Add dummy logged user
+- Add dummy logged user + add it to Firestore database:
+- email: email@gmail.com
+- firstName: "Adam"
+- lastName: "Abacki"
+- role: "ADMIN_FULL_ACCESS"
+- uid: "FROM_AUTHENTICATION"
+
+- If you are planning to use GH-pages add a page to authentication -> Settings -> Authorized domains
 
 - Generate firebase config (main page -> </> -> with hosting)
 - Add firebase config to codebase (without api key ofc)
@@ -75,7 +82,9 @@ service cloud.firestore {
  }
 }
 ```
-- Firebase Settings -> Project settings -> FIREBASE_SERVICE_ACCOUNT_BK_2024
+- Install firebase cli (https://firebase.google.com/docs/cli?hl=pl)
+- firebase login
+- firebase init - will be added GH secret FIREBASE_SERVICE_ACCOUNT_<PROJECT_NAME> as private key generated on service accounts page
 
 - GH settings -> Workflow permissions -> Read and write permissions
 - + Allow GitHub Actions to create and approve pull requests
