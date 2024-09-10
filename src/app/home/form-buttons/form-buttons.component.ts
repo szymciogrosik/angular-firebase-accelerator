@@ -7,7 +7,6 @@ import {DetailsComponent} from "../details/details.component";
 import {PublicRegistrationSettingsService} from "../../_services/database/settings/public-registration-settings.service";
 import {from, interval, Subscription, switchMap} from "rxjs";
 import {ScrollService} from "../../_services/util/scroll.service";
-import {RegistrationGuardService} from "../../_services/guard/registration-guard.service";
 import {DateTime} from "luxon";
 import {SpecialPriceData} from "../../_models/registration/special-price-data";
 import {PriceService} from "../../_services/business/price.service";
@@ -33,11 +32,9 @@ export class FormButtonsComponent implements OnInit, OnDestroy {
     private scrollService: ScrollService,
     private dialog: MatDialog,
     public translateService: CustomTranslateService,
-    private registrationGuardService: RegistrationGuardService,
     private registrationSettingsService: PublicRegistrationSettingsService,
     private priceService: PriceService
   ) {
-    this.enableRegistrationIfAllowed();
     this.scrollSubscription = this.scrollService.scrollRequest.subscribe((elementId: string) => {
       if (elementId === 'registrationHeader') {
         this.scrollToElement();
@@ -76,13 +73,6 @@ export class FormButtonsComponent implements OnInit, OnDestroy {
       });
   }
 
-  private enableRegistrationIfAllowed(): void {
-    // Disabled registration from button as deadline passed
-    // this.registrationGuardService.isRegistrationAllowed().then(
-    //   response => this.registrationEnabled = response
-    // );
-  }
-
   private async updateCountdown(targetDateTime: DateTime): Promise<any> {
     const now = DateTime.local();
     const diff = targetDateTime.diff(now, ['hours', 'minutes', 'seconds']).toObject();
@@ -90,7 +80,6 @@ export class FormButtonsComponent implements OnInit, OnDestroy {
       return { hours: diff.hours, minutes: diff.minutes, seconds: Math.floor(diff.seconds || 0) };
     } else {
       this.subscriptionToStartRegistration.unsubscribe();
-      this.enableRegistrationIfAllowed();
       return null;
     }
   }

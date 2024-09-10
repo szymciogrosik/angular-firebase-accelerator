@@ -32,27 +32,17 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {PhotoSliderMainComponent} from './home/photo-slider-main/photo-slider-main.component';
 import {CarouselModule} from "ngx-owl-carousel-o";
 import {MainPageVideoComponent} from './home/main-page-video/main-page-video.component';
-import {WhatIsBkConfComponent} from './home/what-is-bk-conf/what-is-bk-conf.component';
-import {PhotoSliderSecondComponent} from './home/photo-slider-second/photo-slider-second.component';
-import {BkProgressDescriptionComponent} from './home/bk-progress-description/bk-progress-description.component';
 import {FormButtonsComponent} from './home/form-buttons/form-buttons.component';
 import {FooterComponent} from './footer/footer.component';
-import {RegistrationComponent} from './registration/registration.component';
-import {RegistrationYoungComponent} from './registration/registration-young/registration-young.component';
-import {RegistrationAdultComponent} from './registration/registration-adult/registration-adult.component';
 import {AngularFireModule} from "@angular/fire/compat";
 import {environment} from "../environments/environment";
 import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
-import {SupportUsComponent} from "./home/support-us/support-us.component";
 import {MatDialogModule} from "@angular/material/dialog";
 import {NgOptimizedImage} from "@angular/common";
 import {LoginComponent} from "./login/login.component";
 import {AdminComponent} from "./admin/admin.component";
 import {DetailsComponent} from "./home/details/details.component";
-import {AdultStatueComponent} from "./home/statue/adult-statue/adult-statue.component";
-import {StatueComponent} from "./home/statue/statue.component";
 import {DialogComponent} from "./_shared-components/dialog/dialog.component";
-import {YoungStatueComponent} from "./home/statue/young-statue/young-statue.component";
 import {AdultTableComponent} from "./admin/adult-table/adult-table.component";
 import {YoungTableComponent} from "./admin/young-table/young-table.component";
 import {MatTableModule} from "@angular/material/table";
@@ -79,7 +69,6 @@ import {EmbeddedBrowserPopupComponent} from "./login/embedded-browser-popup/embe
 import {UsersComponent} from "./admin/settings/users/users.component";
 import {UserDetailsComponent} from "./admin/settings/users/user-details/user-details.component";
 import {MatSelectModule} from "@angular/material/select";
-import {RegistrationStaffComponent} from "./registration/registration-staff/registration-staff.component";
 import {StaffTableComponent} from "./admin/staff-table/staff-table.component";
 import {
   RegistrationDetailsPopupStaffComponent
@@ -94,19 +83,9 @@ import {ExportComponent} from "./admin/export/export.component";
     StatusComponent,
     PhotoSliderMainComponent,
     MainPageVideoComponent,
-    WhatIsBkConfComponent,
-    PhotoSliderSecondComponent,
-    BkProgressDescriptionComponent,
     FormButtonsComponent,
     FooterComponent,
-    RegistrationComponent,
-    RegistrationYoungComponent,
-    RegistrationAdultComponent,
-    SupportUsComponent,
     DetailsComponent,
-    YoungStatueComponent,
-    AdultStatueComponent,
-    StatueComponent,
     DialogComponent,
     LoginComponent,
     AdminComponent,
@@ -119,7 +98,6 @@ import {ExportComponent} from "./admin/export/export.component";
     RegistrationDetailsPopupYoungComponent,
     RegistrationDetailsPopupAdultComponent,
     RegistrationDetailsPopupStaffComponent,
-    RegistrationStaffComponent,
     AutoResizeDirective,
     SettingsRegistrationComponent,
     SettingsPriceComponent,
