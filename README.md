@@ -81,3 +81,5 @@ service cloud.firestore {
 - GH -> Settings -> Environment -> github-pages -> Deployment branches and tags -> add release/gh-pages
 - Firebase -> Authentication -> Settings -> Authorized domains -> add GitHub page
 - GH -> Settings -> environment -> gh-pages -> add secret FIREBASE_API_KEY
+
+- Copy and paste environment-example.ts to environment.ts
