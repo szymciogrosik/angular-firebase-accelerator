@@ -2,7 +2,8 @@ name: CI - ftp - Step 1 - Create PR from main to ftp-release
 
 on:
   push:
-    branches: [main]
+#    branches: [main]
+    branches: [DISABLED/DISABLED_DISABLED_DISABLED]
 
 jobs:
   crete-pr-main-to-ftp-release:
