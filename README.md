@@ -30,7 +30,12 @@ ng version
 
 - Create a project
 - Enable authentication (email and google with default settings)
-- Add dummy logged user
+- Add dummy logged user + add it to Firestore database:
+- email: email@gmail.com
+- firstName: "Adam"
+- lastName: "Abacki"
+- role: "ADMIN_FULL_ACCESS"
+- uid: "FROM_AUTHENTICATION"
 
 - Generate firebase config (main page -> </> -> with hosting)
 - Add firebase config to codebase (without api key ofc)
