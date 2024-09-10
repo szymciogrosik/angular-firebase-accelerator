@@ -65,20 +65,6 @@ service cloud.firestore {
      allow read: if request.auth != null;
      allow write: if request.auth != null;
    }
-
-   // Specific rules for the 'registration' collection
-   match /registration_13_18/{document=**} {
-   	 allow read: if request.auth != null;
-     allow write: if true;
-   }
-   match /registration_19_26/{document=**} {
-   	 allow read: if request.auth != null;
-     allow write: if true;
-   }
-   match /registration_staff/{document=**} {
-   	 allow read: if request.auth != null;
-     allow write: if true;
-   }
  }
 }
 ```
@@ -92,3 +78,6 @@ service cloud.firestore {
 
 - GH Pages
 - GH -> Settings -> Pages -> GitHub Actions
+- GH -> Settings -> Environment -> github-pages -> Deployment branches and tags -> add release/gh-pages
+- Firebase -> Authentication -> Settings -> Authorized domains -> add GitHub page
+- GH -> Settings -> environment -> gh-pages -> add secret FIREBASE_API_KEY
