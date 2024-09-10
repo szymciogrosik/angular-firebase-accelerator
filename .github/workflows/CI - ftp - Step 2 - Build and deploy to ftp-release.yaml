@@ -2,7 +2,8 @@ name: CI - ftp - Step 2 - Build and deploy to ftp-release
 
 on:
   push:
-    branches: [release/ftp]
+#    branches: [release/ftp]
+    branches: [DISABLED/DISABLED_DISABLED_DISABLED]
 
 jobs:
   build:
