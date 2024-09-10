@@ -82,7 +82,9 @@ service cloud.firestore {
  }
 }
 ```
-- Firebase Settings -> Project settings -> FIREBASE_SERVICE_ACCOUNT_BK_2024
+- Install firebase cli (https://firebase.google.com/docs/cli?hl=pl)
+- firebase login
+- firebase init - will be added GH secret FIREBASE_SERVICE_ACCOUNT_<PROJECT_NAME> as private key generated on service accounts page
 
 - GH settings -> Workflow permissions -> Read and write permissions
 - + Allow GitHub Actions to create and approve pull requests
