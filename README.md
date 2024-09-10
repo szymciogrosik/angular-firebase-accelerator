@@ -89,4 +89,6 @@ service cloud.firestore {
 - GH settings -> Workflow permissions -> Read and write permissions
 - + Allow GitHub Actions to create and approve pull requests
 - GH settings -> pages -> enable from GitHub Actions
-- 
+
+- GH Pages
+- GH -> Settings -> Pages -> GitHub Actions
