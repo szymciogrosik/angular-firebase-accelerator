@@ -37,6 +37,8 @@ ng version
 - role: "ADMIN_FULL_ACCESS"
 - uid: "FROM_AUTHENTICATION"
 
+- If you are planning to use GH-pages add a page to authentication -> Settings -> Authorized domains
+
 - Generate firebase config (main page -> </> -> with hosting)
 - Add firebase config to codebase (without api key ofc)
 
