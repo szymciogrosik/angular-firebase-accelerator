@@ -12,7 +12,7 @@ Run `ng serve` for a local server. Navigate to `http://localhost:4200/`. The app
 
 ## Firebase hosting
 
-[Deployed app on firebase hosting](https://szymciogrosik.github.io/angular-firebase-accelerator)
+[Deployed app on firebase hosting](https://angular-firebase-accelerator.web.app)
 
 ## Change version of angular cli
 
