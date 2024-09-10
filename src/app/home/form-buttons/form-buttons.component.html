@@ -28,13 +28,12 @@
           <div *ngIf="countdownToStartRegistration && !this.registrationEnabled" class="counter-down">
             <h1>{{ countdownToStartRegistration.hours }}H : {{ countdownToStartRegistration.minutes }}M : {{ countdownToStartRegistration.seconds }}S</h1>
           </div>
-          <button mat-raised-button class="young-button registration-button" *ngIf="this.registrationEnabled"
-                  (click)="redirectTo(RedirectionEnum.REGISTRATION_YOUNG);">
+          <button mat-raised-button class="young-button registration-button" *ngIf="this.registrationEnabled">
             {{ 'bk.buttons.youngRegistration' | translate }}<br/>13-18
           </button>
         </div>
         <div class="rectangle-statute">
-          <button mat-button (click)="redirectTo(RedirectionEnum.STATUE_YOUNG);">
+          <button mat-button>
             {{ 'bk.buttons.statute' | translate }}
           </button>
         </div>
@@ -69,13 +68,12 @@
           <div *ngIf="countdownToStartRegistration && !this.registrationEnabled" class="counter-down">
             <h1>{{ countdownToStartRegistration.hours }}H : {{ countdownToStartRegistration.minutes }}M : {{ countdownToStartRegistration.seconds }}S</h1>
           </div>
-          <button mat-raised-button class="adult-button registration-button" *ngIf="this.registrationEnabled"
-                  (click)="redirectTo(RedirectionEnum.REGISTRATION_ADULT);">
+          <button mat-raised-button class="adult-button registration-button" *ngIf="this.registrationEnabled">
             {{ 'bk.buttons.adultRegistration' | translate }}<br/>19-26
           </button>
         </div>
         <div class="rectangle-statute">
-          <button mat-button (click)="redirectTo(RedirectionEnum.STATUE_ADULT);">
+          <button mat-button>
             {{ 'bk.buttons.statute' | translate }}
           </button>
         </div>
