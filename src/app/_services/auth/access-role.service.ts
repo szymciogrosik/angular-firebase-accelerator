@@ -1,6 +1,6 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {AuthService} from "./auth.service";
-import {AccessPage} from "./access-page";
+import {AccessPageEnum} from "./access-page-enum";
 import {AccessRole} from "../../_models/user/access-role";
 
 @Injectable({
@@ -17,7 +17,7 @@ export class AccessRoleService implements OnDestroy {
     throw new Error('Method not implemented.');
   }
 
-  public isAuthorizedToSeePage(accessPage: AccessPage): Promise<boolean> {
+  public isAuthorizedToSeePage(accessPage: AccessPageEnum): Promise<boolean> {
     return new Promise((resolve, reject) => {
       this.authService.loggedUser().subscribe({
         next: (customUser) => {
@@ -32,21 +32,9 @@ export class AccessRoleService implements OnDestroy {
     });
   }
 
-  private isAuthorizedRoleToSeePage(role: AccessRole, page: AccessPage): boolean {
+  private isAuthorizedRoleToSeePage(role: AccessRole, page: AccessPageEnum): boolean {
     switch (page) {
-      case AccessPage.STATISTICS:
-        return role === AccessRole.ADMIN_FULL_ACCESS
-          || role === AccessRole.ADMIN_REGISTERED_DATA
-          || role === AccessRole.ADMIN_REGISTERED_DATA_WITH_UPDATE
-          || role === AccessRole.ADMIN_STATISTICS;
-      case AccessPage.REGISTERED_DATA:
-        return role === AccessRole.ADMIN_FULL_ACCESS
-          || role === AccessRole.ADMIN_REGISTERED_DATA
-          || role === AccessRole.ADMIN_REGISTERED_DATA_WITH_UPDATE;
-      case AccessPage.REGISTERED_DATA_UPDATE:
-        return role === AccessRole.ADMIN_FULL_ACCESS
-          || role === AccessRole.ADMIN_REGISTERED_DATA_WITH_UPDATE;
-      case AccessPage.SETTINGS:
+      case AccessPageEnum.SETTINGS:
         return role === AccessRole.ADMIN_FULL_ACCESS;
       default:
         throw new Error('Unrecognized access page: "' + page + '"');
