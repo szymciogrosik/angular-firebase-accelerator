@@ -1,5 +1,5 @@
 import {Component, OnDestroy} from '@angular/core';
-import {UserDbService} from "../../../_services/database/auth/user-db-service.service";
+import {UserDbService} from "../../../_database/auth/user-db-service.service";
 import {CustomUser} from "../../../_models/user/custom-user";
 import {Subscription} from "rxjs";
 import {AccessPage} from "../../../_services/auth/access-page";

@@ -34,18 +34,6 @@ export class AccessRoleService implements OnDestroy {
 
   private isAuthorizedRoleToSeePage(role: AccessRole, page: AccessPage): boolean {
     switch (page) {
-      case AccessPage.STATISTICS:
-        return role === AccessRole.ADMIN_FULL_ACCESS
-          || role === AccessRole.ADMIN_REGISTERED_DATA
-          || role === AccessRole.ADMIN_REGISTERED_DATA_WITH_UPDATE
-          || role === AccessRole.ADMIN_STATISTICS;
-      case AccessPage.REGISTERED_DATA:
-        return role === AccessRole.ADMIN_FULL_ACCESS
-          || role === AccessRole.ADMIN_REGISTERED_DATA
-          || role === AccessRole.ADMIN_REGISTERED_DATA_WITH_UPDATE;
-      case AccessPage.REGISTERED_DATA_UPDATE:
-        return role === AccessRole.ADMIN_FULL_ACCESS
-          || role === AccessRole.ADMIN_REGISTERED_DATA_WITH_UPDATE;
       case AccessPage.SETTINGS:
         return role === AccessRole.ADMIN_FULL_ACCESS;
       default:
