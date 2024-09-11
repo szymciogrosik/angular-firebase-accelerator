@@ -2,7 +2,7 @@ import {Component, OnDestroy} from '@angular/core';
 import {UserDbService} from "../../../_database/auth/user-db-service.service";
 import {CustomUser} from "../../../_models/user/custom-user";
 import {Subscription} from "rxjs";
-import {AccessPage} from "../../../_services/auth/access-page";
+import {AccessPageEnum} from "../../../_services/auth/access-page-enum";
 import {AccessRoleService} from "../../../_services/auth/access-role.service";
 import {CustomTranslateService} from "../../../_services/translate/custom-translate.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -39,7 +39,7 @@ export class UsersComponent implements OnDestroy {
     private authService: AuthService,
     private dialogService: DialogService
   ) {
-    this.accessService.isAuthorizedToSeePage(AccessPage.SETTINGS)
+    this.accessService.isAuthorizedToSeePage(AccessPageEnum.SETTINGS)
       .then((isAuthorized: boolean): void => {
         if (isAuthorized) {
           this.allUsersSubscription = this.userDb.getAll().subscribe({

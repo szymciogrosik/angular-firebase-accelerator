@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {AngularFireAnalytics} from "@angular/fire/compat/analytics";
 import {AccessRoleService} from "../_services/auth/access-role.service";
-import {AccessPage} from "../_services/auth/access-page";
+import {AccessPageEnum} from "../_services/auth/access-page-enum";
 import {AuthService} from "../_services/auth/auth.service";
 import {environment} from "../../environments/environment";
 
@@ -36,7 +36,7 @@ export class AdminComponent {
       }
     });
 
-    this.accessService.isAuthorizedToSeePage(AccessPage.SETTINGS)
+    this.accessService.isAuthorizedToSeePage(AccessPageEnum.SETTINGS)
       .then((isAuthorized: boolean): void => {
         if (isAuthorized) {
           this.settingsVisible = true;

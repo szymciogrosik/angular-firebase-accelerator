@@ -3,7 +3,6 @@ import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat
 import {CustomUser} from "../../_models/user/custom-user";
 import {map, Observable} from "rxjs";
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -42,10 +41,13 @@ export class UserDbService {
   }
 
   create(newUser: CustomUser): Promise<void> {
-    return new Promise((resolve, reject) => {
-      return this.db.collection<CustomUser>(this.dbPathBase).add({...newUser})
-        .then(() => resolve())
-        .catch((err) => reject(err));
+    return new Promise(async (resolve, reject) => {
+      try {
+        await this.db.collection<CustomUser>(this.dbPathBase).add({...newUser});
+        return resolve();
+      } catch (err) {
+        return reject(err);
+      }
     });
   }
 
