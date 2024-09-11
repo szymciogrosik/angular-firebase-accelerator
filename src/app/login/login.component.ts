@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
           }
         }
       });
-    }, 1000);
+    }, 1500);
   }
 
   ngOnInit(): void {
