@@ -43,37 +43,17 @@ import {LoginComponent} from "./login/login.component";
 import {AdminComponent} from "./admin/admin.component";
 import {DetailsComponent} from "./home/details/details.component";
 import {DialogComponent} from "./_shared-components/dialog/dialog.component";
-import {AdultTableComponent} from "./admin/adult-table/adult-table.component";
-import {YoungTableComponent} from "./admin/young-table/young-table.component";
 import {MatTableModule} from "@angular/material/table";
 import {SettingsComponent} from "./admin/settings/settings.component";
-import {StatisticsComponent} from "./admin/statistics/statistics.component";
 import {MatSortModule} from "@angular/material/sort";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
-import {
-  RegistrationDetailsPopupComponent
-} from "./admin/registration-details-popup/registration-details-popup.component";
-import {
-  RegistrationDetailsPopupYoungComponent
-} from "./admin/registration-details-popup/registration-details-popup-young/registration-details-popup-young.component";
-import {
-  RegistrationDetailsPopupAdultComponent
-} from "./admin/registration-details-popup/registration-details-popup-adult/registration-details-popup-adult.component";
 import {AutoResizeDirective} from "./_shared-components/auto-resize-directive.directive";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {AngularFireAnalyticsModule} from "@angular/fire/compat/analytics";
-import {SettingsBackupComponent} from "./admin/settings/settings-backup/settings-backup.component";
-import {SettingsPriceComponent} from "./admin/settings/settings-price/settings-price.component";
-import {SettingsRegistrationComponent} from "./admin/settings/settings-registration/settings-registration.component";
 import {EmbeddedBrowserPopupComponent} from "./login/embedded-browser-popup/embedded-browser-popup.component";
 import {UsersComponent} from "./admin/settings/users/users.component";
 import {UserDetailsComponent} from "./admin/settings/users/user-details/user-details.component";
 import {MatSelectModule} from "@angular/material/select";
-import {StaffTableComponent} from "./admin/staff-table/staff-table.component";
-import {
-  RegistrationDetailsPopupStaffComponent
-} from "./admin/registration-details-popup/registration-details-popup-staff/registration-details-popup-staff.component";
-import {ExportComponent} from "./admin/export/export.component";
 
 @NgModule({
   declarations: [
@@ -89,23 +69,11 @@ import {ExportComponent} from "./admin/export/export.component";
     DialogComponent,
     LoginComponent,
     AdminComponent,
-    AdultTableComponent,
-    YoungTableComponent,
-    StaffTableComponent,
     SettingsComponent,
-    StatisticsComponent,
-    RegistrationDetailsPopupComponent,
-    RegistrationDetailsPopupYoungComponent,
-    RegistrationDetailsPopupAdultComponent,
-    RegistrationDetailsPopupStaffComponent,
     AutoResizeDirective,
-    SettingsRegistrationComponent,
-    SettingsPriceComponent,
-    SettingsBackupComponent,
     EmbeddedBrowserPopupComponent,
     UsersComponent,
     UserDetailsComponent,
-    ExportComponent,
   ],
     imports: [
         TranslateModule.forRoot({
