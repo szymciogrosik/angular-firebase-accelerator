@@ -22,7 +22,7 @@ export class AccessRoleService implements OnDestroy {
       this.authService.loggedUser().subscribe({
         next: (customUser) => {
           if (customUser !== null) {
-            resolve(this.isAuthorizedRoleToSeePage(customUser.role, accessPage));
+            resolve(this.isAuthorizedRoleToSeePage(customUser.roles, accessPage));
           } else {
             reject("User is null");
           }
@@ -32,10 +32,10 @@ export class AccessRoleService implements OnDestroy {
     });
   }
 
-  private isAuthorizedRoleToSeePage(role: AccessRole, page: AccessPageEnum): boolean {
+  private isAuthorizedRoleToSeePage(roles: AccessRole[], page: AccessPageEnum): boolean {
     switch (page) {
       case AccessPageEnum.SETTINGS:
-        return role === AccessRole.ADMIN_FULL_ACCESS;
+        return roles.includes(AccessRole.ADMIN_FULL_ACCESS);
       default:
         throw new Error('Unrecognized access page: "' + page + '"');
     }

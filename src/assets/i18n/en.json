@@ -363,7 +363,7 @@
   "bk.admin.panel.users.header": "User details",
   "bk.admin.panel.users.firstName": "First name",
   "bk.admin.panel.users.lastName": "Last name",
-  "bk.admin.panel.users.role": "Role",
+  "bk.admin.panel.users.roles": "Roles",
   "bk.admin.panel.users.select": "-- None --",
   "bk.admin.panel.users.warning.removedUser": "Please note, once a user is deleted, it will not be possible to add a new user for the same email number unless it is deleted from the Firebase authentication console."
 }

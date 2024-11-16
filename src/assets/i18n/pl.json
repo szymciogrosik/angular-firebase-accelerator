@@ -363,7 +363,7 @@
   "bk.admin.panel.users.header": "Szczegóły użytkownika",
   "bk.admin.panel.users.firstName": "Imię",
   "bk.admin.panel.users.lastName": "Nazwisko",
-  "bk.admin.panel.users.role": "Rola",
+  "bk.admin.panel.users.roles": "Role",
   "bk.admin.panel.users.select": "-- Brak --",
   "bk.admin.panel.users.warning.removedUser": "Uwaga, po usunięciu użytkownika, nie będzie możliwe dodanie nowego użytkownika dla tego samego numer email, chyba że zostanie on usunięty z konsoli autentykacyjnej Firebase."
 }

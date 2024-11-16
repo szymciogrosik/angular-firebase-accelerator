@@ -26,7 +26,7 @@ export class UsersComponent implements OnDestroy {
   protected allUsers: CustomUser[];
   protected allUsersSubscription: Subscription;
   protected displayedColumns: string[] = [
-    'position', 'name', 'email', 'role', 'details', 'remove'
+    'position', 'name', 'email', 'roles', 'details', 'remove'
   ];
   protected dataSource: any;
 
@@ -44,7 +44,7 @@ export class UsersComponent implements OnDestroy {
         if (isAuthorized) {
           this.allUsersSubscription = this.userDb.getAll().subscribe({
             next: (allUsers: CustomUser[]) => {
-              this.allUsers = allUsers.sort((a, b) => a.role.localeCompare(b.role));
+              this.allUsers = allUsers.sort((a, b) => a.firstName.localeCompare(b.firstName));
               this.dataSource = new MatTableDataSource(this.allUsers);
             }
           });

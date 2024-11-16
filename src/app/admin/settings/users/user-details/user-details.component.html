@@ -39,14 +39,13 @@
       </p>
       <p>
         <mat-form-field appearance="outline">
-          <mat-label>{{ 'bk.admin.panel.users.role' | translate }}</mat-label>
-          <mat-select formControlName="role" required>
-            <mat-option>{{ 'bk.admin.panel.users.select' | translate }}</mat-option>
+          <mat-label>{{ 'bk.admin.panel.users.roles' | translate }}</mat-label>
+          <mat-select formControlName="roles" multiple>
             @for (role of accessRoleValues; track role) {
               <mat-option [value]="role">{{ role }}</mat-option>
             }
           </mat-select>
-          <mat-error>{{this.getErrorMessage('role')}}</mat-error>
+          <mat-error>{{this.getErrorMessage('roles')}}</mat-error>
         </mat-form-field>
       </p>
     </mat-dialog-content>
