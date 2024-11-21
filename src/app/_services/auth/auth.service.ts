@@ -7,7 +7,7 @@ import {AngularFireAuth} from "@angular/fire/compat/auth";
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import {CustomUser} from "../../_models/user/custom-user";
 import {Router} from "@angular/router";
-import {StandardUserDbService} from "../database/auth/standard-user-db.service";
+import {StandardUserDbService} from "../../_database/auth/standard-user-db.service";
 import {CustomTranslateService} from "../translate/custom-translate.service";
 import {getAuth, signInWithEmailAndPassword} from "@angular/fire/auth";
 
