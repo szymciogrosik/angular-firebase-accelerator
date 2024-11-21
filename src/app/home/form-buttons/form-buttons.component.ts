@@ -4,12 +4,9 @@ import {MatDialog} from "@angular/material/dialog";
 import {RegistrationDetailsDialog} from "../../_models/registration/details/registration-details-dialog";
 import {CustomTranslateService} from "../../_services/translate/custom-translate.service";
 import {DetailsComponent} from "../details/details.component";
-import {PublicRegistrationSettingsService} from "../../_services/database/settings/public-registration-settings.service";
-import {from, interval, Subscription, switchMap} from "rxjs";
+import {Subscription} from "rxjs";
 import {ScrollService} from "../../_services/util/scroll.service";
-import {DateTime} from "luxon";
 import {SpecialPriceData} from "../../_models/registration/special-price-data";
-import {PriceService} from "../../_services/business/price.service";
 
 @Component({
   selector: 'app-form-buttons',
@@ -32,55 +29,21 @@ export class FormButtonsComponent implements OnInit, OnDestroy {
     private scrollService: ScrollService,
     private dialog: MatDialog,
     public translateService: CustomTranslateService,
-    private registrationSettingsService: PublicRegistrationSettingsService,
-    private priceService: PriceService
   ) {
     this.scrollSubscription = this.scrollService.scrollRequest.subscribe((elementId: string) => {
       if (elementId === 'registrationHeader') {
         this.scrollToElement();
       }
     });
-    priceService.getSpecialPrice().then(price => {
-      this.price = price
-    });
   }
 
   ngOnInit() {
-    this.startCounterDownFunctionality();
   }
 
   ngOnDestroy(): void {
     this.scrollSubscription.unsubscribe();
     if (this.subscriptionToStartRegistration) {
       this.subscriptionToStartRegistration.unsubscribe();
-    }
-  }
-
-  private startCounterDownFunctionality(): void {
-    this.subscriptionToStartRegistration = from(this.registrationSettingsService.getRegistrationStartDateTime())
-      .pipe(
-        switchMap(targetDateTime => {
-          return interval(1000).pipe(
-            switchMap(() => {
-              return from(this.updateCountdown(targetDateTime));
-            })
-          );
-        })
-      )
-      .subscribe({
-        next: (countdown) => this.countdownToStartRegistration = countdown,
-        error: (error) => console.error('Failed to get date time:', error)
-      });
-  }
-
-  private async updateCountdown(targetDateTime: DateTime): Promise<any> {
-    const now = DateTime.local();
-    const diff = targetDateTime.diff(now, ['hours', 'minutes', 'seconds']).toObject();
-    if (targetDateTime > now) {
-      return { hours: diff.hours, minutes: diff.minutes, seconds: Math.floor(diff.seconds || 0) };
-    } else {
-      this.subscriptionToStartRegistration.unsubscribe();
-      return null;
     }
   }
 

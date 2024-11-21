@@ -1,8 +1,8 @@
 import {Component, OnDestroy} from '@angular/core';
-import {UserDbService} from "../../../_services/database/auth/user-db-service.service";
+import {UserDbService} from "../../../_database/auth/user-db-service.service";
 import {CustomUser} from "../../../_models/user/custom-user";
 import {Subscription} from "rxjs";
-import {AccessPage} from "../../../_services/auth/access-page";
+import {AccessPageEnum} from "../../../_services/auth/access-page-enum";
 import {AccessRoleService} from "../../../_services/auth/access-role.service";
 import {CustomTranslateService} from "../../../_services/translate/custom-translate.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -26,7 +26,7 @@ export class UsersComponent implements OnDestroy {
   protected allUsers: CustomUser[];
   protected allUsersSubscription: Subscription;
   protected displayedColumns: string[] = [
-    'position', 'name', 'email', 'role', 'details', 'remove'
+    'position', 'name', 'email', 'roles', 'details', 'remove'
   ];
   protected dataSource: any;
 
@@ -39,12 +39,12 @@ export class UsersComponent implements OnDestroy {
     private authService: AuthService,
     private dialogService: DialogService
   ) {
-    this.accessService.isAuthorizedToSeePage(AccessPage.SETTINGS)
+    this.accessService.isAuthorizedToSeePage(AccessPageEnum.SETTINGS)
       .then((isAuthorized: boolean): void => {
         if (isAuthorized) {
           this.allUsersSubscription = this.userDb.getAll().subscribe({
             next: (allUsers: CustomUser[]) => {
-              this.allUsers = allUsers.sort((a, b) => a.role.localeCompare(b.role));
+              this.allUsers = allUsers.sort((a, b) => a.firstName.localeCompare(b.firstName));
               this.dataSource = new MatTableDataSource(this.allUsers);
             }
           });

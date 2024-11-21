@@ -109,16 +109,6 @@ $light-theme: mat.define-light-theme((
 }
 
 @font-face {
-  font-family: NeueHaasDisplayBold;
-  src: url(./assets/font/neue-haas-grotesk/NeueHaasDisplayBold.ttf) format("opentype");
-}
-
-@font-face {
-  font-family: NeueHaasDisplayBoldItalic;
-  src: url(./assets/font/neue-haas-grotesk/NeueHaasDisplayBoldItalic.ttf) format("opentype");
-}
-
-@font-face {
   font-family: NeueHaasDisplayRomanItalic;
   src: url(./assets/font/neue-haas-grotesk/NeueHaasDisplayRomanItalic.ttf) format("opentype");
 }
