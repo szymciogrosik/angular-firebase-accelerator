@@ -11,9 +11,8 @@
   flex-shrink: 0;
   width: 100%;
   color: $footer-element-color;
-  background: $bk-background-color url($asset-scss-base-path + 'assets/icon/graphic/wave.2.png') no-repeat bottom center;
+  background: $bk-background-color;
   background-size: 100% auto;  /* Adjust the width to 100% and height automatically */
-  min-height: 40vw;
 }
 
 .footer-content {
