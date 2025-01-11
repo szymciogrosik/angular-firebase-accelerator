@@ -29,10 +29,6 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatLuxonDateModule} from "@angular/material-luxon-adapter";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatTabsModule} from "@angular/material/tabs";
-import {PhotoSliderMainComponent} from './home/photo-slider-main/photo-slider-main.component';
-import {CarouselModule} from "ngx-owl-carousel-o";
-import {MainPageVideoComponent} from './home/main-page-video/main-page-video.component';
-import {FormButtonsComponent} from './home/form-buttons/form-buttons.component';
 import {FooterComponent} from './footer/footer.component';
 import {AngularFireModule} from "@angular/fire/compat";
 import {environment} from "../environments/environment";
@@ -41,7 +37,6 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {NgOptimizedImage} from "@angular/common";
 import {LoginComponent} from "./login/login.component";
 import {AdminComponent} from "./admin/admin.component";
-import {DetailsComponent} from "./home/details/details.component";
 import {DialogComponent} from "./_shared-components/dialog/dialog.component";
 import {MatTableModule} from "@angular/material/table";
 import {SettingsComponent} from "./admin/settings/settings.component";
@@ -61,11 +56,7 @@ import {MatSelectModule} from "@angular/material/select";
     HomeComponent,
     NavbarComponent,
     StatusComponent,
-    PhotoSliderMainComponent,
-    MainPageVideoComponent,
-    FormButtonsComponent,
     FooterComponent,
-    DetailsComponent,
     DialogComponent,
     LoginComponent,
     AdminComponent,
@@ -111,7 +102,6 @@ import {MatSelectModule} from "@angular/material/select";
         MatLuxonDateModule,
         MatGridListModule,
         MatTabsModule,
-        CarouselModule,
         MatDialogModule,
         NgOptimizedImage,
         MatTableModule,
