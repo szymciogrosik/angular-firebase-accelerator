@@ -8,7 +8,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatSliderModule} from '@angular/material/slider';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {HttpClient, provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 import {routing} from './app-routing.module';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
@@ -66,51 +66,50 @@ import {MatSelectModule} from "@angular/material/select";
     UsersComponent,
     UserDetailsComponent,
   ],
-    imports: [
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        }),
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFireAnalyticsModule,
-        AngularFirestoreModule,
-        BrowserModule,
-        BrowserAnimationsModule,
-        MatSliderModule,
-        RouterModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        routing,
-        MatFormFieldModule,
-        MatSnackBarModule,
-        MatMenuModule,
-        MatButtonModule,
-        MatListModule,
-        MatToolbarModule,
-        LayoutModule,
-        MatSidenavModule,
-        MatIconModule,
-        MatCardModule,
-        MatInputModule,
-        FormsModule,
-        HttpClientModule,
-        MatProgressSpinnerModule,
-        MatDatepickerModule,
-        MatLuxonDateModule,
-        MatGridListModule,
-        MatTabsModule,
-        MatDialogModule,
-        NgOptimizedImage,
-        MatTableModule,
-        MatSortModule,
-        MatButtonToggleModule,
-        MatSlideToggleModule,
-        MatSelectModule,
-    ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  imports: [
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAnalyticsModule,
+    AngularFirestoreModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    MatSliderModule,
+    RouterModule,
+    ReactiveFormsModule,
+    routing,
+    MatFormFieldModule,
+    MatSnackBarModule,
+    MatMenuModule,
+    MatButtonModule,
+    MatListModule,
+    MatToolbarModule,
+    LayoutModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatCardModule,
+    MatInputModule,
+    FormsModule,
+    MatProgressSpinnerModule,
+    MatDatepickerModule,
+    MatLuxonDateModule,
+    MatGridListModule,
+    MatTabsModule,
+    MatDialogModule,
+    NgOptimizedImage,
+    MatTableModule,
+    MatSortModule,
+    MatButtonToggleModule,
+    MatSlideToggleModule,
+    MatSelectModule
+  ],
+  providers: [provideHttpClient(withInterceptorsFromDi())]
 })
 export class AppModule {
 }
