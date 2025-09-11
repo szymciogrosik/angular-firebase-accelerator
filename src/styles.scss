@@ -15,20 +15,17 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 
-$bk-light-blue-color: #83cfcb;
-$bk-purple-color: #a796ca;
-$bk-blue-color: #3c75bc;
-$bk-yellow-color: #fcc535;
-$bk-red-color: #e04036;
-$bk-green-color: #06a650;
+$app-light-blue-color: #83cfcb;
+$app-purple-color: #a796ca;
+$app-blue-color: #2367ca;
+$app-yellow-color: #fcc535;
+$app-red-color: #e04036;
+$app-green-color: #06a650;
 
-$bk-primary-color: $bk-light-blue-color;
-//$bk-accent-color: #da6f75;
-$bk-accent-color: $bk-yellow-color;
-$bk-warn-color: $bk-red-color;
-$bk-young-color: $bk-yellow-color;
-$bk-adult-color: $bk-yellow-color;
-$bk-background-color: $bk-purple-color;
+$app-primary-color: $app-light-blue-color;
+$app-accent-color: $app-yellow-color;
+$app-warn-color: $app-red-color;
+$app-background-color: #FFFFFF;
 $navbar-element-color: black;
 $footer-element-color: black;
 $main-font-color: black;
@@ -39,7 +36,7 @@ $bk-main-palette: (
   200: #80cbc4,
   300: #4db6ac,
   400: #26a69a,
-  500: $bk-primary-color,  // Primary color
+  500: $app-primary-color,  // Primary color
   600: #00897b,
   700: #00796b,
   800: #00695c,
@@ -59,7 +56,7 @@ $bk-accent-palette: (
   200: #ce93d8,
   300: #ba68c8,
   400: #ab47bc,
-  500: $bk-accent-color,  // Accent color
+  500: $app-accent-color,  // Accent color
   600: #8e24aa,
   700: #7b1fa2,
   800: #6a1b9a,
@@ -79,7 +76,7 @@ $bk-warn-palette: (
   200: #ffcc80,
   300: #ffb74d,
   400: #ffa726,
-  500: $bk-warn-color,  // Warn color
+  500: $app-warn-color,  // Warn color
   600: #fb8c00,
   700: #f57c00,
   800: #ef6c00,
@@ -108,11 +105,6 @@ $light-theme: mat.define-light-theme((
   src: url(./assets/font/RetroGaming.ttf) format("opentype");
 }
 
-@font-face {
-  font-family: NeueHaasDisplayRomanItalic;
-  src: url(./assets/font/neue-haas-grotesk/NeueHaasDisplayRomanItalic.ttf) format("opentype");
-}
-
 /* You can add global styles to this file, and also import other style files */
 
 html {
@@ -121,15 +113,11 @@ html {
 html, body {
   height: 100%;
 }
-//body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 body {
   margin: 0;
-  font-family: Roboto, sans-serif;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 1.2rem;
   color: $main-font-color;
-}
-h1 {
-  font-family: RetroGaming, sans-serif;
 }
 
 .short-page-content {
@@ -162,61 +150,4 @@ mat-hint {
 }
 mat-error {
   font-size: 0.9rem;
-}
-
-/*
-Neon
-*/
-.neon {
-  font-family: 'RetroGaming', cursive;
-  color: #fff;
-  text-shadow: 0 0 5px #fcc535, 0 0 10px #fcc535, 0 0 15px #fcc535, 0 0 20px #fcc535, 0 0 30px #e04036, 0 0 40px #e04036;
-}
-.neon-image {
-  box-shadow: 0 0 3px #fcc535, 0 0 6px #fcc535, 0 0 9px #fcc535, 0 0 12px #fcc535, 0 0 15px #e04036, 0 0 18px #e04036;
-}
-
-/*
-Photo gallery styles
-*/
-.photo-container {
-  padding: 0 20px;
-}
-
-/*
-Shadow
-*/
-.top-shadow {
-  box-shadow: 0 -3px 5px -1px rgba(0, 0, 0, 0.03), 0 -6px 10px rgba(0, 0, 0, 0.14), 0 -1px 18px rgba(0, 0, 0, 0.12);
-}
-.bottom-shadow {
-  box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
-}
-
-.margin-between-elements {
-  margin-top: 60px;
-}
-
-.padding-between-elements {
-  padding-top: 10px;
-}
-
-.bk-border-element {
-  border-style: solid;
-  border-width: thin;
-  border-color: gray;
-}
-
-// Settings tab
-.settings-date-time-input {
-  max-width: 250px !important;
-  margin-right: 20px;
-}
-
-.settings-update-button {
-  height: 55px !important;
-}
-
-.settings-element {
-  margin-top: 40px;
 }
