@@ -22,7 +22,11 @@ button:focus {
 
 .navbar-style {
   color: $navbar-element-color;
-  font-size: 1rem;
+  font-size: $navbar-font-size;
+}
+
+.navbar-button-burger-menu {
+  font-size: $navbar-font-size;
 }
 
 .navbar-home-page {

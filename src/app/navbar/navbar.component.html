@@ -35,18 +35,25 @@
 <mat-menu xPosition="before" #menu="matMenu">
   <!-- Add new link here part 2/2 -->
   <!-- Home tab -->
-  <button mat-menu-item>
+  <button mat-menu-item class="navbar-button-burger-menu">
     Dummy button
   </button>
-  <button mat-menu-item *ngIf="(this.authService.isAuthenticated() | async)" (click)="logout()">
+  <button mat-menu-item class="navbar-button-burger-menu"
+          *ngIf="(this.authService.isAuthenticated() | async)" (click)="logout()">
     {{ 'navbar.tab.button.logout' | translate }}
   </button>
   <!-- Choose language tab -->
-  <button mat-menu-item [matMenuTriggerFor]="languageMenu"><mat-icon>language</mat-icon></button>
+  <button mat-menu-item class="navbar-button-burger-menu"
+          [matMenuTriggerFor]="languageMenu"><mat-icon>language</mat-icon>
+  </button>
 </mat-menu>
 
 <!-- Language sub-menu -->
 <mat-menu xPosition="before" #languageMenu="matMenu">
-  <button mat-menu-item (click)="this.translateService.setLanguage(LanguageEnum.POLISH)">{{ 'language.polish' | translate }}</button>
-  <button mat-menu-item (click)="this.translateService.setLanguage(LanguageEnum.ENGLISH)">{{ 'language.english' | translate }}</button>
+  <button mat-menu-item class="navbar-button-burger-menu"
+          (click)="this.translateService.setLanguage(LanguageEnum.POLISH)">{{ 'language.polish' | translate }}
+  </button>
+  <button mat-menu-item class="navbar-button-burger-menu"
+          (click)="this.translateService.setLanguage(LanguageEnum.ENGLISH)">{{ 'language.english' | translate }}
+  </button>
 </mat-menu>
