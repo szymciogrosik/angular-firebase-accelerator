@@ -1,54 +1,44 @@
-import {Injectable} from '@angular/core';
-import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
-import {CustomUser} from "../../_models/user/custom-user";
-import {map, Observable} from "rxjs";
+import { Injectable, inject } from '@angular/core';
+import { Firestore, collection, collectionData, doc, docData, addDoc, updateDoc, deleteDoc, query, where } from '@angular/fire/firestore';
+import { CustomUser } from '../../_models/user/custom-user';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserDbService {
-  private dbPathBase: string = '/users';
+  private dbPathBase = 'users';
+  private firestore: Firestore;
 
-  constructor(private db: AngularFirestore) {
+  constructor() {
+    // w Angular 19 modularnym używamy inject()
+    this.firestore = inject(Firestore);
   }
 
-  public getUser(uid: string, email: string): AngularFirestoreCollection<CustomUser> {
-    return this.db.collection<CustomUser>(this.dbPathBase, ref =>
-      ref.where('uid', '==', uid)
-        .where('email', '==', email)
-    );
+  public getUser(uid: string, email: string): Observable<CustomUser[]> {
+    const usersRef = collection(this.firestore, this.dbPathBase);
+    const q = query(usersRef, where('uid', '==', uid), where('email', '==', email));
+    return collectionData(q, { idField: 'id' }) as Observable<CustomUser[]>;
   }
 
   public getAll(): Observable<CustomUser[]> {
-    return this.db.collection<CustomUser>(this.dbPathBase).snapshotChanges()
-      .pipe(
-        map(changes => changes.map(c => {
-          const data = c.payload.doc.data() as CustomUser;
-          return {
-            ...data,
-            id: c.payload.doc.id
-          };
-        }))
-      );
+    const usersRef = collection(this.firestore, this.dbPathBase);
+    return collectionData(usersRef, { idField: 'id' }) as Observable<CustomUser[]>;
   }
 
-  delete(id: string): Promise<void> {
-    return this.db.collection<CustomUser>(this.dbPathBase).doc(id).delete();
+  public delete(id: string): Promise<void> {
+    const docRef = doc(this.firestore, `${this.dbPathBase}/${id}`);
+    return deleteDoc(docRef);
   }
 
-  update(docId: string, updatedUser: any): Promise<void> {
-    return this.db.doc(this.dbPathBase + '/' + docId).update(updatedUser);
+  public update(docId: string, updatedUser: Partial<CustomUser>): Promise<void> {
+    const docRef = doc(this.firestore, `${this.dbPathBase}/${docId}`);
+    return updateDoc(docRef, updatedUser);
   }
 
-  create(newUser: CustomUser): Promise<void> {
-    return new Promise(async (resolve, reject) => {
-      try {
-        await this.db.collection<CustomUser>(this.dbPathBase).add({...newUser});
-        return resolve();
-      } catch (err) {
-        return reject(err);
-      }
-    });
+  public async create(newUser: CustomUser): Promise<void> {
+    const usersRef = collection(this.firestore, this.dbPathBase);
+    await addDoc(usersRef, { ...newUser });
   }
-
 }

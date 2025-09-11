@@ -1,4 +1,4 @@
-@import "src/styles.scss";
+@use "src/styles.scss" as *;
 
 .short-page-content {
   max-width: 1200px;
