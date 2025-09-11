@@ -2,11 +2,14 @@ import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {DialogData} from "../../_models/dialog/dialog-data";
 import {DialogType} from "../../_models/dialog/dialog-type";
+import {CustomCommonModule} from "../../_imports/CustomCommon.module";
 
 @Component({
   selector: 'app-confirmation',
   templateUrl: './dialog.component.html',
-  styleUrl: './dialog.component.scss'
+  styleUrl: './dialog.component.scss',
+  standalone: true,
+  imports: [CustomCommonModule],
 })
 export class DialogComponent {
 

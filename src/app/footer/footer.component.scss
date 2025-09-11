@@ -1,8 +1,4 @@
-@import "src/styles.scss";
-
-.image {
-  margin-bottom: 10px;
-}
+@use "src/styles.scss" as *;
 
 .footer {
   margin: 0;

@@ -5,15 +5,17 @@ import {SnackbarService} from "../_services/util/snackbar.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../_services/auth/auth.service";
 import {RedirectionEnum} from "../../utils/redirection.enum";
-import {AngularFireAnalytics} from "@angular/fire/compat/analytics";
 import {MatDialog} from "@angular/material/dialog";
 import {EmbeddedBrowserPopupComponent} from "./embedded-browser-popup/embedded-browser-popup.component";
 import {EmbeddedBrowserWarningData} from "../_models/dialog/embedded-browser-warning/embedded-browser-warning-data";
+import {CustomCommonModule} from "../_imports/CustomCommon.module";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
+  standalone: true,
+  imports: [CustomCommonModule],
 })
 export class LoginComponent implements OnInit {
   checkingIfUserIsAlreadyLoggedIn: boolean = true;
@@ -30,11 +32,8 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private snackbarService: SnackbarService,
     private translateService: CustomTranslateService,
-    private analytics: AngularFireAnalytics,
     private dialog: MatDialog
   ) {
-    this.analytics.logEvent('app_login_loaded', {"component": "LoginComponent"});
-
     setTimeout(() => {
       this.authService.isAuthenticated().subscribe({
         next: (isLoggedUser: boolean) => {
