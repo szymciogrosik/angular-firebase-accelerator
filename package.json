@@ -33,7 +33,6 @@
     "firebase": "^10.12.1",
     "jquery": "^3.7.1",
     "luxon": "^3.4.4",
-    "ngx-owl-carousel-o": "^17.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "xlsx": "^0.18.5",
