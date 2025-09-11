@@ -1,5 +1,5 @@
 <div class="dialog-container">
-  <h1 mat-dialog-title class="dialog-font dialog-title">{{ 'bk.admin.panel.users.header' | translate }}</h1>
+  <h1 mat-dialog-title class="dialog-font dialog-title">{{ 'admin.panel.users.header' | translate }}</h1>
 
   <form [formGroup]="userForm" #userFormDirective (ngSubmit)="onSubmit()">
     <mat-dialog-content class="mat-typography dialog-font dialog-content-container">
@@ -13,7 +13,7 @@
       </p>
       <p *ngIf="data.userDetailsType === UserDetailsType.CREATE">
         <mat-form-field appearance="outline" class="user-details-bigger-error">
-          <mat-label>{{ 'bk.login.enterPassword' | translate }}</mat-label>
+          <mat-label>{{ 'login.enterPassword' | translate }}</mat-label>
           <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
           <button mat-icon-button matSuffix class="register-button"
                   (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
@@ -25,21 +25,21 @@
       </p>
       <p>
         <mat-form-field appearance="outline">
-          <mat-label>{{ 'bk.admin.panel.users.firstName' | translate }}</mat-label>
+          <mat-label>{{ 'admin.panel.users.firstName' | translate }}</mat-label>
           <input matInput type="text" formControlName="firstName" required>
           <mat-error>{{this.getErrorMessage('firstName')}}</mat-error>
         </mat-form-field>
       </p>
       <p>
         <mat-form-field appearance="outline">
-          <mat-label>{{ 'bk.admin.panel.users.lastName' | translate }}</mat-label>
+          <mat-label>{{ 'admin.panel.users.lastName' | translate }}</mat-label>
           <input matInput type="text" formControlName="lastName" required>
           <mat-error>{{this.getErrorMessage('lastName')}}</mat-error>
         </mat-form-field>
       </p>
       <p>
         <mat-form-field appearance="outline">
-          <mat-label>{{ 'bk.admin.panel.users.roles' | translate }}</mat-label>
+          <mat-label>{{ 'admin.panel.users.roles' | translate }}</mat-label>
           <mat-select formControlName="roles" multiple>
             @for (role of accessRoleValues; track role) {
               <mat-option [value]="role">{{ role }}</mat-option>
@@ -55,13 +55,13 @@
   <mat-dialog-actions align="end">
     <div class="button-wrapper dialog-actions">
       <button mat-raised-button color="warn" class="action-button" (click)="onCancelClick()" cdkFocusInitial>
-        {{ 'bk.registeredUsers.details.cancel' | translate }}
+        {{ 'registeredUsers.details.cancel' | translate }}
       </button>
       <button mat-raised-button color="primary" class="action-button" (click)="onApproveClick()">
         @if (data.userDetailsType === UserDetailsType.CREATE) {
-          {{ 'bk.registeredUsers.details.create' | translate }}
+          {{ 'registeredUsers.details.create' | translate }}
         } @else {
-          {{ 'bk.registeredUsers.details.save' | translate }}
+          {{ 'registeredUsers.details.save' | translate }}
         }
       </button>
     </div>
