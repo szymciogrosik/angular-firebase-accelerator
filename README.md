@@ -6,7 +6,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a local server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## GitGub pages
+## GitHub pages
 
 [Deployed app on GitHub pages](https://szymciogrosik.github.io/angular-firebase-accelerator)
 
