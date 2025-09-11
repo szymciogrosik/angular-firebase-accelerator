@@ -6,11 +6,14 @@ import {UserDetailsType} from "../../../../_models/dialog/user-details/user-deta
 import {AccessRole} from "../../../../_models/user/access-role";
 import {CustomTranslateService} from "../../../../_services/translate/custom-translate.service";
 import {CustomValidators} from "../../../../_services/validator/custom-validators";
+import {CustomCommonModule} from "../../../../_imports/CustomCommon.module";
 
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
-  styleUrl: './user-details.component.scss'
+  styleUrl: './user-details.component.scss',
+  standalone: true,
+  imports: [CustomCommonModule],
 })
 export class UserDetailsComponent implements OnInit {
   @ViewChild('submitBtn') submitBtn: ElementRef;

@@ -16,11 +16,14 @@ import {DialogService} from "../../../_services/util/dialog.service";
 import {DialogData} from "../../../_models/dialog/dialog-data";
 import {DialogType} from "../../../_models/dialog/dialog-type";
 import {FirebaseError} from 'firebase/app';
+import {CustomCommonModule} from "../../../_imports/CustomCommon.module";
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrl: './users.component.scss'
+  styleUrl: './users.component.scss',
+  standalone: true,
+  imports: [CustomCommonModule],
 })
 export class UsersComponent implements OnDestroy {
   protected allUsers: CustomUser[];
@@ -28,7 +31,7 @@ export class UsersComponent implements OnDestroy {
   protected displayedColumns: string[] = [
     'position', 'name', 'email', 'roles', 'details', 'remove'
   ];
-  protected dataSource: any;
+  protected dataSource = new MatTableDataSource<CustomUser>([]);
 
   constructor(
     private accessService: AccessRoleService,
@@ -42,11 +45,9 @@ export class UsersComponent implements OnDestroy {
     this.accessService.isAuthorizedToSeePage(AccessPageEnum.SETTINGS)
       .then((isAuthorized: boolean): void => {
         if (isAuthorized) {
-          this.allUsersSubscription = this.userDb.getAll().subscribe({
-            next: (allUsers: CustomUser[]) => {
-              this.allUsers = allUsers.sort((a, b) => a.firstName.localeCompare(b.firstName));
-              this.dataSource = new MatTableDataSource(this.allUsers);
-            }
+          this.allUsersSubscription = this.userDb.getAll().subscribe(allUsers => {
+            this.allUsers = allUsers.sort((a,b) => a.firstName.localeCompare(b.firstName));
+            this.dataSource.data = this.allUsers;
           });
         }
       });

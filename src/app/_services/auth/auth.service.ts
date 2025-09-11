@@ -1,125 +1,99 @@
 import {Injectable} from '@angular/core';
-import firebase from "firebase/compat/app";
-import {BehaviorSubject, firstValueFrom, map, Observable} from "rxjs";
-import {SnackbarService} from "../util/snackbar.service";
-import {RedirectionEnum} from "../../../utils/redirection.enum";
-import {AngularFireAuth} from "@angular/fire/compat/auth";
-import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
-import {CustomUser} from "../../_models/user/custom-user";
-import {Router} from "@angular/router";
-import {StandardUserDbService} from "../../_database/auth/standard-user-db.service";
-import {CustomTranslateService} from "../translate/custom-translate.service";
-import {getAuth, signInWithEmailAndPassword} from "@angular/fire/auth";
+import {
+  Auth,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  User
+} from '@angular/fire/auth';
+import {firstValueFrom, BehaviorSubject, Observable, map} from 'rxjs';
+import {Router} from '@angular/router';
+import {SnackbarService} from '../util/snackbar.service';
+import {StandardUserDbService} from '../../_database/auth/standard-user-db.service';
+import {CustomTranslateService} from '../translate/custom-translate.service';
+import {CustomUser} from '../../_models/user/custom-user';
+import {RedirectionEnum} from '../../../utils/redirection.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private userSubject: BehaviorSubject<CustomUser | null>;
-  private readonly user: Observable<CustomUser | null>;
+  private userSubject = new BehaviorSubject<CustomUser | null>(null);
+  private user: Observable<CustomUser | null> = this.userSubject.asObservable();
 
   constructor(
+    private auth: Auth,  // wstrzykiwany z DI modularnego
     private router: Router,
     private snackbarService: SnackbarService,
-    private angularFireAuth: AngularFireAuth,
     private standardUserService: StandardUserDbService,
     private translateService: CustomTranslateService
   ) {
-    this.userSubject = new BehaviorSubject<CustomUser | null>(null);
-    this.user = this.userSubject.asObservable();
-    this.listenForLoggedInFirebaseEvents();
+    this.listenForAuthChanges();
   }
 
-  private listenForLoggedInFirebaseEvents() {
-    this.angularFireAuth.authState.subscribe({
-      next: (loggedUser) => {
-        if (loggedUser !== null) {
-          this.standardUserService.getUser(loggedUser.uid, loggedUser.email)
-            .then((foundUser) => {
-              if (foundUser !== null) {
-                this.userSubject.next(foundUser);
-              } else {
-                this.logout(true);
-                this.snackbarService.openLongSnackBar(this.translateService.get('login.error.invalidUser'));
-              }
-            })
-            .catch((error) => {
-              this.logout(true);
-              this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
-              console.error(error);
-            });
-        } else {
-          this.logout(false);
+  private listenForAuthChanges() {
+    onAuthStateChanged(this.auth, async (firebaseUser: User | null) => {
+      if (firebaseUser) {
+        try {
+          const foundUser = await this.standardUserService.getUser(firebaseUser.uid, firebaseUser.email);
+          if (foundUser) {
+            this.userSubject.next(foundUser);
+          } else {
+            this.logout(true);
+            this.snackbarService.openLongSnackBar(this.translateService.get('login.error.invalidUser'));
+          }
+        } catch (err) {
+          console.error(err);
+          this.logout(true);
+          this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
         }
-      },
-      error: (error) => {
+      } else {
         this.logout(false);
-        this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
-        console.error(error);
       }
     });
   }
 
-  public registerUser(email: string, password: string): Promise<string> {
-    return new Promise((resolve, reject) => {
-      this.angularFireAuth.createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          let uid: string | undefined = userCredential.user?.uid;
-          if (uid) {
-            resolve(uid);
-          } else {
-            reject('Registered user uid is undefined');
-          }
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
+  public async registerUser(email: string, password: string): Promise<string> {
+    const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
+    if (!userCredential.user?.uid) throw new Error('UID undefined');
+    return userCredential.user.uid;
   }
 
-  public loginWithEmailAndPassword(email: string, password: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-      signInWithEmailAndPassword(getAuth(), email, password)
-        .then(() => {
-          resolve();
-        })
-        .catch((err) => {
-          console.error(err);
-          reject(this.translateService.get('login.error.internal'));
-        });
-    });
+  public async loginWithEmailAndPassword(email: string, password: string): Promise<void> {
+    try {
+      await signInWithEmailAndPassword(this.auth, email, password);
+    } catch (err) {
+      console.error(err);
+      throw this.translateService.get('login.error.internal');
+    }
   }
 
-  public loginWithGoogleSso(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.angularFireAuth.signInWithPopup(new GoogleAuthProvider())
-        .then(() => {
-          resolve();
-        })
-        .catch((err) => {
-          console.error(err);
-          reject(this.translateService.get('login.error.internal'));
-        });
-    });
+  public async loginWithGoogleSso(): Promise<void> {
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(this.auth, provider);
+    } catch (err) {
+      console.error(err);
+      throw this.translateService.get('login.error.internal');
+    }
   }
 
   public logout(withRedirection: boolean): void {
-    this.angularFireAuth.signOut()
-      .then(() => {
-        this.userSubject.next(null);
-        if (withRedirection) {
-          this.router.navigate([RedirectionEnum.LOGIN]);
-        }
-      })
-      .catch((error) => {
-        this.userSubject.next(null);
-        this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
-        console.error(error);
-      });
+    signOut(this.auth).then(() => {
+      this.userSubject.next(null);
+      if (withRedirection) this.router.navigate([RedirectionEnum.LOGIN]);
+    }).catch(err => {
+      console.error(err);
+      this.userSubject.next(null);
+      this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
+    });
   }
 
   public isAuthenticated(): Observable<boolean> {
-    return this.user.pipe(map(user => !!user));
+    return this.user.pipe(map(u => !!u));
   }
 
   public loggedUser(): Observable<CustomUser | null> {
@@ -129,5 +103,4 @@ export class AuthService {
   public async loggedUserPromise(): Promise<CustomUser | null> {
     return await firstValueFrom(this.loggedUser());
   }
-
 }
