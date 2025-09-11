@@ -1,4 +1,4 @@
-@import "src/app/admin/admin.component.scss";
+@use "src/app/admin/admin.component.scss" as *;
 
 .filer-and-add-new-user-container {
   margin-top: 20px;
