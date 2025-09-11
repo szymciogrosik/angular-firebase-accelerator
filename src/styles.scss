@@ -15,113 +15,95 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 
-$bk-light-blue-color: #83cfcb;
-$bk-purple-color: #a796ca;
-$bk-blue-color: #3c75bc;
-$bk-yellow-color: #fcc535;
-$bk-red-color: #e04036;
-$bk-green-color: #06a650;
+//$app-light-blue-color: #83cfcb;
+//$app-purple-color: #a796ca;
+//$app-blue-color: #2367ca;
+//$app-yellow-color: #fcc535;
+$app-red-color: #e04036;
+$app-green-color: #06a650;
 
-$bk-primary-color: $bk-light-blue-color;
-//$bk-accent-color: #da6f75;
-$bk-accent-color: $bk-yellow-color;
-$bk-warn-color: $bk-red-color;
-$bk-young-color: $bk-yellow-color;
-$bk-adult-color: $bk-yellow-color;
-$bk-background-color: $bk-purple-color;
-$navbar-element-color: black;
-$footer-element-color: black;
-$main-font-color: black;
+//$app-blue-dark-color: #1b4f9d;
+//$app-blue-light-color: #5a8fde;
 
-$bk-main-palette: (
-  50: #e0f2f1,
-  100: #b2dfdb,
-  200: #80cbc4,
-  300: #4db6ac,
-  400: #26a69a,
-  500: $bk-primary-color,  // Primary color
-  600: #00897b,
-  700: #00796b,
-  800: #00695c,
-  900: #004d40,
-  A100: #a7ffeb,
-  A200: #64ffda,
-  A400: #1de9b6,
-  A700: #00bfa5,
-  contrast: (
-    500: #000000,
-  )
+$app-primary-color: #2367ca;
+$app-on-primary-color: #ffffff;
+$app-accent-color: #ffc107;
+$app-on-accent-color: #000000;
+$app-warn-color: #b00020;
+$app-on-warn-color: #000000;
+$app-background-color: #f5f5f5;
+$app-on-background-color: #000000;
+
+$navbar-element-color: $app-on-primary-color;
+$footer-element-color: $app-on-primary-color;
+$main-font-color: $app-on-background-color;
+
+$navbar-font-size: 1rem;
+$footer-font-size: 1rem;
+
+$main-palette: (
+  50: #e3f2fd,
+  100: #bbdefb,
+  200: #90caf9,
+  300: #64b5f6,
+  400: #42a5f5,
+  500: $app-primary-color,
+  600: #1e5cb6,
+  700: #1a4f9d,
+  800: #154388,
+  900: #0f2e66,
+  A100: #82b1ff,
+  A200: #448aff,
+  A400: #2979ff,
+  A700: #2962ff,
+  contrast: (500: $app-on-primary-color)
 );
 
-$bk-accent-palette: (
-  50: #f3e5f5,
-  100: #e1bee7,
-  200: #ce93d8,
-  300: #ba68c8,
-  400: #ab47bc,
-  500: $bk-accent-color,  // Accent color
-  600: #8e24aa,
-  700: #7b1fa2,
-  800: #6a1b9a,
-  900: #4a148c,
-  A100: #ea80fc,
-  A200: #e040fc,
-  A400: #d500f9,
-  A700: #aa00ff,
-  contrast: (
-    500: #000000,
-  )
+$accent-palette: (
+  50: #fff8e1,
+  100: #ffecb3,
+  200: #ffe082,
+  300: #ffd54f,
+  400: #ffca28,
+  500: $app-accent-color,
+  600: #ffb300,
+  700: #ffa000,
+  800: #ff8f00,
+  900: #ff6f00,
+  A100: #ffe57f,
+  A200: #ffd740,
+  A400: #ffc400,
+  A700: #ffab00,
+  contrast: (500: $app-on-accent-color)
 );
 
-$bk-warn-palette: (
-  50: #fff3e0,
-  100: #ffe0b2,
-  200: #ffcc80,
-  300: #ffb74d,
-  400: #ffa726,
-  500: $bk-warn-color,  // Warn color
-  600: #fb8c00,
-  700: #f57c00,
-  800: #ef6c00,
-  900: #e65100,
-  A100: #ffd180,
-  A200: #ffab40,
-  A400: #ff9100,
-  A700: #ff6d00,
-  contrast: (
-    500: #000000,
-  )
+$warn-palette: (
+  50: #fce4ec,
+  100: #f8bbd0,
+  200: #f48fb1,
+  300: #f06292,
+  400: #ec407a,
+  500: $app-warn-color,
+  600: #c51162,
+  700: #d50000,
+  800: #b71c1c,
+  900: #880e4f,
+  A100: #ff80ab,
+  A200: #ff4081,
+  A400: #f50057,
+  A700: #c51162,
+  contrast: (500: $app-on-warn-color)
 );
 
 $light-theme: mat.define-light-theme((
     color: (
-      primary: mat.define-palette($bk-main-palette),
-      accent: mat.define-palette($bk-accent-palette),
-      warn: mat.define-palette($bk-warn-palette)
+      primary: mat.define-palette($main-palette),
+      accent: mat.define-palette($accent-palette),
+      warn: mat.define-palette($warn-palette)
     )
 ));
 
 @include mat.all-component-themes($light-theme);
-
-@font-face {
-  font-family: RetroGaming;
-  src: url(./assets/font/RetroGaming.ttf) format("opentype");
-}
-
-@font-face {
-  font-family: NeueHaasDisplayBold;
-  src: url(./assets/font/neue-haas-grotesk/NeueHaasDisplayBold.ttf) format("opentype");
-}
-
-@font-face {
-  font-family: NeueHaasDisplayBoldItalic;
-  src: url(./assets/font/neue-haas-grotesk/NeueHaasDisplayBoldItalic.ttf) format("opentype");
-}
-
-@font-face {
-  font-family: NeueHaasDisplayRomanItalic;
-  src: url(./assets/font/neue-haas-grotesk/NeueHaasDisplayRomanItalic.ttf) format("opentype");
-}
 
 /* You can add global styles to this file, and also import other style files */
 
@@ -131,15 +113,11 @@ html {
 html, body {
   height: 100%;
 }
-//body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 body {
   margin: 0;
-  font-family: NeueHaasDisplayRomanItalic, sans-serif;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 1.2rem;
   color: $main-font-color;
-}
-h1 {
-  font-family: RetroGaming, sans-serif;
 }
 
 .short-page-content {
@@ -172,61 +150,4 @@ mat-hint {
 }
 mat-error {
   font-size: 0.9rem;
-}
-
-/*
-Neon
-*/
-.neon {
-  font-family: 'RetroGaming', cursive;
-  color: #fff;
-  text-shadow: 0 0 5px #fcc535, 0 0 10px #fcc535, 0 0 15px #fcc535, 0 0 20px #fcc535, 0 0 30px #e04036, 0 0 40px #e04036;
-}
-.neon-image {
-  box-shadow: 0 0 3px #fcc535, 0 0 6px #fcc535, 0 0 9px #fcc535, 0 0 12px #fcc535, 0 0 15px #e04036, 0 0 18px #e04036;
-}
-
-/*
-Photo gallery styles
-*/
-.photo-container {
-  padding: 0 20px;
-}
-
-/*
-Shadow
-*/
-.top-shadow {
-  box-shadow: 0 -3px 5px -1px rgba(0, 0, 0, 0.03), 0 -6px 10px rgba(0, 0, 0, 0.14), 0 -1px 18px rgba(0, 0, 0, 0.12);
-}
-.bottom-shadow {
-  box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
-}
-
-.margin-between-elements {
-  margin-top: 60px;
-}
-
-.padding-between-elements {
-  padding-top: 10px;
-}
-
-.bk-border-element {
-  border-style: solid;
-  border-width: thin;
-  border-color: gray;
-}
-
-// Settings tab
-.settings-date-time-input {
-  max-width: 250px !important;
-  margin-right: 20px;
-}
-
-.settings-update-button {
-  height: 55px !important;
-}
-
-.settings-element {
-  margin-top: 40px;
 }

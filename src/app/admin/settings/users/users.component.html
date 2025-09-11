@@ -1,13 +1,13 @@
 <div class="filer-and-add-new-user-container">
   <div class="filter-element">
     <mat-form-field appearance="outline">
-      <mat-label>{{ 'bk.admin.panel.table.filter' | translate }}</mat-label>
-      <input matInput type="text" (keyup)="applyFilter($event)" placeholder="{{ 'bk.admin.panel.table.filter.placeholder' | translate }}" #input>
+      <mat-label>{{ 'admin.panel.table.filter' | translate }}</mat-label>
+      <input matInput type="text" (keyup)="applyFilter($event)" placeholder="{{ 'admin.panel.table.filter.placeholder' | translate }}" #input>
     </mat-form-field>
   </div>
   <div class="add-new-user-element">
     <button mat-raised-button color="primary" class="action-button" (click)="openAddUser()">
-      {{ 'bk.admin.panel.settings.users.addNewUser' | translate }}
+      {{ 'admin.panel.settings.users.addNewUser' | translate }}
     </button>
   </div>
 </div>
@@ -16,30 +16,30 @@
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
     <ng-container matColumnDef="position">
-      <th mat-header-cell *matHeaderCellDef> {{ 'bk.admin.panel.table.header.no' | translate }} </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'admin.panel.table.header.no' | translate }} </th>
       <td mat-cell *matCellDef="let element; let i = index"> {{ i + 1 }} </td>
     </ng-container>
 
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> {{ 'bk.admin.panel.table.header.name' | translate }} </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'admin.panel.table.header.name' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{ element.firstName + ' ' + element.lastName }} </td>
     </ng-container>
 
     <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef> {{ 'bk.admin.panel.table.header.email' | translate }} </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'admin.panel.table.header.email' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{ element.email }} </td>
     </ng-container>
 
-    <ng-container matColumnDef="role">
-      <th mat-header-cell *matHeaderCellDef> {{ 'bk.admin.panel.table.header.role' | translate }} </th>
-      <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+    <ng-container matColumnDef="roles">
+      <th mat-header-cell *matHeaderCellDef> {{ 'admin.panel.table.header.role' | translate }} </th>
+      <td mat-cell *matCellDef="let element"> {{element.roles}} </td>
     </ng-container>
 
     <ng-container matColumnDef="details">
-      <th mat-header-cell *matHeaderCellDef> {{ 'bk.admin.panel.table.header.details' | translate }} </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'admin.panel.table.header.details' | translate }} </th>
       <td mat-cell *matCellDef="let element">
         <button mat-raised-button color="accent" (click)="openUpdateUser(element.id)">
-          {{ 'bk.admin.panel.tab.header.settings.modify' | translate }}
+          {{ 'admin.panel.table.header.modify' | translate }}
         </button>
       </td>
     </ng-container>
@@ -48,7 +48,7 @@
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
         <button mat-raised-button color="warn" (click)="openConfirmRemoveUserDialog(element.id)">
-          {{ 'bk.admin.panel.table.header.delete' | translate }}
+          {{ 'admin.panel.table.header.delete' | translate }}
         </button>
       </td>
     </ng-container>
@@ -58,7 +58,7 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
     <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell" colspan="4">{{ 'bk.admin.panel.table.filter.noResult' | translate }} "{{input.value}}"</td>
+      <td class="mat-cell" colspan="4">{{ 'admin.panel.table.filter.noResult' | translate }} "{{input.value}}"</td>
     </tr>
   </table>
 </div>

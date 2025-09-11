@@ -1,8 +1,8 @@
 import {Component, OnDestroy} from '@angular/core';
-import {UserDbService} from "../../../_services/database/auth/user-db-service.service";
+import {UserDbService} from "../../../_database/auth/user-db-service.service";
 import {CustomUser} from "../../../_models/user/custom-user";
 import {Subscription} from "rxjs";
-import {AccessPage} from "../../../_services/auth/access-page";
+import {AccessPageEnum} from "../../../_services/auth/access-page-enum";
 import {AccessRoleService} from "../../../_services/auth/access-role.service";
 import {CustomTranslateService} from "../../../_services/translate/custom-translate.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -26,7 +26,7 @@ export class UsersComponent implements OnDestroy {
   protected allUsers: CustomUser[];
   protected allUsersSubscription: Subscription;
   protected displayedColumns: string[] = [
-    'position', 'name', 'email', 'role', 'details', 'remove'
+    'position', 'name', 'email', 'roles', 'details', 'remove'
   ];
   protected dataSource: any;
 
@@ -39,12 +39,12 @@ export class UsersComponent implements OnDestroy {
     private authService: AuthService,
     private dialogService: DialogService
   ) {
-    this.accessService.isAuthorizedToSeePage(AccessPage.SETTINGS)
+    this.accessService.isAuthorizedToSeePage(AccessPageEnum.SETTINGS)
       .then((isAuthorized: boolean): void => {
         if (isAuthorized) {
           this.allUsersSubscription = this.userDb.getAll().subscribe({
             next: (allUsers: CustomUser[]) => {
-              this.allUsers = allUsers.sort((a, b) => a.role.localeCompare(b.role));
+              this.allUsers = allUsers.sort((a, b) => a.firstName.localeCompare(b.firstName));
               this.dataSource = new MatTableDataSource(this.allUsers);
             }
           });
@@ -85,15 +85,15 @@ export class UsersComponent implements OnDestroy {
               })
               .catch((err): void => {
                 console.error(err);
-                this.snackbarService.openLongSnackBar(this.translateService.get('bk.login.error.internal'));
+                this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
               });
           })
           .catch((err) => {
             console.error(err);
             if (err instanceof FirebaseError && err.code === 'auth/email-already-in-use') {
-              this.snackbarService.openLongSnackBar(this.translateService.get('bk.login.error.emailAlreadyUsed'));
+              this.snackbarService.openLongSnackBar(this.translateService.get('login.error.emailAlreadyUsed'));
             } else {
-              this.snackbarService.openLongSnackBar(this.translateService.get('bk.login.error.internal'));
+              this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
             }
           });
       }
@@ -104,11 +104,11 @@ export class UsersComponent implements OnDestroy {
     const confirmPopup =
       this.dialogService.openConfirmDialogWithData(
         new DialogData(
-          this.translateService.get('bk.admin.panel.settings.warning.popupWarning'),
+          this.translateService.get('admin.panel.settings.warning.popupWarning'),
           DialogType.CONFIRMATION,
-          this.translateService.get('bk.admin.panel.settings.users.addedSuccessfully'),
+          this.translateService.get('admin.panel.settings.users.addedSuccessfully'),
           null,
-          this.translateService.get('bk.registeredUsers.details.confirm')
+          this.translateService.get('registeredUsers.details.confirm')
         ));
     confirmPopup.afterClosed().subscribe(result => {
       if (result) {
@@ -120,7 +120,7 @@ export class UsersComponent implements OnDestroy {
   protected openUpdateUser(id: string): any {
     let user: CustomUser | undefined = this.allUsers.find(elem => elem.id === id);
     if (user === undefined) {
-      this.snackbarService.openLongSnackBar(this.translateService.get('bk.login.error.internal'));
+      this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
       return;
     }
     const updateRef = this.dialog.open(
@@ -136,11 +136,11 @@ export class UsersComponent implements OnDestroy {
       if (user) {
         this.userDb.update(user.id, user)
           .then((): void => {
-            this.snackbarService.openDefaultSnackBar(this.translateService.get('bk.admin.panel.settings.users.updatedSuccessfully'));
+            this.snackbarService.openDefaultSnackBar(this.translateService.get('admin.panel.settings.users.updatedSuccessfully'));
           })
           .catch((err): void => {
             console.error(err);
-            this.snackbarService.openLongSnackBar(this.translateService.get('bk.login.error.internal'));
+            this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
           });
       }
     });
@@ -148,7 +148,7 @@ export class UsersComponent implements OnDestroy {
 
   protected openConfirmRemoveUserDialog(id: string) {
     const confirmPopup =
-      this.dialogService.openConfirmDialog('bk.admin.panel.users.warning.removedUser');
+      this.dialogService.openConfirmDialog('admin.panel.users.warning.removedUser');
     confirmPopup.afterClosed().subscribe(result => {
       if (result) {
         this.removeUser(id);
@@ -159,11 +159,11 @@ export class UsersComponent implements OnDestroy {
   private removeUser(id: string): any {
     this.userDb.delete(id)
       .then((): void => {
-        this.snackbarService.openDefaultSnackBar(this.translateService.get('bk.admin.panel.settings.users.deletedSuccessfully'));
+        this.snackbarService.openDefaultSnackBar(this.translateService.get('admin.panel.settings.users.deletedSuccessfully'));
       })
       .catch((err): void => {
         console.error(err);
-        this.snackbarService.openLongSnackBar(this.translateService.get('bk.login.error.internal'));
+        this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
       });
   }
 

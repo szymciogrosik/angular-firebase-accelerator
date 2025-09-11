@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  buildVersion: 'BUILD_VERSION_TEMPLATE',
   default_language: 'pl',
   selected_language_key: 'Language',
   firebase: {

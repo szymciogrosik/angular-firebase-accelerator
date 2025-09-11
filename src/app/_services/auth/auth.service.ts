@@ -7,7 +7,7 @@ import {AngularFireAuth} from "@angular/fire/compat/auth";
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import {CustomUser} from "../../_models/user/custom-user";
 import {Router} from "@angular/router";
-import {StandardUserDbService} from "../database/auth/standard-user-db.service";
+import {StandardUserDbService} from "../../_database/auth/standard-user-db.service";
 import {CustomTranslateService} from "../translate/custom-translate.service";
 import {getAuth, signInWithEmailAndPassword} from "@angular/fire/auth";
 
@@ -40,12 +40,12 @@ export class AuthService {
                 this.userSubject.next(foundUser);
               } else {
                 this.logout(true);
-                this.snackbarService.openLongSnackBar(this.translateService.get('bk.login.error.invalidUser'));
+                this.snackbarService.openLongSnackBar(this.translateService.get('login.error.invalidUser'));
               }
             })
             .catch((error) => {
               this.logout(true);
-              this.snackbarService.openLongSnackBar(this.translateService.get('bk.login.error.internal'));
+              this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
               console.error(error);
             });
         } else {
@@ -54,7 +54,7 @@ export class AuthService {
       },
       error: (error) => {
         this.logout(false);
-        this.snackbarService.openLongSnackBar(this.translateService.get('bk.login.error.internal'));
+        this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
         console.error(error);
       }
     });
@@ -85,7 +85,7 @@ export class AuthService {
         })
         .catch((err) => {
           console.error(err);
-          reject(this.translateService.get('bk.login.error.internal'));
+          reject(this.translateService.get('login.error.internal'));
         });
     });
   }
@@ -98,7 +98,7 @@ export class AuthService {
         })
         .catch((err) => {
           console.error(err);
-          reject(this.translateService.get('bk.login.error.internal'));
+          reject(this.translateService.get('login.error.internal'));
         });
     });
   }
@@ -113,7 +113,7 @@ export class AuthService {
       })
       .catch((error) => {
         this.userSubject.next(null);
-        this.snackbarService.openLongSnackBar(this.translateService.get('bk.login.error.internal'));
+        this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
         console.error(error);
       });
   }
