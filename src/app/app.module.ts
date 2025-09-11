@@ -117,5 +117,5 @@ export class AppModule {
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http, AssetsService.BASE_PATH + "i18n/", ".json");
+  return new TranslateHttpLoader(http, AssetsService.BASE_PATH + "i18n/", `.json?v=${environment.buildVersion}`);
 }
