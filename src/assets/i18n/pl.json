@@ -7,6 +7,7 @@
   "datePicker.chooseDateAndTime": "Wpisz datę i czas",
 
   "navbar.tab.applicationName": "Angular accelerator app",
+  "navbar.tab.button.logout": "Wyloguj",
 
   "snackbar.default.dismiss": "Zamknij",
 
@@ -256,7 +257,6 @@
 
   "bk.nonProdMode.warning": "Ta aplikacja nie jest w trybie produkcyjnym. Wprowadzone zmiany nie będą miały wpływu na produkcyjną bazę danych.",
 
-  "bk.login.button.logout": "Wyloguj",
   "bk.login.header": "LOGOWANIE",
   "bk.login.header2": "do panelu administratora",
   "bk.login.enterEmail": "Wprowadź email",

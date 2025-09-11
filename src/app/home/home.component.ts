@@ -4,6 +4,7 @@ import {CustomTranslateService} from "../_services/translate/custom-translate.se
 import {AssetsService} from "../_services/util/assets.service";
 import {Subscription} from "rxjs";
 import {ScrollService} from "../_services/util/scroll.service";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-home',
@@ -21,5 +22,5 @@ export class HomeComponent implements OnInit {
   }
 
 
-
+  protected readonly environment = environment;
 }
