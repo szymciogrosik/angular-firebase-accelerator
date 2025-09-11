@@ -3,9 +3,10 @@ import {AccessRoleService} from "../../_services/auth/access-role.service";
 import {AccessPageEnum} from "../../_services/auth/access-page-enum";
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.component.html',
-  styleUrl: './settings.component.scss'
+    selector: 'app-settings',
+    templateUrl: './settings.component.html',
+    styleUrl: './settings.component.scss',
+    standalone: false
 })
 export class SettingsComponent {
   protected isAuthorized: boolean = false;

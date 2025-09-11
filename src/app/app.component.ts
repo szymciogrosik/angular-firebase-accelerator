@@ -3,9 +3,10 @@ import {CustomTranslateService} from './_services/translate/custom-translate.ser
 import {AngularFireAnalytics} from "@angular/fire/compat/analytics";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent {
   title = 'angular';

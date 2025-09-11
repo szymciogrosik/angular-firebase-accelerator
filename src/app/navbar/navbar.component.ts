@@ -5,9 +5,10 @@ import {LanguageEnum} from "../_services/translate/language-enum";
 import {AuthService} from "../_services/auth/auth.service";
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+    selector: 'app-navbar',
+    templateUrl: './navbar.component.html',
+    styleUrls: ['./navbar.component.scss'],
+    standalone: false
 })
 export class NavbarComponent implements OnInit {
   protected readonly LanguageEnum = LanguageEnum;

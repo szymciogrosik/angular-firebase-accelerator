@@ -3,9 +3,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {EmbeddedBrowserWarningData} from "../../_models/dialog/embedded-browser-warning/embedded-browser-warning-data";
 
 @Component({
-  selector: 'app-embedded-browser-popup',
-  templateUrl: './embedded-browser-popup.component.html',
-  styleUrl: './embedded-browser-popup.component.scss'
+    selector: 'app-embedded-browser-popup',
+    templateUrl: './embedded-browser-popup.component.html',
+    styleUrl: './embedded-browser-popup.component.scss',
+    standalone: false
 })
 export class EmbeddedBrowserPopupComponent {
   constructor(

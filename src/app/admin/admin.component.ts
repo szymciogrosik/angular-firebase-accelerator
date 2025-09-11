@@ -6,9 +6,10 @@ import {AuthService} from "../_services/auth/auth.service";
 import {environment} from "../../environments/environment";
 
 @Component({
-  selector: 'app-admin',
-  templateUrl: './admin.component.html',
-  styleUrl: './admin.component.scss'
+    selector: 'app-admin',
+    templateUrl: './admin.component.html',
+    styleUrl: './admin.component.scss',
+    standalone: false
 })
 export class AdminComponent {
   protected readonly environment = environment;

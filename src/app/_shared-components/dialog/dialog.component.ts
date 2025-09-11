@@ -4,9 +4,10 @@ import {DialogData} from "../../_models/dialog/dialog-data";
 import {DialogType} from "../../_models/dialog/dialog-type";
 
 @Component({
-  selector: 'app-confirmation',
-  templateUrl: './dialog.component.html',
-  styleUrl: './dialog.component.scss'
+    selector: 'app-confirmation',
+    templateUrl: './dialog.component.html',
+    styleUrl: './dialog.component.scss',
+    standalone: false
 })
 export class DialogComponent {
 

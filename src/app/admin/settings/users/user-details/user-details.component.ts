@@ -8,9 +8,10 @@ import {CustomTranslateService} from "../../../../_services/translate/custom-tra
 import {CustomValidators} from "../../../../_services/validator/custom-validators";
 
 @Component({
-  selector: 'app-user-details',
-  templateUrl: './user-details.component.html',
-  styleUrl: './user-details.component.scss'
+    selector: 'app-user-details',
+    templateUrl: './user-details.component.html',
+    styleUrl: './user-details.component.scss',
+    standalone: false
 })
 export class UserDetailsComponent implements OnInit {
   @ViewChild('submitBtn') submitBtn: ElementRef;

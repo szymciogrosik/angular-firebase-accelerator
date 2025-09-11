@@ -1,7 +1,8 @@
 import {AfterViewInit, ChangeDetectorRef, Directive, ElementRef, HostListener} from '@angular/core';
 
 @Directive({
-  selector: '[appAutoResize]'
+    selector: '[appAutoResize]',
+    standalone: false
 })
 export class AutoResizeDirective implements AfterViewInit {
 

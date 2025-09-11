@@ -7,9 +7,10 @@ import {ScrollService} from "../_services/util/scroll.service";
 import {environment} from "../../environments/environment";
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss'],
+    standalone: false
 })
 export class HomeComponent implements OnInit {
   constructor(

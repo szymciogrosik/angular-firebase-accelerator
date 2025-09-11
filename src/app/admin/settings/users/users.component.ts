@@ -18,9 +18,10 @@ import {DialogType} from "../../../_models/dialog/dialog-type";
 import {FirebaseError} from 'firebase/app';
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrl: './users.component.scss'
+    selector: 'app-users',
+    templateUrl: './users.component.html',
+    styleUrl: './users.component.scss',
+    standalone: false
 })
 export class UsersComponent implements OnDestroy {
   protected allUsers: CustomUser[];

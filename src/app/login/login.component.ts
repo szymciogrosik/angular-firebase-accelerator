@@ -11,9 +11,10 @@ import {EmbeddedBrowserPopupComponent} from "./embedded-browser-popup/embedded-b
 import {EmbeddedBrowserWarningData} from "../_models/dialog/embedded-browser-warning/embedded-browser-warning-data";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss',
+    standalone: false
 })
 export class LoginComponent implements OnInit {
   checkingIfUserIsAlreadyLoggedIn: boolean = true;
