@@ -65,6 +65,7 @@
   "admin.panel.table.header.email": "Email",
   "admin.panel.table.header.role": "Rola",
   "admin.panel.table.header.age": "Wiek",
+  "admin.panel.table.header.details": "Szczegóły",
   "admin.panel.table.header.delete": "Usuń",
   "admin.panel.table.header.modify": "Zmień",
 
