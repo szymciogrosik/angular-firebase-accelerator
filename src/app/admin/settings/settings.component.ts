@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {AccessRoleService} from "../../_services/auth/access-role.service";
-import {AccessPage} from "../../_services/auth/access-page";
+import {AccessPageEnum} from "../../_services/auth/access-page-enum";
 
 @Component({
   selector: 'app-settings',
@@ -13,7 +13,7 @@ export class SettingsComponent {
   constructor(
     private accessService: AccessRoleService
   ) {
-    this.accessService.isAuthorizedToSeePage(AccessPage.SETTINGS)
+    this.accessService.isAuthorizedToSeePage(AccessPageEnum.SETTINGS)
       .then((isAuthorized: boolean): void => {
         if (isAuthorized) {
           this.isAuthorized = true;

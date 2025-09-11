@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
           }
         }
       });
-    }, 1000);
+    }, 1500);
   }
 
   ngOnInit(): void {
@@ -83,11 +83,11 @@ export class LoginComponent implements OnInit {
 
   protected getErrorMessage(formControlName: string): string {
     if (this.formControls[formControlName].hasError('required')) {
-      return this.translateService.get('bk.login.validation.mandatoryField');
+      return this.translateService.get('login.validation.mandatoryField');
     }
 
     return this.formControls[formControlName].hasError('email')
-      ? this.translateService.get('bk.login.validation.invalidEmail')
+      ? this.translateService.get('login.validation.invalidEmail')
       : '';
   }
 

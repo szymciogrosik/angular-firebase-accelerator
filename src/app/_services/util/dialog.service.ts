@@ -22,11 +22,11 @@ export class DialogService {
         width: '400px',
         disableClose: true,
         data: new DialogData(
-          this.translateService.get('bk.admin.panel.settings.warning.popupWarning'),
+          this.translateService.get('admin.panel.settings.warning.popupWarning'),
           null,
           this.translateService.get(messageKey),
-          this.translateService.get('bk.registeredUsers.details.cancel'),
-          this.translateService.get('bk.registeredUsers.details.confirm')
+          this.translateService.get('registeredUsers.details.cancel'),
+          this.translateService.get('registeredUsers.details.confirm')
         )
       }
     );

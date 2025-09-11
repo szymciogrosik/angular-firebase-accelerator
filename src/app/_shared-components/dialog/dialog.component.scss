@@ -1,7 +1,6 @@
 @import "src/styles.scss";
 
 .dialog-font {
-  font-family: NeueHaasDisplayRomanItalic, sans-serif;
   font-size: 1.2rem;
 }
 
@@ -30,15 +29,15 @@
 }
 
 .dialog-success-image {
-  color: $bk-green-color;
+  color: $app-green-color;
 }
 
 .dialog-warning-image{
-  color: $bk-yellow-color;
+  color: $app-accent-color;
 }
 
 .dialog-error-image{
-  color: $bk-red-color;
+  color: $app-red-color;
 }
 
 .dialog-actions {

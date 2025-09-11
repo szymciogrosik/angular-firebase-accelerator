@@ -31,7 +31,7 @@ export class UserDetailsComponent implements OnInit {
       email: [{ value: this.data.user.email, disabled: this.data.userDetailsType !== UserDetailsType.CREATE }, [Validators.required, Validators.email]],
       firstName: [this.data.user.firstName, [Validators.required]],
       lastName: [this.data.user.lastName, [Validators.required]],
-      role: [this.data.user.role, [Validators.required]],
+      roles: [this.data.user.roles],
     });
 
     if (this.data.userDetailsType === UserDetailsType.CREATE) {

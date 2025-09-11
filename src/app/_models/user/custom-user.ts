@@ -6,5 +6,5 @@ export class CustomUser {
   email: string;
   firstName: string;
   lastName: string;
-  role: AccessRole;
+  roles: AccessRole[];
 }

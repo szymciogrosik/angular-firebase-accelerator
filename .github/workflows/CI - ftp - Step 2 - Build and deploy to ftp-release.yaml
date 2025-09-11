@@ -26,6 +26,11 @@ jobs:
         run: |
           sed -i "s/FIREBASE_API_KEY/${{ secrets.FIREBASE_API_KEY }}/g" src/environments/ftp/environment.ts
 
+      - name: Replace build version in environment.ts
+        run: |
+          BUILD_VERSION=$(date +'%Y%m%d%H%M%S')
+          sed -i "s/BUILD_VERSION_TEMPLATE/${BUILD_VERSION}/g" src/environments/ftp/environment.ts
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
 
