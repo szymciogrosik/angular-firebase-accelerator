@@ -48,10 +48,6 @@
   "registeredUsers.details.create": "Create",
   "registeredUsers.details.confirm": "Confirm",
   "registeredUsers.details.cancel": "Cancel",
-  "registeredUsers.details.lastModificationDate": "Last modification date",
-  "registeredUsers.details.lastModifiedUser": "Last modification user",
-  "registeredUsers.details.registrationDate": "Registration date",
-  "registeredUsers.details.additionalInfo": "Additional info",
 
   "admin.panel.header": "ADMIN PANEL",
   "admin.panel.helloMessage": "Hello, ",
@@ -59,8 +55,6 @@
   "admin.panel.tab.header.settings": "Settings",
 
   "admin.panel.tab.header.settings.users": "Users",
-
-  "admin.panel.table.showOnly": "Show only:",
 
   "admin.panel.table.filter": "Filter",
   "admin.panel.table.filter.placeholder": "Ex. Adam",
@@ -71,39 +65,15 @@
   "admin.panel.table.header.email": "Email",
   "admin.panel.table.header.role": "Role",
   "admin.panel.table.header.age": "Age",
-  "admin.panel.table.header.somePayed": "Advance",
-  "admin.panel.table.header.fullPayed": "Whole amount",
-  "admin.panel.table.header.phone": "Phone",
-  "admin.panel.table.header.lastModificationDate": "Last modification date",
-  "admin.panel.table.header.registrationDate": "Registration date",
-  "admin.panel.table.header.details": "Details",
   "admin.panel.table.header.delete": "Delete",
   "admin.panel.table.header.modify": "Modify",
-  "admin.panel.table.header.restore": "Restore",
-  "admin.panel.table.header.see": "See",
-  "admin.panel.table.header.areaOfServe": "Area of service",
-  "admin.panel.table.yes": "Yes",
-  "admin.panel.table.no": "No",
 
-  "admin.panel.table.details": "Advance payed",
-  "admin.panel.table.fullAmountPayed": "Full amount payed",
-
-  "admin.panel.export.download": "Pobierz Excel z danymi zarejestrowanych uczestników",
-
-  "admin.panel.settings.startDateTime": "Provide start registration date and time",
-  "admin.panel.settings.promoEndDate": "Enter the end date for the promotional price",
-  "admin.panel.settings.standardPrice": "Standard price (PLN)",
-  "admin.panel.settings.promoPrice": "Sale price (PLN)",
-  "admin.panel.settings.saveBackupRegistrationData": "Download a backup copy of registration data",
   "admin.panel.settings.warning.popupWarning": "Warning",
-  "admin.panel.settings.warning.enableRegistration": "Changing this setting will disable/enable registration. Are you sure you want to change this setting?",
-  "admin.panel.settings.warning.saveStartRegistrationDate": "Changing this date may trigger a countdown on the home page (if the date is later than today). Are you sure you want to change this setting?",
-  "admin.panel.settings.warning.exportBackup": "You are trying to download Excel with registered participant data. The file contains sensitive data, please make sure you keep the file in a safe place. Are you sure you want to download?",
 
+  "admin.panel.settings.users.addNewUser": "Add new user",
   "admin.panel.settings.users.deletedSuccessfully": "User deleted successfully",
   "admin.panel.settings.users.updatedSuccessfully": "User updated successfully",
   "admin.panel.settings.users.addedSuccessfully": "User added successfully, in a second you will be switched to newly created account. Please confirm if newly created user have not to much rights.",
-  "admin.panel.settings.users.addNewUser": "Add new user",
 
   "admin.panel.users.header": "User details",
   "admin.panel.users.firstName": "First name",
