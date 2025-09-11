@@ -22,13 +22,25 @@ $app-yellow-color: #fcc535;
 $app-red-color: #e04036;
 $app-green-color: #06a650;
 
-$app-primary-color: $app-light-blue-color;
-$app-accent-color: $app-yellow-color;
-$app-warn-color: $app-red-color;
-$app-background-color: #FFFFFF;
-$navbar-element-color: black;
-$footer-element-color: black;
-$main-font-color: black;
+$app-blue-dark-color: #1b4f9d;
+$app-blue-light-color: #5a8fde;
+$app-secondary-color: #03dac6;
+$app-background-color: #f5f5f5;
+$app-error-color: #b00020;
+$app-on-secondary-color: #000000;
+
+
+$app-primary-color: #2367ca;
+$app-on-primary-color: #ffffff;
+$app-accent-color: #03dac6;
+$app-on-secondary-color: #000000;
+$app-warn-color: #b00020;
+$app-background-color: #f5f5f5;
+$app-on-background-color: #000000;
+
+$navbar-element-color: $app-on-primary-color;
+$footer-element-color: $app-on-primary-color;
+$main-font-color: $app-on-background-color;
 
 $bk-main-palette: (
   50: #e0f2f1,
@@ -36,7 +48,7 @@ $bk-main-palette: (
   200: #80cbc4,
   300: #4db6ac,
   400: #26a69a,
-  500: $app-primary-color,  // Primary color
+  500: $app-secondary-color,  // Primary color
   600: #00897b,
   700: #00796b,
   800: #00695c,
@@ -99,11 +111,6 @@ $light-theme: mat.define-light-theme((
 ));
 
 @include mat.all-component-themes($light-theme);
-
-@font-face {
-  font-family: RetroGaming;
-  src: url(./assets/font/RetroGaming.ttf) format("opentype");
-}
 
 /* You can add global styles to this file, and also import other style files */
 

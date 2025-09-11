@@ -10,31 +10,31 @@
   <div class="full-menu">
     <!-- Add new link here part 1/2 -->
     <!-- Home tab -->
-    <button mat-raised-button color="primary" class="navbar-button">
+    <button mat-button class="navbar-button">
       {{ 'bk.navbar.whatIsBkConf' | translate }}
     </button>
-    <button mat-raised-button color="primary" class="navbar-button">
+    <button mat-button class="navbar-button">
       {{ 'bk.navbar.whatIsBkProgress' | translate }}
     </button>
-    <button mat-raised-button color="primary" class="navbar-button">
+    <button mat-button class="navbar-button">
       {{ 'bk.navbar.registration' | translate }}
     </button>
-    <button mat-raised-button color="primary" class="navbar-button">
+    <button mat-button class="navbar-button">
       {{ 'bk.navbar.supportUs' | translate }}
     </button>
-    <button mat-raised-button color="primary" class="navbar-button"
+    <button mat-button class="navbar-button"
             *ngIf="(this.authService.isAuthenticated() | async)" (click)="logout()">
       {{ 'bk.login.button.logout' | translate }}
     </button>
     <!-- Choose language tab -->
-    <button mat-raised-button color="primary" class="navbar-button" [matMenuTriggerFor]="languageMenu">
+    <button mat-button class="navbar-button" [matMenuTriggerFor]="languageMenu">
       <mat-icon style="margin: 0;">language</mat-icon>
     </button>
   </div>
 
   <!-- Short menu navbar -->
   <div class="short-menu">
-    <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">
+    <button mat-button [matMenuTriggerFor]="menu">
       <mat-icon style="margin: 0;">menu</mat-icon>
     </button>
   </div>
