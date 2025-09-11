@@ -35,10 +35,9 @@
 <mat-menu xPosition="before" #menu="matMenu">
   <!-- Add new link here part 2/2 -->
   <!-- Home tab -->
-  <button mat-menu-item>{{ 'bk.navbar.whatIsBkConf' | translate }}</button>
-  <button mat-menu-item>{{ 'bk.navbar.whatIsBkProgress' | translate }}</button>
-  <button mat-menu-item>{{ 'bk.navbar.registration' | translate }}</button>
-  <button mat-menu-item>{{ 'bk.navbar.supportUs' | translate }}</button>
+  <button mat-menu-item>
+    Dummy button
+  </button>
   <button mat-menu-item *ngIf="(this.authService.isAuthenticated() | async)" (click)="logout()">
     {{ 'navbar.tab.button.logout' | translate }}
   </button>
