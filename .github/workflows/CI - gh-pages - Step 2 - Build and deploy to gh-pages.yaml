@@ -48,7 +48,7 @@ jobs:
         run: sed -i "s/DD-MM-YYYY HH:MM:SS/$(TZ=Europe/Warsaw date +'%d-%m-%Y %H:%M:%S')/g" ${GITHUB_WORKSPACE}/docs/assets/status/status.json
 
       - name: Upload artifact for GitHub Pages
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ./docs
 
@@ -60,10 +60,8 @@ jobs:
       id-token: write
       pages: write
       contents: read
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: 📂 Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
+        with:
+          artifact-path: ./docs
