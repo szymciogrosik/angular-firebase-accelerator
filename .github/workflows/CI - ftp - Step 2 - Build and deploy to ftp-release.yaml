@@ -43,18 +43,18 @@ jobs:
         run: npm run build-ftp
 
       - name: Create error directory and copy custom 404 page for FTP
-        run: mkdir -p ${GITHUB_WORKSPACE}/docs/errors && cp ${GITHUB_WORKSPACE}/src/environments/ftp/404.html ${GITHUB_WORKSPACE}/docs/errors/404.html
+        run: mkdir -p ${GITHUB_WORKSPACE}/docs/errors && cp ${GITHUB_WORKSPACE}/src/environments/ftp/404.html ${GITHUB_WORKSPACE}/docs/browser/errors/404.html
 
       - name: Copy .htaccess for FTP
-        run: cp ${GITHUB_WORKSPACE}/src/environments/ftp/.htaccess ${GITHUB_WORKSPACE}/docs/.htaccess
+        run: cp ${GITHUB_WORKSPACE}/src/environments/ftp/.htaccess ${GITHUB_WORKSPACE}/docs/browser/.htaccess
 
       - name: Update last deployment data and time
-        run: sed -i "s/DD-MM-YYYY HH:MM:SS/$(TZ=Europe/Warsaw date +'%d-%m-%Y %H:%M:%S')/g" ${GITHUB_WORKSPACE}/docs/assets/status/status.json
+        run: sed -i "s/DD-MM-YYYY HH:MM:SS/$(TZ=Europe/Warsaw date +'%d-%m-%Y %H:%M:%S')/g" ${GITHUB_WORKSPACE}/docs/browser/assets/status/status.json
 
       - name: 📂 Sync files (🎉 deploy to FTP)
         uses: SamKirkland/FTP-Deploy-Action@4.3.2
         with:
-          local-dir: ./docs/
+          local-dir: ./docs/browser/
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
