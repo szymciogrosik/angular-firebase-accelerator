@@ -150,11 +150,7 @@ firebase use --add
    # Automatic deployment when a PR is merged? No
    ```
 
-9) **Enable IAM Service Account Credentials API**
-
-- [Google Cloud Console](https://console.cloud.google.com/welcome) → APIs & Services → **Enable APIs & Services** → search “IAM Service Account Credentials API” → **Enable**.
-
-10) **Revert unwanted changes in `firebase.json`** if init overwrote custom settings.
+9) **Revert unwanted changes in `firebase.json`** if init overwrote custom settings.
 
 ---
 
