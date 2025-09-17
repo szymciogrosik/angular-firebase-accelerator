@@ -133,7 +133,7 @@ firebase login
 
 7) **Change firebase project**
 ```bash
-firebase use <your-project-id-from-firebase>
+firebase use --add
 ```
 
 8) **Initialize Hosting (GitHub integration)**
