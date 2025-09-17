@@ -68,11 +68,12 @@ Setup firestore:
 
 Then create manually a fist user:
 - Create a `users` document for a first user:
-  - `email` (string): `your-email@gmail.com`
-  - `firstName` (string): `Adam`
-  - `lastName` (string): `Abacki`
-  - `roles` (array of string): `ADMIN_PAGE_ACCESS`
-  - `uid` (string): `<copied from Authentication>`
+  - Document ID: AdamAbacki (or random uid)
+    - `email` (string): `your-email@gmail.com`
+    - `firstName` (string): `Adam`
+    - `lastName` (string): `Abacki`
+    - `roles` (array of string): `ADMIN_PAGE_ACCESS`
+    - `uid` (string): `<copied from Authentication>`
 - **Rules** → replace with:
   ```js
   rules_version = '2';
