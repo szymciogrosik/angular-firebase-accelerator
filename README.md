@@ -112,14 +112,26 @@ Then create manually a fist user:
     - `src/environments/gh-pages/environment.ts`
   - Copy `environment-example.ts` → `environment.ts` and fill in API key.
 
-5) **Firebase CLI**
+5) **Repo strings to update**
+
+Replace every `angular-firebase-accelerator` with your local app name.
+
+In those files, provide a Firebase app ID:
+- `.firebaserc`
+- `CI - firebase - Step 2 - Build and deploy to firebase-release.yaml` → two places
+- `README.md` link to Firebase Hosting
+
+Rename the secret env var:
+- `FIREBASE_SERVICE_ACCOUNT_ANGULAR_FIREBASE_ACCELERATOR` → use your generated secret name from GitHub.
+
+6) **Firebase CLI**
 
 ```bash
 npm i -g firebase-tools
 firebase login
 ```
 
-6) **Initialize Hosting (GitHub integration)**
+7) **Initialize Hosting (GitHub integration)**
    Run it. If you configure both sites separately, do it twice.
 
    ```bash
@@ -133,11 +145,11 @@ firebase login
    # Automatic deployment when a PR is merged? No
    ```
 
-7) **Enable IAM Service Account Credentials API**
+8) **Enable IAM Service Account Credentials API**
 
 - [Google Cloud Console](https://console.cloud.google.com/welcome) → APIs & Services → **Enable APIs & Services** → search “IAM Service Account Credentials API” → **Enable**.
 
-8) **Revert unwanted changes in `firebase.json`** if init overwrote custom settings.
+9) **Revert unwanted changes in `firebase.json`** if init overwrote custom settings.
 
 ---
 
@@ -165,20 +177,6 @@ firebase login
 4) **Service account secret**  
    During `firebase init` with GitHub, a repo secret like  
    `FIREBASE_SERVICE_ACCOUNT_<PROJECT_NAME>` is created. Verify if it is and keep it.
-
----
-
-## Repo strings to update
-
-Replace every `angular-firebase-accelerator` with your local app name. 
-
-In those files, provide a Firebase app ID:
-- `.firebaserc`
-- `CI - firebase - Step 2 - Build and deploy to firebase-release.yaml` → two places
-- `README.md` link to Firebase Hosting
-
-Rename the secret env var:
-- `FIREBASE_SERVICE_ACCOUNT_ANGULAR_FIREBASE_ACCELERATOR` → use your generated secret name from GitHub.
 
 ---
 
