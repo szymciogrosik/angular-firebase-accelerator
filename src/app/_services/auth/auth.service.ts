@@ -25,7 +25,7 @@ export class AuthService {
   private user: Observable<CustomUser | null> = this.userSubject.asObservable();
 
   constructor(
-    private auth: Auth,  // wstrzykiwany z DI modularnego
+    private auth: Auth,
     private router: Router,
     private snackbarService: SnackbarService,
     private standardUserService: StandardUserDbService,
