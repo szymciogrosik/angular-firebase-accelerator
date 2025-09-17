@@ -30,18 +30,6 @@ ng serve
 
 ---
 
-## Change Angular CLI version
-
-```bash
-npm uninstall -g @angular/cli
-npm cache clean --force
-npm cache verify
-npm install -g @angular/cli@<version>
-ng version
-```
-
----
-
 ## Use the template
 
 Create a fresh repo from the template. **Do not** copy branches.
@@ -200,6 +188,14 @@ Rename the secret env var:
 - 403 when deploying to Firebase: enable **IAM Service Account Credentials API**.
 - Auth popup blocked on GH Pages: add your GH Pages domain in **Authorized domains**.
 - GH Action cannot push to `gh-pages`: verify **Read and write permissions** and the `github-pages` environment configuration.
+- Change Angular CLI version when needed
+```bash
+npm uninstall -g @angular/cli
+npm cache clean --force
+npm cache verify
+npm install -g @angular/cli@<version>
+ng version
+```
 
 ---
 
