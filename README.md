@@ -48,19 +48,6 @@ git push -u origin release/firebase
 
 ---
 
-## Environments
-
-Add your Firebase web config (without the API key) to:
-
-- `src/environments/environment-example.ts`
-- `src/environments/firebase/environment.ts`
-- `src/environments/ftp/environment.ts`
-- `src/environments/gh-pages/environment.ts`
-
-Copy `environment-example.ts` → `environment.ts` and fill in API key.
-
----
-
 ## Firebase setup
 
 1) **Create a project**
@@ -112,7 +99,7 @@ Copy `environment-example.ts` → `environment.ts` and fill in API key.
 4) **Web app config**
 
 - Project Settings → General → Your apps → Web → register and copy the config.
-- Add the config to the "Environments" files listed above.
+- Add the config to the "Environments" files listed below.
 
 5) **Firebase CLI**
 
@@ -140,6 +127,19 @@ firebase login
    ```
 
 8) **Revert unwanted changes in `firebase.json`** if init overwrote custom settings.
+
+---
+
+## Environments
+
+Add your Firebase web config (without the API key) to:
+
+- `src/environments/environment-example.ts`
+- `src/environments/firebase/environment.ts`
+- `src/environments/ftp/environment.ts`
+- `src/environments/gh-pages/environment.ts`
+
+Copy `environment-example.ts` → `environment.ts` and fill in API key.
 
 ---
 
