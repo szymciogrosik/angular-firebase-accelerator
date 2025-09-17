@@ -4,7 +4,7 @@ import {AuthService} from "../auth/auth.service";
 import {RedirectionEnum} from "../../../utils/redirection.enum";
 import {tap} from "rxjs";
 
-export const adminGuard: CanActivateFn = (next: ActivatedRouteSnapshot) => {
+export const authenticatedGuard: CanActivateFn = (next: ActivatedRouteSnapshot) => {
   const authService: AuthService = inject(AuthService);
   const router: Router = inject(Router);
   return authService.isAuthenticated().pipe(
