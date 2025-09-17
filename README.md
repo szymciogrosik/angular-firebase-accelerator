@@ -131,7 +131,12 @@ npm i -g firebase-tools
 firebase login
 ```
 
-7) **Initialize Hosting (GitHub integration)**
+7) **Change firebase project**
+```bash
+firebase use <your-project-id-from-firebase>
+```
+
+8) **Initialize Hosting (GitHub integration)**
    Run it. If you configure both sites separately, do it twice.
 
    ```bash
@@ -145,11 +150,11 @@ firebase login
    # Automatic deployment when a PR is merged? No
    ```
 
-8) **Enable IAM Service Account Credentials API**
+9) **Enable IAM Service Account Credentials API**
 
 - [Google Cloud Console](https://console.cloud.google.com/welcome) → APIs & Services → **Enable APIs & Services** → search “IAM Service Account Credentials API” → **Enable**.
 
-9) **Revert unwanted changes in `firebase.json`** if init overwrote custom settings.
+10) **Revert unwanted changes in `firebase.json`** if init overwrote custom settings.
 
 ---
 
