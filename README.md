@@ -1,4 +1,4 @@
-# Word Checker App
+# Angular Firebase Accelerator
 
 Fast Angular app with Firebase Auth + Firestore, deployed to both GitHub Pages and Firebase Hosting.
 
