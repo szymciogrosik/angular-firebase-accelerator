@@ -4,7 +4,8 @@ import {RedirectionEnum} from '../utils/redirection.enum';
 import {StatusComponent} from "./status/status.component";
 import {LoginComponent} from "./login/login.component";
 import {AdminComponent} from "./admin/admin.component";
-import {adminGuard} from "./_services/guard/admin.guard";
+import {authenticatedGuard} from "./_services/guard/authenticatedGuard";
+import {adminPageGuard} from "./_services/guard/adminPageGuard";
 
 const appRoutes: Routes = [
   {
@@ -22,7 +23,7 @@ const appRoutes: Routes = [
   {
     path: RedirectionEnum.ADMIN,
     component: AdminComponent,
-    canActivate: [adminGuard]
+    canActivate: [authenticatedGuard, adminPageGuard]
   },
   // otherwise redirect to home
   {path: '**', redirectTo: ''}

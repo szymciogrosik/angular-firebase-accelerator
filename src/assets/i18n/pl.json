@@ -8,6 +8,7 @@
 
   "navbar.tab.applicationName": "Angular accelerator app",
   "navbar.tab.button.logout": "Wyloguj",
+  "navbar.tab.button.adminPanel": "Panel administratora",
 
   "snackbar.default.dismiss": "Zamknij",
 
@@ -26,7 +27,7 @@
   "nonProdMode.warning": "Ta aplikacja nie jest w trybie produkcyjnym. Wprowadzone zmiany nie będą miały wpływu na produkcyjną bazę danych.",
 
   "login.header": "LOGOWANIE",
-  "login.header2": "do panelu administratora",
+  "login.header2": "do aplikacji",
   "login.enterEmail": "Wprowadź email",
   "login.exampleEmail": "example@gmail.com",
   "login.enterPassword": "Wprowadź hasło",

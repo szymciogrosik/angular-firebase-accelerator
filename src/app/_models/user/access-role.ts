@@ -1,3 +1,3 @@
 export enum AccessRole {
-  ADMIN_FULL_ACCESS = 'ADMIN_FULL_ACCESS',
+  ADMIN_PAGE_ACCESS = 'ADMIN_PAGE_ACCESS',
 }

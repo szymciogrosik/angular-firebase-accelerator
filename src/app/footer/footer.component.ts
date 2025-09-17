@@ -14,7 +14,7 @@ export class FooterComponent {
   }
 
   protected openLink(link: string) {
-    window.location.href = link;
+    window.open(link, '_blank');
   }
 
 }

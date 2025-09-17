@@ -2,7 +2,6 @@ import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, collectionData, doc, docData, addDoc, updateDoc, deleteDoc, query, where } from '@angular/fire/firestore';
 import { CustomUser } from '../../_models/user/custom-user';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +11,6 @@ export class UserDbService {
   private firestore: Firestore;
 
   constructor() {
-    // w Angular 19 modularnym używamy inject()
     this.firestore = inject(Firestore);
   }
 
