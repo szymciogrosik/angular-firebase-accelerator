@@ -2,7 +2,6 @@ import {Component, OnDestroy} from '@angular/core';
 import {UserDbService} from "../../../_database/auth/user-db-service.service";
 import {CustomUser} from "../../../_models/user/custom-user";
 import {Subscription} from "rxjs";
-import {AccessPageEnum} from "../../../_services/auth/access-page-enum";
 import {AccessRoleService} from "../../../_services/auth/access-role.service";
 import {CustomTranslateService} from "../../../_services/translate/custom-translate.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -17,6 +16,7 @@ import {DialogData} from "../../../_models/dialog/dialog-data";
 import {DialogType} from "../../../_models/dialog/dialog-type";
 import {FirebaseError} from 'firebase/app';
 import {CustomCommonModule} from "../../../_imports/CustomCommon.module";
+import {AccessRole} from "../../../_models/user/access-role";
 
 @Component({
   selector: 'app-users',
@@ -42,7 +42,7 @@ export class UsersComponent implements OnDestroy {
     private authService: AuthService,
     private dialogService: DialogService
   ) {
-    this.accessService.isAuthorizedToSeePage(AccessPageEnum.SETTINGS)
+    this.accessService.isAuthorized(AccessRole.ADMIN_PAGE_ACCESS)
       .then((isAuthorized: boolean): void => {
         if (isAuthorized) {
           this.allUsersSubscription = this.userDb.getAll().subscribe(allUsers => {
