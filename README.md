@@ -50,11 +50,9 @@ git push -u origin release/firebase
 
 ## Firebase setup
 
-[Firebase](https://console.firebase.google.com/)
+Link to [Firebase](https://console.firebase.google.com/).
 
 1) **Create a project**
-  - Location: Warsaw.
-  - Mode: Firestore in **production** mode.
 
 2) **Authentication**
 
@@ -64,7 +62,11 @@ git push -u origin release/firebase
 - Authentication → Settings → **Authorized domains**: add your GitHub Pages domain, e.g. `szymciogrosik.github.io`.
 
 3) **Firestore**
+Setup firestore:
+- Location: Warsaw.
+- Mode: Firestore in **production** mode.
 
+Then create manually a fist user:
 - Create a `users` document for a first user:
   - `email` (string): `your-email@gmail.com`
   - `firstName` (string): `Adam`
