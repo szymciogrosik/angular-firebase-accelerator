@@ -50,6 +50,8 @@ git push -u origin release/firebase
 
 ## Firebase setup
 
+[Firebase](https://console.firebase.google.com/)
+
 1) **Create a project**
   - Location: Warsaw.
   - Mode: Firestore in **production** mode.
