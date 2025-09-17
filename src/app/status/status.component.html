@@ -6,11 +6,12 @@
           <h2>{{ 'status.lastBuildTime' | translate }}</h2>
         </mat-card-title>
         <mat-card-content>
-          <div *ngIf="lastDeployTime" [innerHTML]="lastDeployTime" style="text-align: center;">
-          </div>
-          <div *ngIf="!lastDeployTime">
-            <mat-spinner [diameter]="80"></mat-spinner>
-          </div>
+          @if (lastDeployTime) {
+            <div [innerHTML]="lastDeployTime" style="text-align: center;"></div>
+          }
+          @if (!lastDeployTime) {
+            <div><mat-spinner [diameter]="80"></mat-spinner></div>
+          }
         </mat-card-content>
       </mat-card>
     </div>
