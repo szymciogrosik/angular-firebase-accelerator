@@ -137,9 +137,7 @@ firebase login
 
 - [Google Cloud Console](https://console.cloud.google.com/welcome) → APIs & Services → **Enable APIs & Services** → search “IAM Service Account Credentials API” → **Enable**.
 
-8) **Re-execute "Initialize Hosting (GitHub integration)"**
-
-9) **Revert unwanted changes in `firebase.json`** if init overwrote custom settings.
+8) **Revert unwanted changes in `firebase.json`** if init overwrote custom settings.
 
 ---
 
