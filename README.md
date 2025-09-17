@@ -105,6 +105,12 @@ Then create manually a fist user:
 
 - Project Settings → General → Your apps → Web → register and copy the config.
 - Add the config to the "Environments" files listed below.
+  - Add your Firebase web config (without the API key) to:
+    - `src/environments/environment-example.ts`
+    - `src/environments/firebase/environment.ts`
+    - `src/environments/ftp/environment.ts`
+    - `src/environments/gh-pages/environment.ts`
+  - Copy `environment-example.ts` → `environment.ts` and fill in API key.
 
 5) **Firebase CLI**
 
@@ -113,11 +119,7 @@ npm i -g firebase-tools
 firebase login
 ```
 
-6) **Enable IAM Service Account Credentials API**
-
-- [Google Cloud Console](https://console.cloud.google.com/welcome) → APIs & Services → **Enable APIs & Services** → search “IAM Service Account Credentials API” → **Enable**.
-
-7) **Initialize Hosting (GitHub integration)**
+6) **Initialize Hosting (GitHub integration)**
    Run it. If you configure both sites separately, do it twice.
 
    ```bash
@@ -131,20 +133,13 @@ firebase login
    # Automatic deployment when a PR is merged? No
    ```
 
-8) **Revert unwanted changes in `firebase.json`** if init overwrote custom settings.
+7) **Enable IAM Service Account Credentials API**
 
----
+- [Google Cloud Console](https://console.cloud.google.com/welcome) → APIs & Services → **Enable APIs & Services** → search “IAM Service Account Credentials API” → **Enable**.
 
-## Environments
+8) **Re-execute "Initialize Hosting (GitHub integration)"**
 
-Add your Firebase web config (without the API key) to:
-
-- `src/environments/environment-example.ts`
-- `src/environments/firebase/environment.ts`
-- `src/environments/ftp/environment.ts`
-- `src/environments/gh-pages/environment.ts`
-
-Copy `environment-example.ts` → `environment.ts` and fill in API key.
+9) **Revert unwanted changes in `firebase.json`** if init overwrote custom settings.
 
 ---
 
