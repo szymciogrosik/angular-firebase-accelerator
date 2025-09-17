@@ -92,7 +92,7 @@ Copy `environment-example.ts` → `environment.ts` and fill in API key.
   - `email` (string): `your-email@gmail.com`
   - `firstName` (string): `Adam`
   - `lastName` (string): `Abacki`
-  - `roles` (array of string): `ADMIN_FULL_ACCESS`
+  - `roles` (array of string): `ADMIN_PAGE_ACCESS`
   - `uid` (string): `<copied from Authentication>`
 - **Rules** → replace with:
   ```js
