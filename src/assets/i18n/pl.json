@@ -2,6 +2,8 @@
   "language.english": "English",
   "language.polish": "Polski",
 
+  "page.title": "Angular accelerator app",
+
   "datePicker.formatHint": "DD.MM.YYYY",
   "datePicker.chooseDate": "Wybierz datę",
   "datePicker.chooseDateAndTime": "Wpisz datę i czas",
