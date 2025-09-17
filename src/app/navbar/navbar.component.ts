@@ -4,6 +4,10 @@ import {CustomTranslateService} from '../_services/translate/custom-translate.se
 import {LanguageEnum} from "../_services/translate/language-enum";
 import {AuthService} from "../_services/auth/auth.service";
 import {CustomCommonModule} from "../_imports/CustomCommon.module";
+import {AccessRoleService} from "../_services/auth/access-role.service";
+import {AccessRole} from "../_models/user/access-role";
+import {Observable} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-navbar',
@@ -15,11 +19,15 @@ import {CustomCommonModule} from "../_imports/CustomCommon.module";
 export class NavbarComponent implements OnInit {
   protected readonly LanguageEnum = LanguageEnum;
   protected readonly rp = RedirectionEnum;
+  protected isAdmin$: Observable<boolean>;
 
   constructor(
-    public translateService: CustomTranslateService,
-    public authService: AuthService
+    protected translateService: CustomTranslateService,
+    protected authService: AuthService,
+    private accessService: AccessRoleService,
+    private router: Router,
   ) {
+    this.isAdmin$ = this.accessService.isAuthorized$(AccessRole.ADMIN_PAGE_ACCESS);
   }
 
   ngOnInit(): void { }
@@ -28,4 +36,10 @@ export class NavbarComponent implements OnInit {
     this.authService.logout(true);
   }
 
+  navigateToAdminPanel(): void {
+    this.router.navigate(["/" + RedirectionEnum.ADMIN]);
+  }
+
+  protected readonly AccessRoleService = AccessRoleService;
+  protected readonly AccessRole = AccessRole;
 }

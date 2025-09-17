@@ -8,6 +8,7 @@
 
   "navbar.tab.applicationName": "Angular accelerator app",
   "navbar.tab.button.logout": "Wyloguj",
+  "navbar.tab.button.adminPanel": "Panel administratora",
 
   "snackbar.default.dismiss": "Zamknij",
 
