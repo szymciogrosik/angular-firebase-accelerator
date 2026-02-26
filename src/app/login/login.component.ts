@@ -9,7 +9,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {EmbeddedBrowserPopupComponent} from "./embedded-browser-popup/embedded-browser-popup.component";
 import {EmbeddedBrowserWarningData} from "../_models/dialog/embedded-browser-warning/embedded-browser-warning-data";
 import {CustomCommonModule} from "../_imports/CustomCommon.module";
-import {FirebaseError} from 'firebase/app';
+import {FirebaseError} from '@angular/fire/app';
 import {CustomValidators} from "../_services/validator/custom-validators";
 import {MatTabChangeEvent} from "@angular/material/tabs";
 import {PublicSettingsService} from "../_database/settings/public-settings.service";

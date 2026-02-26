@@ -14,7 +14,7 @@ import {
   getAdditionalUserInfo
 } from '@angular/fire/auth';
 import {firstValueFrom, BehaviorSubject, Observable, map, Subject} from 'rxjs';
-import {FirebaseError} from 'firebase/app';
+import {FirebaseError} from '@angular/fire/app';
 import {Router} from '@angular/router';
 import {SnackbarService} from '../util/snackbar.service';
 import {StandardUserDbService} from '../../_database/auth/standard-user-db.service';

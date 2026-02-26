@@ -14,7 +14,7 @@ import {UserDetailsType} from "../../../_models/dialog/user-details/user-details
 import {DialogService} from "../../../_services/util/dialog.service";
 import {DialogData} from "../../../_models/dialog/dialog-data";
 import {DialogType} from "../../../_models/dialog/dialog-type";
-import {FirebaseError} from 'firebase/app';
+import {FirebaseError} from '@angular/fire/app';
 import {CustomCommonModule} from "../../../_imports/CustomCommon.module";
 import {AccessRole} from "../../../_models/user/access-role";
 import {MatSort} from "@angular/material/sort";
