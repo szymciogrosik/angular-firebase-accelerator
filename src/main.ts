@@ -11,15 +11,13 @@ import {provideTranslateService} from '@ngx-translate/core';
 import {AppComponent} from './app/app.component';
 import {routing} from './app/app-routing.module';
 import {environment} from './environments/environment';
-import {CustomCommonModule} from "./app/_imports/CustomCommon.module";
 import {provideTranslateHttpLoader} from "@ngx-translate/http-loader";
 import {AssetsService} from "./app/_services/util/assets.service";
+import {MatNativeDateModule} from '@angular/material/core';
 
 if (environment.production) {
   enableProdMode();
 }
-
-const app = initializeApp(environment.firebase);
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -32,14 +30,14 @@ bootstrapApplication(AppComponent, {
       fallbackLang: `${environment.default_language}`,
       lang: `${environment.default_language}`
     }),
-    importProvidersFrom(CustomCommonModule),
     importProvidersFrom(routing),
+    importProvidersFrom(MatNativeDateModule),
 
-    provideFirebaseApp(() => app),
-    provideAuth(() => getAuth(app)),
-    provideFirestore(() => getFirestore(app)),
-    provideStorage(() => getStorage(app)),
-    provideAnalytics(() => getAnalytics(app)),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage()),
+    provideAnalytics(() => getAnalytics()),
   ]
 }).catch(error => {
   console.error("Init failed: " + error)

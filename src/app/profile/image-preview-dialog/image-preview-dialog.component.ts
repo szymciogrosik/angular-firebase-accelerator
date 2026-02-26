@@ -1,6 +1,8 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {CustomCommonModule} from '../../_imports/CustomCommon.module';
+import {CommonModule} from '@angular/common';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 
 export interface ImagePreviewData {
   imageUrl: string;
@@ -9,7 +11,7 @@ export interface ImagePreviewData {
 @Component({
   selector: 'app-image-preview-dialog',
   standalone: true,
-  imports: [CustomCommonModule],
+  imports: [CommonModule, MatButtonModule, MatIconModule],
   templateUrl: './image-preview-dialog.component.html',
   styleUrls: ['./image-preview-dialog.component.scss']
 })

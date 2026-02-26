@@ -89,8 +89,8 @@ $warn-palette: (
 );
 
 $light-theme: mat.m2-define-light-theme((color: (primary: mat.m2-define-palette($main-palette),
-  accent: mat.m2-define-palette($accent-palette),
-  warn: mat.m2-define-palette($warn-palette))));
+        accent: mat.m2-define-palette($accent-palette),
+        warn: mat.m2-define-palette($warn-palette))));
 
 @include mat.all-component-themes($light-theme);
 
@@ -200,12 +200,12 @@ input[type="password"]::-ms-clear {
 }
 
 // Reusable Card
-mat-card-title > h1 {
+mat-card-title>h1 {
   margin-bottom: 24px;
   font-weight: bold;
 }
 
-mat-card-title > p {
+mat-card-title>p {
   font-size: 1.2rem;
 }
 
@@ -232,6 +232,7 @@ mat-card-title > p {
 .app-full-width-actions {
   display: flex;
   width: 100%;
+  box-sizing: border-box;
   gap: 16px;
   margin-top: 10px;
   justify-content: space-between;
@@ -240,6 +241,7 @@ mat-card-title > p {
 .app-popup-full-width-actions {
   display: flex;
   width: 100%;
+  box-sizing: border-box;
   gap: 16px;
   margin-top: 10px;
   justify-content: space-between;
@@ -272,8 +274,8 @@ mat-card-title > p {
   }
 }
 
-@media (min-width: 470px) {
-  .dialog-container {
+@media (min-width: 471px) {
+  .cdk-overlay-pane.mat-mdc-dialog-panel {
     width: 450px;
   }
 }

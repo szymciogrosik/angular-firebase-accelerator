@@ -9,8 +9,6 @@
   padding-bottom: 0;
 }
 
-
-
 .dialog-image {
   text-align: center;
 
@@ -25,25 +23,10 @@
   color: $app-green-color;
 }
 
-.dialog-warning-image{
+.dialog-warning-image {
   color: $app-accent-color;
 }
 
-.dialog-error-image{
+.dialog-error-image {
   color: $app-red-color;
-}
-
-.dialog-actions {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.action-button {
-  flex: 1;
-}
-
-.button-wrapper {
-  width: 100%;
-  margin: 10px;
 }

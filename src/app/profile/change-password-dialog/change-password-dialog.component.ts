@@ -1,16 +1,23 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatDialogRef} from '@angular/material/dialog';
-import {CustomCommonModule} from '../../_imports/CustomCommon.module';
 import {CustomTranslateService} from '../../_services/translate/custom-translate.service';
 import {CustomValidators} from '../../_services/validator/custom-validators';
 import {AuthService} from '../../_services/auth/auth.service';
 import {SnackbarService} from '../../_services/util/snackbar.service';
+import {CommonModule} from '@angular/common';
+import {TranslateModule} from '@ngx-translate/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-change-password-dialog',
   standalone: true,
-  imports: [CustomCommonModule],
+  imports: [CommonModule, TranslateModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatDialogModule],
   templateUrl: './change-password-dialog.component.html',
   styleUrls: ['./change-password-dialog.component.scss']
 })

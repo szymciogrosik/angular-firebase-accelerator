@@ -103,6 +103,7 @@
   "admin.panel.settings.users.restoredSuccessfully": "Użytkownik pomyślnie przywrócony.",
   "admin.panel.settings.users.error.userDeletedOnlyRestore": "Ten użytkownik został wcześniej usunięty. Dodanie go ponownie jest zablokowane - przejdź do zakładki 'Usunięci', aby przywrócić jego konto.",
   "admin.panel.settings.public.allowForRegistering": "Zezwól na swobodną rejestrację",
+  "admin.panel.settings.public.allowForProfilePictureChange": "Zezwól na zmianę zdjęcia profilowego",
   "admin.panel.settings.public.savedSuccessfully": "Pomyślnie zaktualizowano ustawienia.",
   "login.error.accountDeleted": "Konto zostało usunięte.",
   "dialog.cancel": "Anuluj",

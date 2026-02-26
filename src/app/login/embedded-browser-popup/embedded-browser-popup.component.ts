@@ -1,14 +1,18 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {EmbeddedBrowserWarningData} from "../../_models/dialog/embedded-browser-warning/embedded-browser-warning-data";
-import {CustomCommonModule} from "../../_imports/CustomCommon.module";
+import {CommonModule} from '@angular/common';
+import {TranslateModule} from '@ngx-translate/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-embedded-browser-popup',
   templateUrl: './embedded-browser-popup.component.html',
   styleUrl: './embedded-browser-popup.component.scss',
   standalone: true,
-  imports: [CustomCommonModule],
+  imports: [CommonModule, TranslateModule, MatButtonModule, MatIconModule, MatDialogModule],
 })
 export class EmbeddedBrowserPopupComponent {
   constructor(

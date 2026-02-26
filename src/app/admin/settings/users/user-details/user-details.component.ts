@@ -3,18 +3,20 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {UserDetailsPopupData} from "../../../../_models/dialog/user-details/user-details-popup-data";
 import {UserDetailsType} from "../../../../_models/dialog/user-details/user-details-type";
 import {CustomTranslateService} from "../../../../_services/translate/custom-translate.service";
-import {CustomValidators} from "../../../../_services/validator/custom-validators";
-import {CustomCommonModule} from "../../../../_imports/CustomCommon.module";
 import {UserFormComponent} from "../../../../_shared-components/user-form/user-form.component";
 import {AuthService} from "../../../../_services/auth/auth.service";
 import {SnackbarService} from "../../../../_services/util/snackbar.service";
+import {CommonModule} from '@angular/common';
+import {TranslateModule} from '@ngx-translate/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.scss',
   standalone: true,
-  imports: [CustomCommonModule, UserFormComponent],
+  imports: [UserFormComponent, CommonModule, TranslateModule, MatButtonModule, MatDialogModule],
 })
 export class UserDetailsComponent implements OnInit {
   @ViewChild('userFormComponent') userFormComponent!: UserFormComponent;

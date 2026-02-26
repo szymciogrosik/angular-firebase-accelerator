@@ -8,18 +8,28 @@ import {RedirectionEnum} from "../../utils/redirection.enum";
 import {MatDialog} from "@angular/material/dialog";
 import {EmbeddedBrowserPopupComponent} from "./embedded-browser-popup/embedded-browser-popup.component";
 import {EmbeddedBrowserWarningData} from "../_models/dialog/embedded-browser-warning/embedded-browser-warning-data";
-import {CustomCommonModule} from "../_imports/CustomCommon.module";
 import {FirebaseError} from '@angular/fire/app';
 import {CustomValidators} from "../_services/validator/custom-validators";
 import {MatTabChangeEvent} from "@angular/material/tabs";
 import {PublicSettingsService} from "../_database/settings/public-settings.service";
+import {CommonModule} from '@angular/common';
+import {TranslateModule} from '@ngx-translate/core';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatIconModule} from '@angular/material/icon';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   standalone: true,
-  imports: [CustomCommonModule],
+  imports: [CommonModule, TranslateModule, MatCardModule, MatButtonModule, MatProgressSpinnerModule, MatIconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatDialogModule, MatTabsModule],
 })
 export class LoginComponent implements OnInit {
   checkingIfUserIsAlreadyLoggedIn: boolean = true;
