@@ -51,7 +51,7 @@ export class ChangePasswordDialogComponent implements OnInit {
     this.isLoading = true;
     try {
       await this.authService.updateAuthPassword(password);
-      this.snackbarService.openLongSnackBar(this.translateService.get('profile.password.success'));
+      this.snackbarService.openSnackBar(this.translateService.get('profile.password.success'));
       this.dialogRef.close(true);
     } catch (error) {
       console.error(error);

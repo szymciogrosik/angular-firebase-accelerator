@@ -62,7 +62,7 @@ export class PublicSettingsComponent implements OnInit {
           throw e;
         }
       });
-      this.snackbarService.openLongSnackBar(this.translateService.get('admin.panel.settings.public.savedSuccessfully'));
+      this.snackbarService.openSnackBar(this.translateService.get('admin.panel.settings.public.savedSuccessfully'));
     } catch (err) {
       console.error(err);
       this.snackbarService.openLongSnackBar('Failed to save settings.');

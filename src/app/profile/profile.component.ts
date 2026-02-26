@@ -95,7 +95,7 @@ export class ProfileComponent implements OnInit {
       this.user.firstName = payload.firstName;
       this.user.lastName = payload.lastName;
 
-      this.snackbarService.openLongSnackBar(this.translateService.get('profile.success.update'));
+      this.snackbarService.openSnackBar(this.translateService.get('profile.success.update'));
     } catch (error) {
       console.error('Failed to update user', error);
       this.snackbarService.openLongSnackBar(this.translateService.get('profile.error.update'));
