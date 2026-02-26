@@ -1,15 +1,23 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {CustomUser} from "../../../app/_models/user/custom-user";
-import {AccessRole} from "../../../app/_models/user/access-role";
-import {CustomTranslateService} from "../../../app/_services/translate/custom-translate.service";
-import {CustomValidators} from "../../../app/_services/validator/custom-validators";
-import {CustomCommonModule} from "../../../app/_imports/CustomCommon.module";
+import {CustomUser} from "../../_models/user/custom-user";
+import {AccessRole} from "../../_models/user/access-role";
+import {CustomTranslateService} from "../../_services/translate/custom-translate.service";
+import {CustomValidators} from "../../_services/validator/custom-validators";
+import {CommonModule} from '@angular/common';
+import {TranslateModule} from '@ngx-translate/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatSelectModule} from '@angular/material/select';
 
 @Component({
   selector: 'app-user-form',
   standalone: true,
-  imports: [CustomCommonModule],
+  imports: [CommonModule, TranslateModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatDialogModule, MatSelectModule],
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss']
 })

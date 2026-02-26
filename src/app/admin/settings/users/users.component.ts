@@ -15,16 +15,23 @@ import {DialogService} from "../../../_services/util/dialog.service";
 import {DialogData} from "../../../_models/dialog/dialog-data";
 import {DialogType} from "../../../_models/dialog/dialog-type";
 import {FirebaseError} from '@angular/fire/app';
-import {CustomCommonModule} from "../../../_imports/CustomCommon.module";
 import {AccessRole} from "../../../_models/user/access-role";
 import {MatSort} from "@angular/material/sort";
+import {CommonModule} from '@angular/common';
+import {TranslateModule} from '@ngx-translate/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatTableModule} from '@angular/material/table';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
   standalone: true,
-  imports: [CustomCommonModule, MatSort],
+  imports: [MatSort, CommonModule, TranslateModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatTableModule, MatTabsModule],
 })
 export class UsersComponent implements OnDestroy {
   protected allUsers: CustomUser[];

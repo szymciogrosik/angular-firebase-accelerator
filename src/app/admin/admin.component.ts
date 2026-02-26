@@ -2,16 +2,19 @@ import {Component} from '@angular/core';
 import {AccessRoleService} from "../_services/auth/access-role.service";
 import {AuthService} from "../_services/auth/auth.service";
 import {environment} from "../../environments/environment";
-import {CustomCommonModule} from "../_imports/CustomCommon.module";
 import {SettingsComponent} from "./settings/settings.component";
 import {AccessRole} from "../_models/user/access-role";
+import {CommonModule} from '@angular/common';
+import {TranslateModule} from '@ngx-translate/core';
+import {MatCardModule} from '@angular/material/card';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss',
   standalone: true,
-  imports: [CustomCommonModule, SettingsComponent],
+  imports: [SettingsComponent, CommonModule, TranslateModule, MatCardModule, MatTabsModule],
 })
 export class AdminComponent {
   protected readonly environment = environment;

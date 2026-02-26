@@ -1,12 +1,15 @@
 import {Component} from '@angular/core';
-import {CustomCommonModule} from "../_imports/CustomCommon.module";
+import {CommonModule} from '@angular/common';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
   standalone: true,
-  imports: [CustomCommonModule],
+  imports: [CommonModule, MatButtonModule, MatIconModule, MatToolbarModule],
 })
 export class FooterComponent {
   constructor(

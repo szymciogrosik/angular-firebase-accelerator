@@ -103,6 +103,7 @@
   "admin.panel.settings.users.restoredSuccessfully": "User successfully restored.",
   "admin.panel.settings.users.error.userDeletedOnlyRestore": "This user was previously deleted. Adding them again is blocked - go to the 'Deleted' tab to restore their account.",
   "admin.panel.settings.public.allowForRegistering": "Allow for open registration",
+  "admin.panel.settings.public.allowForProfilePictureChange": "Allow changing profile picture",
   "admin.panel.settings.public.savedSuccessfully": "Successfully updated global settings.",
   "login.error.accountDeleted": "Account has been deleted.",
   "dialog.cancel": "Cancel",

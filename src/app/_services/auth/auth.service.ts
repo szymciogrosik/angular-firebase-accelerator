@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, inject, Injector, runInInjectionContext} from '@angular/core';
 import {
   Auth,
   signInWithEmailAndPassword,
@@ -10,7 +10,6 @@ import {
   onAuthStateChanged,
   updatePassword,
   User,
-  AdditionalUserInfo,
   getAdditionalUserInfo
 } from '@angular/fire/auth';
 import {firstValueFrom, BehaviorSubject, Observable, map, Subject} from 'rxjs';
@@ -33,6 +32,8 @@ export class AuthService {
 
   private pendingRegistrationInfo: { firstName: string, lastName: string, roles: AccessRole[] } | null = null;
 
+  private readonly injector: Injector;
+
   constructor(
     private auth: Auth,
     private router: Router,
@@ -40,6 +41,7 @@ export class AuthService {
     private standardUserService: StandardUserDbService,
     private translateService: CustomTranslateService
   ) {
+    this.injector = inject(Injector);
     this.listenForAuthChanges();
   }
 
@@ -170,14 +172,23 @@ export class AuthService {
   }
 
   public logout(withRedirection: boolean): void {
-    signOut(this.auth).then(() => {
-      this.userSubject.next(null);
-      if (withRedirection) this.router.navigate([RedirectionEnum.LOGIN]);
-    }).catch(err => {
-      console.error(err);
-      this.userSubject.next(null);
-      this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
-    });
+    if (this.injector) {
+      runInInjectionContext(this.injector, () => {
+        signOut(this.auth).then(() => {
+          this.userSubject.next(null);
+          if (withRedirection) this.router.navigate([RedirectionEnum.LOGIN]);
+        }).catch(err => {
+          console.error(err);
+          this.userSubject.next(null);
+          this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
+        });
+      });
+    } else {
+      signOut(this.auth).then(() => {
+        this.userSubject.next(null);
+        if (withRedirection) this.router.navigate([RedirectionEnum.LOGIN]);
+      });
+    }
   }
 
   public isAuthenticated(): Observable<boolean> {

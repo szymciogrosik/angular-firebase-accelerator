@@ -14,17 +14,20 @@
         <div class="profile-picture-container">
           <div class="avatar-wrapper">
             @if (user.photoUrl) {
-              <img [src]="user.photoUrl" alt="Profile Picture" class="avatar-image avatar-clickable" loading="lazy"
-                   fetchpriority="high" (click)="openPreviewDialog(user.photoUrl)">
+              <img [src]="user.photoUrl" alt="Profile Picture" class="avatar-image avatar-clickable"
+                   fetchpriority="high"
+                   (click)="openPreviewDialog(user.photoUrl)">
             } @else {
               <div class="avatar-fallback">{{ user.firstName.charAt(0) || '' }}{{ user.lastName.charAt(0) || '' }}</div>
             }
           </div>
-          <button mat-button color="primary" (click)="fileInput.click()" class="change-photo-btn">
-            <mat-icon>photo_camera</mat-icon>
-            {{ 'profile.button.changePhoto' | translate }}
-          </button>
-          <input type="file" #fileInput hidden accept="image/*" (change)="onFileSelected($event)">
+          @if (allowForProfilePictureChange) {
+            <button mat-button color="primary" (click)="fileInput.click()" class="change-photo-btn">
+              <mat-icon>photo_camera</mat-icon>
+              {{ 'profile.button.changePhoto' | translate }}
+            </button>
+            <input type="file" #fileInput hidden accept="image/*" (change)="onFileSelected($event)">
+          }
         </div>
 
         <app-user-form #userFormComponent [user]="user" [showPassword]="false" [showRoles]="false" [disableEmail]="true"
