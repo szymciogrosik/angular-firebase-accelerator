@@ -3,13 +3,14 @@ import {AccessRoleService} from "../../_services/auth/access-role.service";
 import {CustomCommonModule} from "../../_imports/CustomCommon.module";
 import {UsersComponent} from "./users/users.component";
 import {AccessRole} from "../../_models/user/access-role";
+import {PublicSettingsComponent} from "./public-settings/public-settings.component";
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss',
   standalone: true,
-  imports: [CustomCommonModule, UsersComponent],
+  imports: [CustomCommonModule, UsersComponent, PublicSettingsComponent],
 })
 export class SettingsComponent {
   protected isAuthorized: boolean = false;

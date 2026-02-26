@@ -1,9 +1,10 @@
-import {enableProdMode} from '@angular/core';
+import {enableProdMode, provideZoneChangeDetection} from '@angular/core';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 import {provideFirebaseApp, initializeApp} from '@angular/fire/app';
 import {getAuth, provideAuth} from '@angular/fire/auth';
 import {provideFirestore, getFirestore} from '@angular/fire/firestore';
+import {provideStorage, getStorage} from '@angular/fire/storage';
 import {provideAnalytics, getAnalytics} from '@angular/fire/analytics';
 import {importProvidersFrom} from '@angular/core';
 import {provideTranslateService} from '@ngx-translate/core';
@@ -22,7 +23,7 @@ const app = initializeApp(environment.firebase);
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideHttpClient(withInterceptorsFromDi()),
+    provideZoneChangeDetection(), provideHttpClient(withInterceptorsFromDi()),
     provideTranslateService({
       loader: provideTranslateHttpLoader({
         prefix: AssetsService.BASE_PATH + "i18n/",
@@ -37,6 +38,7 @@ bootstrapApplication(AppComponent, {
     provideFirebaseApp(() => app),
     provideAuth(() => getAuth(app)),
     provideFirestore(() => getFirestore(app)),
+    provideStorage(() => getStorage(app)),
     provideAnalytics(() => getAnalytics(app)),
   ]
 }).catch(error => {

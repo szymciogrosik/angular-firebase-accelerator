@@ -14,9 +14,32 @@
         {{ 'navbar.tab.button.adminPanel' | translate }}
       </button>
     }
-    @if (this.authService.isAuthenticated() | async) {
+    @if (currentUser$ | async; as user) {
+      <button mat-button class="navbar-button" (click)="navigateToProfile()">
+        <div class="navbar-profile-btn-content">
+          @if (user.photoUrl) {
+            <img [src]="user.photoUrl" class="navbar-avatar-image" alt="Avatar">
+          } @else {
+            <div class="navbar-avatar-fallback">{{ user.firstName.charAt(0) || '' }}{{ user.lastName.charAt(0) || '' }}
+            </div>
+          }
+          <span>{{ 'navbar.tab.button.profile' | translate }}</span>
+        </div>
+      </button>
       <button mat-button class="navbar-button" (click)="logout()">
         {{ 'navbar.tab.button.logout' | translate }}
+      </button>
+    } @else if (this.authService.isAuthenticated() | async) {
+      <!-- Fallback just in case user object is momentarily null but authenticated is true -->
+      <button mat-button class="navbar-button" (click)="navigateToProfile()">
+        {{ 'navbar.tab.button.profile' | translate }}
+      </button>
+      <button mat-button class="navbar-button" (click)="logout()">
+        {{ 'navbar.tab.button.logout' | translate }}
+      </button>
+    } @else {
+      <button mat-button class="navbar-button" (click)="navigateToLogin()">
+        {{ 'navbar.tab.button.login' | translate }}
       </button>
     }
     <!-- Choose language tab -->
@@ -41,14 +64,36 @@
       {{ 'navbar.tab.button.adminPanel' | translate }}
     </button>
   }
-  @if (this.authService.isAuthenticated() | async) {
+  @if (currentUser$ | async; as user) {
+    <button mat-menu-item class="navbar-button-burger-menu" (click)="navigateToProfile()">
+      <div class="navbar-profile-btn-content">
+        @if (user.photoUrl) {
+          <img [src]="user.photoUrl" class="navbar-avatar-image" alt="Avatar">
+        } @else {
+          <div class="navbar-avatar-fallback">{{ user.firstName.charAt(0) || '' }}{{ user.lastName.charAt(0) || '' }}
+          </div>
+        }
+        <span>{{ 'navbar.tab.button.profile' | translate }}</span>
+      </div>
+    </button>
     <button mat-menu-item class="navbar-button-burger-menu" (click)="logout()">
       {{ 'navbar.tab.button.logout' | translate }}
     </button>
+  } @else if (this.authService.isAuthenticated() | async) {
+    <button mat-menu-item class="navbar-button-burger-menu" (click)="navigateToProfile()">
+      {{ 'navbar.tab.button.profile' | translate }}
+    </button>
+    <button mat-menu-item class="navbar-button-burger-menu" (click)="logout()">
+      {{ 'navbar.tab.button.logout' | translate }}
+    </button>
+  } @else {
+    <button mat-menu-item class="navbar-button-burger-menu" (click)="navigateToLogin()">
+      {{ 'navbar.tab.button.login' | translate }}
+    </button>
   }
   <!-- Choose language tab -->
-  <button mat-menu-item class="navbar-button-burger-menu"
-          [matMenuTriggerFor]="languageMenu"><mat-icon>language</mat-icon>
+  <button mat-menu-item class="navbar-button-burger-menu" [matMenuTriggerFor]="languageMenu">
+    <mat-icon>language</mat-icon>
   </button>
 </mat-menu>
 

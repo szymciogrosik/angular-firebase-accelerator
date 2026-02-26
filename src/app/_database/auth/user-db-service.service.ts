@@ -1,7 +1,18 @@
-import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, collectionData, doc, docData, addDoc, updateDoc, deleteDoc, query, where } from '@angular/fire/firestore';
-import { CustomUser } from '../../_models/user/custom-user';
-import { Observable } from 'rxjs';
+import {Injectable, inject} from '@angular/core';
+import {
+  Firestore,
+  collection,
+  collectionData,
+  doc,
+  docData,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  query,
+  where
+} from '@angular/fire/firestore';
+import {CustomUser} from '../../_models/user/custom-user';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +28,18 @@ export class UserDbService {
   public getUser(uid: string, email: string): Observable<CustomUser[]> {
     const usersRef = collection(this.firestore, this.dbPathBase);
     const q = query(usersRef, where('uid', '==', uid), where('email', '==', email));
-    return collectionData(q, { idField: 'id' }) as Observable<CustomUser[]>;
+    return collectionData(q, {idField: 'id'}) as Observable<CustomUser[]>;
+  }
+
+  public getUserByEmail(email: string): Observable<CustomUser[]> {
+    const usersRef = collection(this.firestore, this.dbPathBase);
+    const q = query(usersRef, where('email', '==', email));
+    return collectionData(q, {idField: 'id'}) as Observable<CustomUser[]>;
   }
 
   public getAll(): Observable<CustomUser[]> {
     const usersRef = collection(this.firestore, this.dbPathBase);
-    return collectionData(usersRef, { idField: 'id' }) as Observable<CustomUser[]>;
+    return collectionData(usersRef, {idField: 'id'}) as Observable<CustomUser[]>;
   }
 
   public delete(id: string): Promise<void> {
@@ -37,6 +54,6 @@ export class UserDbService {
 
   public async create(newUser: CustomUser): Promise<void> {
     const usersRef = collection(this.firestore, this.dbPathBase);
-    await addDoc(usersRef, { ...newUser });
+    await addDoc(usersRef, {...newUser});
   }
 }

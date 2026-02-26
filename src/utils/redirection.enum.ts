@@ -4,4 +4,5 @@ export enum RedirectionEnum {
   STATUS = 'status',
   LOGIN = 'login',
   ADMIN = 'admin-panel',
+  PROFILE = 'profile',
 }

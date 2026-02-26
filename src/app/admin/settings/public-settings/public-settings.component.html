@@ -1,0 +1,17 @@
+<div class="highlight-tab-content">
+    @if (loading) {
+      <mat-spinner diameter="30"></mat-spinner>
+    } @else {
+      <form [formGroup]="settingsForm">
+        <div style="display: flex; align-items: center;">
+          <mat-slide-toggle formControlName="allowForRegistering" color="primary" (change)="saveSettings()"
+                            [disabled]="saving">
+            {{ 'admin.panel.settings.public.allowForRegistering' | translate }}
+          </mat-slide-toggle>
+          @if (saving) {
+            <mat-spinner diameter="20" style="margin-left: 15px;"></mat-spinner>
+          }
+        </div>
+      </form>
+    }
+</div>

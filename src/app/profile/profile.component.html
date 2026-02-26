@@ -1,0 +1,51 @@
+<div class="app-page-container">
+  <mat-card class="dialog-container profile-card mat-elevation-z4">
+    <mat-card-title>
+      <h1 class="card-title">{{ 'profile.title' | translate }}</h1>
+      <p class="card-subtitle">{{ 'profile.subtitle' | translate }}</p>
+    </mat-card-title>
+
+    <mat-card-content>
+      @if (isLoading) {
+        <div class="loader-container">
+          <mat-spinner diameter="40"></mat-spinner>
+        </div>
+      } @else if (user) {
+        <div class="profile-picture-container">
+          <div class="avatar-wrapper">
+            @if (user.photoUrl) {
+              <img [src]="user.photoUrl" alt="Profile Picture" class="avatar-image avatar-clickable" loading="lazy"
+                   fetchpriority="high" (click)="openPreviewDialog(user.photoUrl)">
+            } @else {
+              <div class="avatar-fallback">{{ user.firstName.charAt(0) || '' }}{{ user.lastName.charAt(0) || '' }}</div>
+            }
+          </div>
+          <button mat-button color="primary" (click)="fileInput.click()" class="change-photo-btn">
+            <mat-icon>photo_camera</mat-icon>
+            {{ 'profile.button.changePhoto' | translate }}
+          </button>
+          <input type="file" #fileInput hidden accept="image/*" (change)="onFileSelected($event)">
+        </div>
+
+        <app-user-form #userFormComponent [user]="user" [showPassword]="false" [showRoles]="false" [disableEmail]="true"
+                       (formSubmit)="onFormSubmit($event)"></app-user-form>
+      } @else {
+        <div class="error-container">
+          <mat-icon color="warn">error</mat-icon>
+          <p>{{ 'profile.error.notFound' | translate }}</p>
+        </div>
+      }
+
+      <div class="app-full-width-actions">
+        <button mat-raised-button color="accent" class="app-action-button" [disabled]="isLoading || !user"
+                (click)="openChangePasswordDialog()">
+          {{ 'profile.button.changePassword' | translate }}
+        </button>
+        <button mat-raised-button color="primary" class="app-action-button" [disabled]="isLoading || !user"
+                (click)="userFormComponent.triggerSubmit()">
+          {{ 'profile.button.save' | translate }}
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

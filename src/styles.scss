@@ -88,13 +88,9 @@ $warn-palette: (
   contrast: (500: $app-on-warn-color)
 );
 
-$light-theme: mat.m2-define-light-theme((
-  color: (
-    primary: mat.m2-define-palette($main-palette),
-    accent: mat.m2-define-palette($accent-palette),
-    warn: mat.m2-define-palette($warn-palette)
-  )
-));
+$light-theme: mat.m2-define-light-theme((color: (primary: mat.m2-define-palette($main-palette),
+  accent: mat.m2-define-palette($accent-palette),
+  warn: mat.m2-define-palette($warn-palette))));
 
 @include mat.all-component-themes($light-theme);
 
@@ -103,13 +99,16 @@ $light-theme: mat.m2-define-light-theme((
 html {
   scroll-behavior: smooth;
 }
-html, body {
+
+html,
+body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: $main-font-color;
 }
 
@@ -123,24 +122,129 @@ body {
 /* mat-card general styles */
 mat-card-title {
   text-align: center;
-  padding-top: 40px;
+  padding-top: 20px;
   padding-bottom: 20px;
 }
+
 mat-card-content {
   padding-top: 16px !important;
 }
+
 mat-card {
-  padding: 10px;
+  margin: 20px;
+  padding: 2rem;
 }
+
 mat-form-field {
   width: 100%;
 }
+
 mat-spinner {
   margin: 0 auto;
 }
+
 mat-hint {
   font-size: 0.75rem;
 }
+
 mat-error {
   font-size: 0.9rem;
+}
+
+/* Hide the default browser password reveal icon (mostly in Edge/IE) */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none !important;
+}
+
+// Reusable Page Layouts
+.app-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.app-card-wide {
+  max-width: 1200px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.app-card-narrow {
+  max-width: 700px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+// Reusable Card
+.card-title {
+  margin-bottom: 24px;
+  font-weight: bold;
+}
+
+.card-subtitle {
+  font-size: 1.2rem;
+}
+
+// Reusable tab
+.highlight-tab-content {
+  border: 2px solid $app-primary-color;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 10px;
+}
+
+// Reusable Dialog
+.dialog-font {
+  font-size: 1rem;
+}
+
+.dialog-title {
+  margin-top: 5px;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+// Reusable Action Button Groups
+.app-full-width-actions {
+  display: flex;
+  width: 100%;
+  gap: 16px;
+  margin-top: 10px;
+  justify-content: space-between;
+}
+
+.app-popup-full-width-actions {
+  display: flex;
+  width: 100%;
+  gap: 16px;
+  margin-top: 10px;
+  justify-content: space-between;
+  padding: 0 16px 16px 16px;
+}
+
+.app-action-button {
+  flex: 1;
+  margin: 0 !important;
+}
+
+@media (max-width: 450px) {
+
+  .app-full-width-actions,
+  .app-popup-full-width-actions {
+    flex-direction: column;
+    gap: 20px;
+    height: 8rem;
+  }
+}
+
+/* Dialog override to remove padding and background for image preview */
+.image-preview-dialog-panel {
+  .mat-mdc-dialog-container {
+    .mdc-dialog__surface {
+      background: transparent !important;
+      box-shadow: none !important;
+      overflow: visible;
+    }
+  }
 }
