@@ -55,7 +55,7 @@ export class ImageCropperDialogComponent {
       await this.userDbService.update(this.data.userDocId, {photoUrl});
 
       // 3. Inform the user and close dialog returns the photoUrl
-      this.snackbarService.openLongSnackBar(this.translateService.get('profile.cropper.success'));
+      this.snackbarService.openSnackBar(this.translateService.get('profile.cropper.success'));
       this.dialogRef.close(photoUrl);
 
     } catch (error) {

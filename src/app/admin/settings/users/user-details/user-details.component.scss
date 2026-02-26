@@ -5,11 +5,6 @@
   margin: 16px;
 }
 
-.card-title {
-  margin-top: 5px;
-  font-weight: bold;
-}
-
 .dialog-image {
   text-align: center;
 
@@ -30,10 +25,4 @@
 
 .dialog-error-image {
   color: $app-red-color;
-}
-
-@media (min-width: 470px) {
-  .dialog-container {
-    width: 450px;
-  }
 }

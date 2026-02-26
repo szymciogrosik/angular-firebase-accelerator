@@ -135,6 +135,13 @@ mat-card {
   padding: 2rem;
 }
 
+@media (max-width: 440px) {
+  mat-card {
+    padding: 2rem 5px;
+    margin: 10px;
+  }
+}
+
 mat-form-field {
   width: 100%;
 }
@@ -164,25 +171,41 @@ input[type="password"]::-ms-clear {
   align-items: flex-start;
 }
 
-.app-card-wide {
-  max-width: 1200px;
+.app-card-wide,
+.app-card-medium,
+.app-card-narrow {
   width: 100%;
   margin-bottom: 20px;
+}
+
+.app-card-wide {
+  max-width: 1200px;
+}
+
+.app-card-medium {
+  max-width: 700px;
 }
 
 .app-card-narrow {
-  max-width: 700px;
-  width: 100%;
-  margin-bottom: 20px;
+  max-width: 400px;
+}
+
+@media (max-width: 440px) {
+
+  .app-card-wide,
+  .app-card-medium,
+  .app-card-narrow {
+    padding: 2rem 5px;
+  }
 }
 
 // Reusable Card
-.card-title {
+mat-card-title > h1 {
   margin-bottom: 24px;
   font-weight: bold;
 }
 
-.card-subtitle {
+mat-card-title > p {
   font-size: 1.2rem;
 }
 
@@ -246,5 +269,19 @@ input[type="password"]::-ms-clear {
       box-shadow: none !important;
       overflow: visible;
     }
+  }
+}
+
+@media (min-width: 470px) {
+  .dialog-container {
+    width: 450px;
+  }
+}
+
+/* Ensure all popups take 100% width on screens <= 470px */
+@media (max-width: 470px) {
+  .cdk-overlay-pane.mat-mdc-dialog-panel {
+    max-width: 100vw !important;
+    width: 100% !important;
   }
 }
