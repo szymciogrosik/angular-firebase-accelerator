@@ -7,14 +7,13 @@ import {AccessRoleService} from "../_services/auth/access-role.service";
 import {AccessRole} from "../_models/user/access-role";
 import {CustomUser} from "../_models/user/custom-user";
 import {Observable} from "rxjs";
-import {Router} from "@angular/router";
+import {Router, RouterModule} from "@angular/router";
 import {ThemeService} from "../_services/util/theme.service";
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
-import {RouterModule} from '@angular/router';
 import {MatToolbarModule} from '@angular/material/toolbar';
 
 @Component({

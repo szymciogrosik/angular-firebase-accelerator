@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {ImageCroppedEvent, ImageCropperComponent} from 'ngx-image-cropper';
 import {StorageService} from '../../_services/storage/storage.service';
 import {UserDbService} from '../../_database/auth/user-db-service.service';
@@ -9,7 +9,6 @@ import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatDialogModule} from '@angular/material/dialog';
 
 export interface ImageCropperData {
   imageChangedEvent: Event;

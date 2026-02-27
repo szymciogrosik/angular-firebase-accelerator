@@ -11,8 +11,7 @@ import {MatCardModule} from '@angular/material/card';
   imports: [CommonModule, MatCardModule],
 })
 export class HomeComponent implements OnInit {
-  constructor(
-  ) {
+  constructor() {
 
   }
 

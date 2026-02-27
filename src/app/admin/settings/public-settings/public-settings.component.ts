@@ -1,14 +1,13 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PublicSettingsService} from "../../../_database/settings/public-settings.service";
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {SnackbarService} from "../../../_services/util/snackbar.service";
 import {CustomTranslateService} from "../../../_services/translate/custom-translate.service";
 import {Subscription} from 'rxjs';
-import {MatSlideToggle} from "@angular/material/slide-toggle";
+import {MatSlideToggle, MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-public-settings',

@@ -1,12 +1,11 @@
-import {enableProdMode, provideZoneChangeDetection} from '@angular/core';
+import {enableProdMode, importProvidersFrom, provideZoneChangeDetection} from '@angular/core';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
-import {provideFirebaseApp, initializeApp} from '@angular/fire/app';
+import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
 import {getAuth, provideAuth} from '@angular/fire/auth';
-import {provideFirestore, getFirestore} from '@angular/fire/firestore';
-import {provideStorage, getStorage} from '@angular/fire/storage';
-import {provideAnalytics, getAnalytics} from '@angular/fire/analytics';
-import {importProvidersFrom} from '@angular/core';
+import {getFirestore, provideFirestore} from '@angular/fire/firestore';
+import {getStorage, provideStorage} from '@angular/fire/storage';
+import {getAnalytics, provideAnalytics} from '@angular/fire/analytics';
 import {provideTranslateService} from '@ngx-translate/core';
 import {AppComponent} from './app/app.component';
 import {routing} from './app/app-routing.module';

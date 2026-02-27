@@ -1,5 +1,5 @@
-import {Injectable, inject} from '@angular/core';
-import {Storage, ref, uploadBytes, getDownloadURL} from '@angular/fire/storage';
+import {inject, Injectable} from '@angular/core';
+import {getDownloadURL, ref, Storage, uploadBytes} from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'

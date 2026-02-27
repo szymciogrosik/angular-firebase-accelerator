@@ -12,8 +12,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
   imports: [CommonModule, MatButtonModule, MatIconModule, MatToolbarModule],
 })
 export class FooterComponent {
-  constructor(
-  ) {
+  constructor() {
   }
 
   protected openLink(link: string) {
