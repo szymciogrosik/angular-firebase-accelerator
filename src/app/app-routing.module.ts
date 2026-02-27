@@ -1,4 +1,4 @@
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from './home/home.component';
 import {RedirectionEnum} from '../utils/redirection.enum';
 import {StatusComponent} from "./status/status.component";

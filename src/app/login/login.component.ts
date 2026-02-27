@@ -1,16 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {CustomTranslateService} from "../_services/translate/custom-translate.service";
 import {SnackbarService} from "../_services/util/snackbar.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../_services/auth/auth.service";
 import {RedirectionEnum} from "../../utils/redirection.enum";
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {EmbeddedBrowserPopupComponent} from "./embedded-browser-popup/embedded-browser-popup.component";
 import {EmbeddedBrowserWarningData} from "../_models/dialog/embedded-browser-warning/embedded-browser-warning-data";
 import {FirebaseError} from '@angular/fire/app';
 import {CustomValidators} from "../_services/validator/custom-validators";
-import {MatTabChangeEvent} from "@angular/material/tabs";
+import {MatTabChangeEvent, MatTabsModule} from "@angular/material/tabs";
 import {PublicSettingsService} from "../_database/settings/public-settings.service";
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
@@ -20,9 +20,6 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import {ReactiveFormsModule} from '@angular/forms';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
   selector: 'app-login',

@@ -1,13 +1,13 @@
-import {Injectable, inject, Injector, runInInjectionContext} from '@angular/core';
+import {inject, Injectable, Injector, runInInjectionContext} from '@angular/core';
 import {
-  Firestore,
+  addDoc,
   collection,
   collectionData,
-  doc,
-  addDoc,
-  updateDoc,
   deleteDoc,
+  doc,
+  Firestore,
   query,
+  updateDoc,
   where
 } from '@angular/fire/firestore';
 import {CustomUser} from '../../_models/user/custom-user';

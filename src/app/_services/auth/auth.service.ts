@@ -1,18 +1,18 @@
-import {Injectable, inject, Injector, runInInjectionContext} from '@angular/core';
+import {inject, Injectable, Injector, runInInjectionContext} from '@angular/core';
 import {
   Auth,
+  createUserWithEmailAndPassword,
+  getAdditionalUserInfo,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
-  GoogleAuthProvider,
-  createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
   signOut,
-  onAuthStateChanged,
   updatePassword,
-  User,
-  getAdditionalUserInfo
+  User
 } from '@angular/fire/auth';
-import {firstValueFrom, BehaviorSubject, Observable, map, Subject} from 'rxjs';
+import {BehaviorSubject, firstValueFrom, map, Observable, Subject} from 'rxjs';
 import {FirebaseError} from '@angular/fire/app';
 import {Router} from '@angular/router';
 import {SnackbarService} from '../util/snackbar.service';

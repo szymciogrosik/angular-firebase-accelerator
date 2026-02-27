@@ -5,11 +5,11 @@ import {CustomUser} from '../_models/user/custom-user';
 import {SnackbarService} from '../_services/util/snackbar.service';
 import {CustomTranslateService} from '../_services/translate/custom-translate.service';
 import {UserDbService} from '../_database/auth/user-db-service.service';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {ChangePasswordDialogComponent} from './change-password-dialog/change-password-dialog.component';
 
-import {ImageCropperDialogComponent, ImageCropperData} from './image-cropper-dialog/image-cropper-dialog.component';
-import {ImagePreviewDialogComponent, ImagePreviewData} from './image-preview-dialog/image-preview-dialog.component';
+import {ImageCropperData, ImageCropperDialogComponent} from './image-cropper-dialog/image-cropper-dialog.component';
+import {ImagePreviewData, ImagePreviewDialogComponent} from './image-preview-dialog/image-preview-dialog.component';
 import {PublicSettingsService} from '../_database/settings/public-settings.service';
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
@@ -17,7 +17,6 @@ import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
-import {MatDialogModule} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-profile',

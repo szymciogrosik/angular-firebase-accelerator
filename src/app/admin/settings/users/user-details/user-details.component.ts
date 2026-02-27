@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {UserDetailsPopupData} from "../../../../_models/dialog/user-details/user-details-popup-data";
 import {UserDetailsType} from "../../../../_models/dialog/user-details/user-details-type";
 import {CustomTranslateService} from "../../../../_services/translate/custom-translate.service";
@@ -9,7 +9,6 @@ import {SnackbarService} from "../../../../_services/util/snackbar.service";
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatButtonModule} from '@angular/material/button';
-import {MatDialogModule} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-user-details',

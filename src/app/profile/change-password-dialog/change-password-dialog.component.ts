@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MatDialogRef} from '@angular/material/dialog';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {CustomTranslateService} from '../../_services/translate/custom-translate.service';
 import {CustomValidators} from '../../_services/validator/custom-validators';
 import {AuthService} from '../../_services/auth/auth.service';
@@ -11,8 +11,6 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import {ReactiveFormsModule} from '@angular/forms';
-import {MatDialogModule} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-change-password-dialog',
