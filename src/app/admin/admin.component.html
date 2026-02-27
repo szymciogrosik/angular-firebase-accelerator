@@ -6,9 +6,12 @@
     </mat-card-title>
     <mat-card-content>
       @if (!environment.production) {
-        <div class="alert alert-warning" role="alert" style="margin-bottom: 30px;">
-          {{ 'nonProdMode.warning' | translate }}
-        </div>
+        <mat-card class="app-alert-warning" style="margin: 0;">
+          <mat-card-content>
+            <mat-icon inline="true" style="margin-right: 8px; vertical-align: middle;">warning</mat-icon>
+            <span style="vertical-align: middle;">{{ 'nonProdMode.warning' | translate }}</span>
+          </mat-card-content>
+        </mat-card>
       }
       <mat-tab-group dynamicHeight>
         @if (settingsVisible) {

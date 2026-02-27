@@ -14,6 +14,15 @@
         {{ 'navbar.tab.button.adminPanel' | translate }}
       </button>
     }
+    <!-- Theme Toggle -->
+    <button mat-button class="navbar-button" (click)="themeService.toggleTheme()">
+      <mat-icon style="margin: 0;">{{ (isDarkTheme$ | async) ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
+    <!-- Choose language tab -->
+    <button mat-button class="navbar-button" [matMenuTriggerFor]="languageMenu">
+      <mat-icon style="margin: 0;">language</mat-icon>
+    </button>
+
     @if (currentUser$ | async; as user) {
       <button mat-button class="navbar-button" (click)="navigateToProfile()">
         <div class="navbar-profile-btn-content">
@@ -42,10 +51,6 @@
         {{ 'navbar.tab.button.login' | translate }}
       </button>
     }
-    <!-- Choose language tab -->
-    <button mat-button class="navbar-button" [matMenuTriggerFor]="languageMenu">
-      <mat-icon style="margin: 0;">language</mat-icon>
-    </button>
   </div>
 
   <!-- Short menu navbar -->
@@ -67,13 +72,13 @@
   @if (currentUser$ | async; as user) {
     <button mat-menu-item class="navbar-button-burger-menu" (click)="navigateToProfile()">
       <div class="navbar-profile-btn-content">
+        <span>{{ 'navbar.tab.button.profile' | translate }}</span>
         @if (user.photoUrl) {
           <img [src]="user.photoUrl" class="navbar-avatar-image" alt="Avatar">
         } @else {
           <div class="navbar-avatar-fallback">{{ user.firstName.charAt(0) || '' }}{{ user.lastName.charAt(0) || '' }}
           </div>
         }
-        <span>{{ 'navbar.tab.button.profile' | translate }}</span>
       </div>
     </button>
     <button mat-menu-item class="navbar-button-burger-menu" (click)="logout()">
@@ -91,9 +96,15 @@
       {{ 'navbar.tab.button.login' | translate }}
     </button>
   }
+  <!-- Theme Toggle -->
+  <button mat-menu-item class="navbar-button-burger-menu" (click)="themeService.toggleTheme()">
+    <mat-icon>{{ (isDarkTheme$ | async) ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    <span>{{ ((isDarkTheme$ | async) ? 'theme.light' : 'theme.dark') | translate }}</span>
+  </button>
   <!-- Choose language tab -->
   <button mat-menu-item class="navbar-button-burger-menu" [matMenuTriggerFor]="languageMenu">
     <mat-icon>language</mat-icon>
+    <span>{{ 'language.english' | translate }} / {{ 'language.polish' | translate }}</span>
   </button>
 </mat-menu>
 

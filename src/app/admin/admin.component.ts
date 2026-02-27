@@ -8,13 +8,14 @@ import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss',
   standalone: true,
-  imports: [SettingsComponent, CommonModule, TranslateModule, MatCardModule, MatTabsModule],
+  imports: [SettingsComponent, CommonModule, TranslateModule, MatCardModule, MatTabsModule, MatIconModule],
 })
 export class AdminComponent {
   protected readonly environment = environment;

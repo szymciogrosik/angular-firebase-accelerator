@@ -5,7 +5,6 @@ import {Subscription, first} from "rxjs";
 import {AccessRoleService} from "../../../_services/auth/access-role.service";
 import {CustomTranslateService} from "../../../_services/translate/custom-translate.service";
 import {MatDialog} from "@angular/material/dialog";
-import {MatTableDataSource} from "@angular/material/table";
 import {SnackbarService} from "../../../_services/util/snackbar.service";
 import {AuthService} from "../../../_services/auth/auth.service";
 import {UserDetailsComponent} from "./user-details/user-details.component";
@@ -16,37 +15,85 @@ import {DialogData} from "../../../_models/dialog/dialog-data";
 import {DialogType} from "../../../_models/dialog/dialog-type";
 import {FirebaseError} from '@angular/fire/app';
 import {AccessRole} from "../../../_models/user/access-role";
-import {MatSort} from "@angular/material/sort";
+
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
-import {MatTableModule} from '@angular/material/table';
 import {MatTabsModule} from '@angular/material/tabs';
+import {SmartTableComponent} from "../../../_shared-components/smart-table/smart-table.component";
+import {SmartTableColumn} from "../../../_shared-components/smart-table/smart-table.model";
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
   standalone: true,
-  imports: [MatSort, CommonModule, TranslateModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatTableModule, MatTabsModule],
+  imports: [CommonModule, TranslateModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatTabsModule, SmartTableComponent],
 })
 export class UsersComponent implements OnDestroy {
   protected allUsers: CustomUser[];
   protected deletedUsers: CustomUser[];
   protected allUsersSubscription: Subscription;
 
-  protected activeDisplayedColumns: string[] = [
-    'position', 'name', 'email', 'roles', 'details', 'remove'
-  ];
-  protected activeDataSource = new MatTableDataSource<CustomUser>([]);
+  protected addUserAction = {
+    icon: 'person_add',
+    tooltipKey: 'admin.panel.settings.users.addNewUser',
+    color: 'primary' as const,
+    onClick: () => this.openAddUser()
+  };
 
-  protected deletedDisplayedColumns: string[] = [
-    'position', 'name', 'email', 'uid', 'restore'
+  protected activeUsersColumns: SmartTableColumn<CustomUser>[] = [
+    {key: 'position', headerLabelKey: 'admin.panel.table.header.no', type: 'index'},
+    {
+      key: 'name',
+      headerLabelKey: 'admin.panel.table.header.name',
+      type: 'text',
+      valueFn: (row) => row.firstName + ' ' + row.lastName
+    },
+    {key: 'email', headerLabelKey: 'admin.panel.table.header.email', type: 'text'},
+    {key: 'roles', headerLabelKey: 'admin.panel.table.header.role', type: 'text'},
+    {
+      key: 'actions', headerLabelKey: '', type: 'action', actions: [
+        {
+          tooltipKey: 'admin.panel.table.header.modify',
+          icon: 'edit',
+          color: 'primary',
+          onClick: (row) => this.openUpdateUser(row.id!)
+        },
+        {
+          tooltipKey: 'admin.panel.table.header.delete',
+          icon: 'delete',
+          color: 'warn',
+          onClick: (row) => this.openConfirmRemoveUserDialog(row.id!)
+        }
+      ]
+    }
   ];
-  protected deletedDataSource = new MatTableDataSource<CustomUser>([]);
+
+  protected deletedUsersColumns: SmartTableColumn<CustomUser>[] = [
+    {key: 'position', headerLabelKey: 'admin.panel.table.header.no', type: 'index'},
+    {
+      key: 'name',
+      headerLabelKey: 'admin.panel.table.header.name',
+      type: 'text',
+      valueFn: (row) => row.firstName + ' ' + row.lastName
+    },
+    {key: 'email', headerLabelKey: 'admin.panel.table.header.email', type: 'text'},
+    {key: 'uid', headerLabelKey: 'admin.panel.table.header.guid', type: 'text'},
+    {
+      key: 'actions', headerLabelKey: '', type: 'action', actions: [
+        {
+          tooltipKey: 'admin.panel.table.header.restore',
+          icon: 'settings_backup_restore',
+          color: 'primary',
+          onClick: (row) => this.restoreUser(row.id!)
+        }
+      ]
+    }
+  ];
 
   constructor(
     private accessService: AccessRoleService,
@@ -63,9 +110,6 @@ export class UsersComponent implements OnDestroy {
           this.allUsersSubscription = this.userDb.getAll().subscribe(allUsers => {
             this.allUsers = allUsers.filter(u => !u.isDeleted).sort((a, b) => a.firstName.localeCompare(b.firstName));
             this.deletedUsers = allUsers.filter(u => u.isDeleted).sort((a, b) => a.firstName.localeCompare(b.firstName));
-
-            this.activeDataSource.data = this.allUsers;
-            this.deletedDataSource.data = this.deletedUsers;
           });
         }
       });
@@ -73,16 +117,6 @@ export class UsersComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.allUsersSubscription?.unsubscribe();
-  }
-
-  protected applyActiveFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.activeDataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  protected applyDeletedFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.deletedDataSource.filter = filterValue.trim().toLowerCase();
   }
 
   protected openAddUser(): any {

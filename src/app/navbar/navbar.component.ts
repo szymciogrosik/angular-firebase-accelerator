@@ -8,6 +8,7 @@ import {AccessRole} from "../_models/user/access-role";
 import {CustomUser} from "../_models/user/custom-user";
 import {Observable} from "rxjs";
 import {Router} from "@angular/router";
+import {ThemeService} from "../_services/util/theme.service";
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatButtonModule} from '@angular/material/button';
@@ -28,15 +29,18 @@ export class NavbarComponent implements OnInit {
   protected readonly rp = RedirectionEnum;
   protected isAdmin$: Observable<boolean>;
   protected currentUser$: Observable<CustomUser | null>;
+  protected isDarkTheme$: Observable<boolean>;
 
   constructor(
     protected translateService: CustomTranslateService,
     protected authService: AuthService,
     private accessService: AccessRoleService,
     private router: Router,
+    public themeService: ThemeService
   ) {
     this.isAdmin$ = this.accessService.isAuthorized$(AccessRole.ADMIN_PAGE_ACCESS);
     this.currentUser$ = this.authService.loggedUser();
+    this.isDarkTheme$ = this.themeService.isDarkTheme$;
   }
 
   ngOnInit(): void {
