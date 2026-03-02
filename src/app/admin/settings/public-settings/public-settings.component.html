@@ -20,6 +20,14 @@
             <mat-spinner diameter="20" style="margin-left: 15px;"></mat-spinner>
           }
         </div>
+        <div style="display: flex; align-items: center;">
+          <mat-slide-toggle formControlName="allowDarkMode" color="primary" (change)="saveSettings()">
+            {{ 'admin.panel.settings.public.allowDarkMode' | translate }}
+          </mat-slide-toggle>
+          @if (saving) {
+            <mat-spinner diameter="20" style="margin-left: 15px;"></mat-spinner>
+          }
+        </div>
       </div>
     </form>
   }

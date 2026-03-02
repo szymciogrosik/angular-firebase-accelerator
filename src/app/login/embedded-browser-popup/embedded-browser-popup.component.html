@@ -17,12 +17,12 @@
     </div>
   </mat-dialog-content>
 
-  <mat-dialog-actions align="end">
-    <div class="button-wrapper dialog-actions">
-      <button mat-raised-button color="warn" class="action-button" (click)="onCancelClick()">
+  <mat-dialog-actions>
+    <div class="app-popup-full-width-actions">
+      <button mat-raised-button color="warn" class="app-action-button" (click)="onCancelClick()">
         {{ 'registeredUsers.details.cancel' | translate }}
       </button>
-      <button mat-raised-button color="primary" class="action-button" (click)="onApproveClick()">
+      <button mat-raised-button color="primary" class="app-action-button" (click)="onApproveClick()">
         {{ 'login.error.information.copy' | translate }}
         <mat-icon>file_copy</mat-icon>
       </button>

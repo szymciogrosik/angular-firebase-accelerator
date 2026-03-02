@@ -10,7 +10,8 @@ import {
   signInWithPopup,
   signOut,
   updatePassword,
-  User
+  User,
+  deleteUser
 } from '@angular/fire/auth';
 import {BehaviorSubject, firstValueFrom, map, Observable, Subject} from 'rxjs';
 import {FirebaseError} from '@angular/fire/app';
@@ -141,10 +142,16 @@ export class AuthService {
         // If we wanted to treat it differently we could, but letting it login is common behavior.
       } else if (!isRegistration && additionalInfo?.isNewUser) {
         // Logged in with Google, but it's fundamentally a new user and it wasn't a registration intent
-        // Our observer will see missing CustomUser and block them.
+        // We delete the user from Firebase Auth to prevent creating a record.
+        await deleteUser(userCredential.user);
+        await signOut(this.auth);
+        throw this.translateService.get('login.error.invalidUser');
       }
     } catch (err) {
       console.error(err);
+      if (err === this.translateService.get('login.error.invalidUser')) {
+        throw err;
+      }
       throw this.translateService.get('login.error.internal');
     }
   }

@@ -211,7 +211,7 @@ export class LoginComponent implements OnInit {
     if (this.isRegistrationMode && this.allowForRegistering) this.registerForm.disable();
     else this.loginForm.disable();
 
-    this.authService.loginWithGoogleSso(this.allowForRegistering)
+    this.authService.loginWithGoogleSso(this.isRegistrationMode && this.allowForRegistering)
       .then((): void => {
         // success; leave loading = true so spinner stays until redirection
       })

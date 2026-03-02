@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {RedirectionEnum} from '../../utils/redirection.enum';
 import {CustomTranslateService} from '../_services/translate/custom-translate.service';
-import {LanguageEnum} from "../_services/translate/language-enum";
-import {AuthService} from "../_services/auth/auth.service";
-import {AccessRoleService} from "../_services/auth/access-role.service";
-import {AccessRole} from "../_models/user/access-role";
-import {CustomUser} from "../_models/user/custom-user";
-import {Observable} from "rxjs";
-import {Router, RouterModule} from "@angular/router";
-import {ThemeService} from "../_services/util/theme.service";
+import {LanguageEnum} from '../_services/translate/language-enum';
+import {AuthService} from '../_services/auth/auth.service';
+import {AccessRoleService} from '../_services/auth/access-role.service';
+import {AccessRole} from '../_models/user/access-role';
+import {CustomUser} from '../_models/user/custom-user';
+import {Observable} from 'rxjs';
+import {Router, RouterModule} from '@angular/router';
+import {ThemeService} from '../_services/util/theme.service';
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatButtonModule} from '@angular/material/button';
@@ -21,7 +21,15 @@ import {MatToolbarModule} from '@angular/material/toolbar';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
   standalone: true,
-  imports: [CommonModule, TranslateModule, MatButtonModule, MatIconModule, MatMenuModule, RouterModule, MatToolbarModule],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    RouterModule,
+    MatToolbarModule
+  ]
 })
 export class NavbarComponent implements OnInit {
   protected readonly LanguageEnum = LanguageEnum;
@@ -29,6 +37,7 @@ export class NavbarComponent implements OnInit {
   protected isAdmin$: Observable<boolean>;
   protected currentUser$: Observable<CustomUser | null>;
   protected isDarkTheme$: Observable<boolean>;
+  protected allowDarkMode$: Observable<boolean>;
 
   constructor(
     protected translateService: CustomTranslateService,
@@ -40,6 +49,7 @@ export class NavbarComponent implements OnInit {
     this.isAdmin$ = this.accessService.isAuthorized$(AccessRole.ADMIN_PAGE_ACCESS);
     this.currentUser$ = this.authService.loggedUser();
     this.isDarkTheme$ = this.themeService.isDarkTheme$;
+    this.allowDarkMode$ = this.themeService.allowDarkMode$;
   }
 
   ngOnInit(): void {
@@ -50,15 +60,15 @@ export class NavbarComponent implements OnInit {
   }
 
   navigateToAdminPanel(): void {
-    this.router.navigate(["/" + RedirectionEnum.ADMIN]);
+    this.router.navigate(['/' + RedirectionEnum.ADMIN]);
   }
 
   navigateToProfile(): void {
-    this.router.navigate(["/" + RedirectionEnum.PROFILE]);
+    this.router.navigate(['/' + RedirectionEnum.PROFILE]);
   }
 
   navigateToLogin(): void {
-    this.router.navigate(["/" + RedirectionEnum.LOGIN]);
+    this.router.navigate(['/' + RedirectionEnum.LOGIN]);
   }
 
   protected readonly AccessRoleService = AccessRoleService;
