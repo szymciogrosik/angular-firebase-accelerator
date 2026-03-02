@@ -15,9 +15,11 @@
       </button>
     }
     <!-- Theme Toggle -->
-    <button mat-button class="navbar-button" (click)="themeService.toggleTheme()">
-      <mat-icon style="margin: 0;">{{ (isDarkTheme$ | async) ? 'light_mode' : 'dark_mode' }}</mat-icon>
-    </button>
+    @if (allowDarkMode$ | async) {
+      <button mat-button class="navbar-button" (click)="themeService.toggleTheme()">
+        <mat-icon style="margin: 0;">{{ (isDarkTheme$ | async) ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      </button>
+    }
     <!-- Choose language tab -->
     <button mat-button class="navbar-button" [matMenuTriggerFor]="languageMenu">
       <mat-icon style="margin: 0;">language</mat-icon>
@@ -97,10 +99,12 @@
     </button>
   }
   <!-- Theme Toggle -->
-  <button mat-menu-item class="navbar-button-burger-menu" (click)="themeService.toggleTheme()">
-    <mat-icon>{{ (isDarkTheme$ | async) ? 'light_mode' : 'dark_mode' }}</mat-icon>
-    <span>{{ ((isDarkTheme$ | async) ? 'theme.light' : 'theme.dark') | translate }}</span>
-  </button>
+  @if (allowDarkMode$ | async) {
+    <button mat-menu-item class="navbar-button-burger-menu" (click)="themeService.toggleTheme()">
+      <mat-icon>{{ (isDarkTheme$ | async) ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      <span>{{ ((isDarkTheme$ | async) ? 'theme.light' : 'theme.dark') | translate }}</span>
+    </button>
+  }
   <!-- Choose language tab -->
   <button mat-menu-item class="navbar-button-burger-menu" [matMenuTriggerFor]="languageMenu">
     <mat-icon>language</mat-icon>

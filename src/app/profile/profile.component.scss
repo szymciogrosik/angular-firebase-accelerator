@@ -24,6 +24,22 @@
   margin-bottom: 30px;
 }
 
+.avatar-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.change-photo-fab {
+  position: absolute !important;
+  bottom: 0;
+  right: 0;
+  transform: translate(25%, 25%);
+  width: 40px !important;
+  height: 40px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
 .avatar-wrapper {
   width: 150px;
   height: 150px;
@@ -59,4 +75,15 @@
   color: #757575;
   text-transform: uppercase;
   letter-spacing: 2px;
+}
+
+:host-context(.dark-theme) {
+  .avatar-wrapper {
+    background-color: $dark-surface;
+    border-color: $dark-border-primary;
+  }
+
+  .avatar-fallback {
+    color: $dark-text-primary;
+  }
 }

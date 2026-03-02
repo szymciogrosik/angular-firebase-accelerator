@@ -18,10 +18,22 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
 
+import {MatTooltipModule} from '@angular/material/tooltip';
+
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [UserFormComponent, CommonModule, TranslateModule, MatCardModule, MatButtonModule, MatProgressSpinnerModule, MatIconModule, MatDialogModule],
+  imports: [
+    UserFormComponent,
+    CommonModule,
+    TranslateModule,
+    MatCardModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatIconModule,
+    MatDialogModule,
+    MatTooltipModule
+  ],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
@@ -45,14 +57,14 @@ export class ProfileComponent implements OnInit {
     try {
       this.user = await this.authService.loggedUserPromise();
       this.publicSettingsService.getDocument('general').subscribe({
-        next: (data) => {
+        next: data => {
           if (data && data.allowForProfilePictureChange !== undefined) {
             this.allowForProfilePictureChange = data.allowForProfilePictureChange;
           } else {
             this.allowForProfilePictureChange = false;
           }
         },
-        error: (err) => console.error('Failed to load public settings', err)
+        error: err => console.error('Failed to load public settings', err)
       });
     } catch (error) {
       console.error('Failed to load user', error);
@@ -106,7 +118,7 @@ export class ProfileComponent implements OnInit {
       this.isLoading = true;
       await this.userDbService.update(this.user.id, {
         firstName: payload.firstName,
-        lastName: payload.lastName,
+        lastName: payload.lastName
       });
       // Optionally update local context if needed, but standard auth stream might catch it
       this.user.firstName = payload.firstName;

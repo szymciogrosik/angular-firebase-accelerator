@@ -69,3 +69,11 @@ button:focus {
   color: #757575;
   text-transform: uppercase;
 }
+
+:host-context(.dark-theme) {
+  .navbar-avatar-fallback {
+    background-color: $dark-surface;
+    border-color: $dark-border-secondary;
+    color: $dark-text-primary;
+  }
+}
