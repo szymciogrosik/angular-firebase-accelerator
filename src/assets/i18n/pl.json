@@ -1,6 +1,7 @@
 {
   "language.english": "Angielski",
   "language.polish": "Polski",
+  "language.name": "Język",
   "theme.light": "Jasny motyw",
   "theme.dark": "Ciemny motyw",
   "page.title": "Angular accelerator app",
