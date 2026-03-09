@@ -1,6 +1,7 @@
 {
   "language.english": "English",
   "language.polish": "Polski",
+  "language.name": "Language",
   "theme.light": "Light theme",
   "theme.dark": "Dark theme",
   "page.title": "Angular accelerator app",

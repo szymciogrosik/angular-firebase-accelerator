@@ -1,4 +1,4 @@
-name: CI - ftp - Step 2 - Build and deploy to ftp-release
+name: CD - ftp - Step 2 - Build and deploy to ftp-release
 
 on:
   push:

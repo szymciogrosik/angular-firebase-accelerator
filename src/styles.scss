@@ -263,7 +263,7 @@ $dark-theme: mat.m2-define-dark-theme((color: (primary: mat.m2-define-palette($m
     border-color: $dark-border-primary !important;
   }
 
-  /* Toolbar/Navbar AND Footer */
+  /* Toolbar / Navbar AND Footer */
   .mat-toolbar.mat-primary,
   .footer {
     background-color: $dark-surface !important;
@@ -382,7 +382,8 @@ input[type="password"]::-ms-clear {
 .app-card-wide,
 .app-card-medium,
 .app-card-narrow {
-  width: 100%;
+  width: calc(100% - 40px);
+  box-sizing: border-box;
   margin-bottom: 20px;
 }
 
@@ -403,6 +404,7 @@ input[type="password"]::-ms-clear {
   .app-card-wide,
   .app-card-medium,
   .app-card-narrow {
+    width: calc(100% - 20px);
     padding: 2rem 5px;
   }
 }
