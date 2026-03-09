@@ -1,4 +1,4 @@
-name: CI - firebase - Step 2 - Build and deploy to firebase
+name: CD - firebase - Step 2 - Build and deploy to firebase
 
 on:
   push:

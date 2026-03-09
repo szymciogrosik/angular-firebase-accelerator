@@ -1,17 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {CustomTranslateService} from "../_services/translate/custom-translate.service";
-import {SnackbarService} from "../_services/util/snackbar.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {AuthService} from "../_services/auth/auth.service";
-import {RedirectionEnum} from "../../utils/redirection.enum";
-import {MatDialog, MatDialogModule} from "@angular/material/dialog";
-import {EmbeddedBrowserPopupComponent} from "./embedded-browser-popup/embedded-browser-popup.component";
-import {EmbeddedBrowserWarningData} from "../_models/dialog/embedded-browser-warning/embedded-browser-warning-data";
+import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {CustomTranslateService} from '../_services/translate/custom-translate.service';
+import {SnackbarService} from '../_services/util/snackbar.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthService} from '../_services/auth/auth.service';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {EmbeddedBrowserPopupComponent} from './embedded-browser-popup/embedded-browser-popup.component';
+import {EmbeddedBrowserWarningData} from '../_models/dialog/embedded-browser-warning/embedded-browser-warning-data';
 import {FirebaseError} from '@angular/fire/app';
-import {CustomValidators} from "../_services/validator/custom-validators";
-import {MatTabChangeEvent, MatTabsModule} from "@angular/material/tabs";
-import {PublicSettingsService} from "../_database/settings/public-settings.service";
+import {CustomValidators} from '../_services/validator/custom-validators';
+import {MatTabChangeEvent, MatTabsModule} from '@angular/material/tabs';
+import {PublicSettingsService} from '../_database/settings/public-settings.service';
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatCardModule} from '@angular/material/card';
@@ -55,7 +54,7 @@ export class LoginComponent implements OnInit {
       this.authService.isAuthenticated().subscribe({
         next: (isLoggedUser: boolean) => {
           if (isLoggedUser) {
-            this.router.navigate([RedirectionEnum.ADMIN]);
+            this.router.navigateByUrl(this.returnUrl || '/');
           } else {
             this.checkingIfUserIsAlreadyLoggedIn = false;
           }

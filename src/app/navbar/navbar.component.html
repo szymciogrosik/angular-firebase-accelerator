@@ -73,25 +73,19 @@
   }
   @if (currentUser$ | async; as user) {
     <button mat-menu-item class="navbar-button-burger-menu" (click)="navigateToProfile()">
-      <div class="navbar-profile-btn-content">
-        <span>{{ 'navbar.tab.button.profile' | translate }}</span>
+      <mat-icon style="display: flex; align-items: center; justify-content: center; overflow: visible;">
         @if (user.photoUrl) {
           <img [src]="user.photoUrl" class="navbar-avatar-image" alt="Avatar">
         } @else {
           <div class="navbar-avatar-fallback">{{ user.firstName.charAt(0) || '' }}{{ user.lastName.charAt(0) || '' }}
           </div>
         }
-      </div>
-    </button>
-    <button mat-menu-item class="navbar-button-burger-menu" (click)="logout()">
-      {{ 'navbar.tab.button.logout' | translate }}
+      </mat-icon>
+      <span>{{ 'navbar.tab.button.profile' | translate }}</span>
     </button>
   } @else if (this.authService.isAuthenticated() | async) {
     <button mat-menu-item class="navbar-button-burger-menu" (click)="navigateToProfile()">
       {{ 'navbar.tab.button.profile' | translate }}
-    </button>
-    <button mat-menu-item class="navbar-button-burger-menu" (click)="logout()">
-      {{ 'navbar.tab.button.logout' | translate }}
     </button>
   } @else {
     <button mat-menu-item class="navbar-button-burger-menu" (click)="navigateToLogin()">
@@ -110,6 +104,12 @@
     <mat-icon>language</mat-icon>
     <span>{{ 'language.name' | translate }}</span>
   </button>
+
+  @if (this.authService.isAuthenticated() | async) {
+    <button mat-menu-item class="navbar-button-burger-menu" (click)="logout()">
+      {{ 'navbar.tab.button.logout' | translate }}
+    </button>
+  }
 </mat-menu>
 
 <!-- Language sub-menu -->
