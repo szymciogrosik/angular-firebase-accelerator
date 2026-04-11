@@ -243,6 +243,7 @@ Make a short review of changes and commit.
 ---
 
 ## Troubleshooting
+- 403 when deploying to Firebase **IAM Service Account Credentials API** access missing. Verify the domain app name from firebase, provided in the configuration, probably is wrong.
 - Auth popup blocked on GH Pages: add your GH Pages domain in **Authorized domains**.
 - GH Action cannot push to `gh-pages`: verify **Read and write permissions** and the `github-pages` environment configuration.
 - Change Angular CLI version when needed
