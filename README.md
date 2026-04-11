@@ -190,6 +190,11 @@ Make a short review of changes and commit.
 4) **Service account secret**  
    During `firebase init` with GitHub, a repo secret like  
    `FIREBASE_SERVICE_ACCOUNT_<PROJECT_NAME>` is created. Verify if it is and keep it.
+     
+5) **Create release branches
+   Create branches:
+   - release/firebase
+   - release/gh-pages
 
 ---
 
@@ -279,6 +284,5 @@ ng version
 ---
 
 ## Links
-
 - Angular CLI: https://github.com/angular/angular-cli
 - Firebase CLI: https://firebase.google.com/docs/cli
