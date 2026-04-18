@@ -4,7 +4,6 @@ import {CustomUser} from "../../_models/user/custom-user";
 import {AccessRole} from "../../_models/user/access-role";
 import {CustomTranslateService} from "../../_services/translate/custom-translate.service";
 import {CustomValidators} from "../../_services/validator/custom-validators";
-import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
@@ -16,7 +15,7 @@ import {MatSelectModule} from '@angular/material/select';
 @Component({
   selector: 'app-user-form',
   standalone: true,
-  imports: [CommonModule, TranslateModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatDialogModule, MatSelectModule],
+  imports: [TranslateModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatDialogModule, MatSelectModule],
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss']
 })

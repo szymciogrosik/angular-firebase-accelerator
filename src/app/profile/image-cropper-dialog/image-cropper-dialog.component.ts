@@ -5,7 +5,6 @@ import {StorageService} from '../../_services/storage/storage.service';
 import {UserDbService} from '../../_database/auth/user-db-service.service';
 import {SnackbarService} from '../../_services/util/snackbar.service';
 import {CustomTranslateService} from '../../_services/translate/custom-translate.service';
-import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -19,7 +18,7 @@ export interface ImageCropperData {
 @Component({
   selector: 'app-image-cropper-dialog',
   standalone: true,
-  imports: [ImageCropperComponent, CommonModule, TranslateModule, MatButtonModule, MatProgressSpinnerModule, MatDialogModule],
+  imports: [ImageCropperComponent, TranslateModule, MatButtonModule, MatProgressSpinnerModule, MatDialogModule],
   templateUrl: './image-cropper-dialog.component.html',
   styleUrls: ['./image-cropper-dialog.component.scss']
 })

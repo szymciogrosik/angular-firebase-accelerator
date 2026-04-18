@@ -5,7 +5,6 @@ import {CustomTranslateService} from '../../_services/translate/custom-translate
 import {CustomValidators} from '../../_services/validator/custom-validators';
 import {AuthService} from '../../_services/auth/auth.service';
 import {SnackbarService} from '../../_services/util/snackbar.service';
-import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
@@ -15,7 +14,7 @@ import {MatInputModule} from '@angular/material/input';
 @Component({
   selector: 'app-change-password-dialog',
   standalone: true,
-  imports: [CommonModule, TranslateModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatDialogModule],
+  imports: [TranslateModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatDialogModule],
   templateUrl: './change-password-dialog.component.html',
   styleUrls: ['./change-password-dialog.component.scss']
 })

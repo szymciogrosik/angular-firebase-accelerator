@@ -6,7 +6,6 @@ import {CustomTranslateService} from "../../../../_services/translate/custom-tra
 import {UserFormComponent} from "../../../../_shared-components/user-form/user-form.component";
 import {AuthService} from "../../../../_services/auth/auth.service";
 import {SnackbarService} from "../../../../_services/util/snackbar.service";
-import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatButtonModule} from '@angular/material/button';
 
@@ -15,7 +14,7 @@ import {MatButtonModule} from '@angular/material/button';
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.scss',
   standalone: true,
-  imports: [UserFormComponent, CommonModule, TranslateModule, MatButtonModule, MatDialogModule],
+  imports: [UserFormComponent, TranslateModule, MatButtonModule, MatDialogModule],
 })
 export class UserDetailsComponent implements OnInit {
   @ViewChild('userFormComponent') userFormComponent!: UserFormComponent;

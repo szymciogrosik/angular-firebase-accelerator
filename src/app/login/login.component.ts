@@ -11,7 +11,6 @@ import {FirebaseError} from '@angular/fire/app';
 import {CustomValidators} from '../_services/validator/custom-validators';
 import {MatTabChangeEvent, MatTabsModule} from '@angular/material/tabs';
 import {PublicSettingsService} from '../_database/settings/public-settings.service';
-import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
@@ -25,7 +24,7 @@ import {MatInputModule} from '@angular/material/input';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   standalone: true,
-  imports: [CommonModule, TranslateModule, MatCardModule, MatButtonModule, MatProgressSpinnerModule, MatIconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatDialogModule, MatTabsModule],
+  imports: [TranslateModule, MatCardModule, MatButtonModule, MatProgressSpinnerModule, MatIconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatDialogModule, MatTabsModule],
 })
 export class LoginComponent implements OnInit {
   checkingIfUserIsAlreadyLoggedIn: boolean = true;

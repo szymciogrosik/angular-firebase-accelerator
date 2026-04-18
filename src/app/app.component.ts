@@ -3,7 +3,6 @@ import {CustomTranslateService} from './_services/translate/custom-translate.ser
 import {FooterComponent} from "./footer/footer.component";
 import {NavbarComponent} from "./navbar/navbar.component";
 import {Title} from '@angular/platform-browser';
-import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {RouterModule} from '@angular/router';
 
@@ -12,7 +11,7 @@ import {RouterModule} from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   standalone: true,
-  imports: [FooterComponent, NavbarComponent, CommonModule, TranslateModule, RouterModule],
+  imports: [FooterComponent, NavbarComponent, TranslateModule, RouterModule],
 })
 export class AppComponent {
 

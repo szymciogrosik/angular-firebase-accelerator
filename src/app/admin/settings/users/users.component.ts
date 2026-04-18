@@ -15,8 +15,6 @@ import {DialogData} from "../../../_models/dialog/dialog-data";
 import {DialogType} from "../../../_models/dialog/dialog-type";
 import {FirebaseError} from '@angular/fire/app';
 import {AccessRole} from "../../../_models/user/access-role";
-
-import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -30,7 +28,7 @@ import {SmartTableColumn} from "../../../_shared-components/smart-table/smart-ta
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
   standalone: true,
-  imports: [CommonModule, TranslateModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatTabsModule, SmartTableComponent],
+  imports: [TranslateModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatTabsModule, SmartTableComponent],
 })
 export class UsersComponent implements OnDestroy {
   protected allUsers: CustomUser[];

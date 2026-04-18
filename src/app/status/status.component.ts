@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {Status} from "../_models/status/status";
 import {AssetsService} from "../_services/util/assets.service";
-import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -11,7 +10,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
   templateUrl: './status.component.html',
   styleUrls: ['./status.component.scss'],
   standalone: true,
-  imports: [CommonModule, TranslateModule, MatCardModule, MatProgressSpinnerModule],
+  imports: [TranslateModule, MatCardModule, MatProgressSpinnerModule],
 })
 export class StatusComponent {
   private STATUS_URL: string = 'status/status.json';

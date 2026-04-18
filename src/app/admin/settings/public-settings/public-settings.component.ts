@@ -5,7 +5,6 @@ import {SnackbarService} from '../../../_services/util/snackbar.service';
 import {CustomTranslateService} from '../../../_services/translate/custom-translate.service';
 import {Subscription} from 'rxjs';
 import {MatSlideToggle, MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
@@ -15,7 +14,6 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
   imports: [
     ReactiveFormsModule,
     MatSlideToggle,
-    CommonModule,
     TranslateModule,
     MatProgressSpinnerModule,
     MatSlideToggleModule
