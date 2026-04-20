@@ -1,19 +1,19 @@
 <div class="registration-content">
   <mat-card class="app-card-narrow">
     <mat-card-title>
-      <h1>{{ (isRegistrationMode ? 'login.mode.register' : 'login.mode.login') | translate }}</h1>
+      <h1>{{ (isRegistrationMode() ? 'login.mode.register' : 'login.mode.login') | translate }}</h1>
       <p>{{ 'login.header2' | translate }}</p>
     </mat-card-title>
 
     <mat-card-content>
-      @if (!checkingIfUserIsAlreadyLoggedIn) {
-        @if (fetchingSettings) {
+      @if (!checkingIfUserIsAlreadyLoggedIn()) {
+        @if (fetchingSettings()) {
           <div style="text-align: center; padding: 20px;">
             <mat-spinner [diameter]="50" style="margin: 0 auto;"></mat-spinner>
           </div>
         } @else {
           <div class="login-tabs-container">
-            @if (allowForRegistering) {
+            @if (allowForRegistering()) {
               <mat-tab-group (selectedTabChange)="onTabChange($event)" dynamicHeight>
                 <mat-tab label="{{ 'login.mode.login' | translate }}">
                   <div class="tab-content-padding">
@@ -30,19 +30,19 @@
                       <p>
                         <mat-form-field appearance="outline">
                           <mat-label>{{ 'login.enterPassword' | translate }}</mat-label>
-                          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password"
+                          <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="password"
                                  required>
                           <button mat-icon-button matSuffix type="button" class="register-button"
-                                  (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
-                                  [attr.aria-pressed]="hidePassword">
-                            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                                  (click)="hidePassword.set(!hidePassword())" [attr.aria-label]="'Hide password'"
+                                  [attr.aria-pressed]="hidePassword()">
+                            <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
                           </button>
                           <mat-error>{{ this.getErrorMessage('password') }}</mat-error>
                         </mat-form-field>
                       </p>
 
                       <div>
-                        @if (loading) {
+                        @if (loading()) {
                           <mat-spinner [diameter]="30"></mat-spinner>
                         } @else {
                           <button mat-flat-button type="submit" color="primary" class="register-button">
@@ -87,19 +87,19 @@
                       <p>
                         <mat-form-field appearance="outline">
                           <mat-label>{{ 'login.enterPassword' | translate }}</mat-label>
-                          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password"
+                          <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="password"
                                  required>
                           <button mat-icon-button matSuffix type="button" class="register-button"
-                                  (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
-                                  [attr.aria-pressed]="hidePassword">
-                            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                                  (click)="hidePassword.set(!hidePassword())" [attr.aria-label]="'Hide password'"
+                                  [attr.aria-pressed]="hidePassword()">
+                            <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
                           </button>
                           <mat-error>{{ this.getErrorMessage('password', true) }}</mat-error>
                         </mat-form-field>
                       </p>
 
                       <div>
-                        @if (loading) {
+                        @if (loading()) {
                           <mat-spinner [diameter]="30"></mat-spinner>
                         } @else {
                           <button mat-flat-button type="submit" color="primary" class="register-button">
@@ -128,18 +128,18 @@
                   <p>
                     <mat-form-field appearance="outline">
                       <mat-label>{{ 'login.enterPassword' | translate }}</mat-label>
-                      <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
+                      <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="password" required>
                       <button mat-icon-button matSuffix type="button" class="register-button"
-                              (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
-                              [attr.aria-pressed]="hidePassword">
-                        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                              (click)="hidePassword.set(!hidePassword())" [attr.aria-label]="'Hide password'"
+                              [attr.aria-pressed]="hidePassword()">
+                        <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
                       </button>
                       <mat-error>{{ this.getErrorMessage('password') }}</mat-error>
                     </mat-form-field>
                   </p>
 
                   <div>
-                    @if (loading) {
+                    @if (loading()) {
                       <mat-spinner [diameter]="30"></mat-spinner>
                     } @else {
                       <button mat-flat-button type="submit" color="primary" class="register-button">
@@ -154,7 +154,7 @@
             <div class="separation-line"></div>
 
             <div>
-              @if (!loading) {
+              @if (!loading()) {
                 <button mat-flat-button color="accent" class="register-button login-with-google"
                         (click)="openPopupIfEmbeddedBrowserOpenOtherwiseOpenPopup()">
                   {{ 'login.googleSso' | translate }}
@@ -164,7 +164,7 @@
           </div>
         }
       }
-      @if (checkingIfUserIsAlreadyLoggedIn) {
+      @if (checkingIfUserIsAlreadyLoggedIn()) {
         <div class="checking-if-user-is-logged-in"
              style="display: flex; flex-direction: column; gap: 16px; margin-top: 20px;">
           <div class="skeleton-loader" style="height: 56px; width: 100%; border-radius: 4px;"></div>

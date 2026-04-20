@@ -1,6 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {environment} from "../../environments/environment";
-import {CommonModule} from '@angular/common';
+import {Component, OnInit, inject} from '@angular/core';
+import {APP_CONFIG} from '../app.config.token';
 import {MatCardModule} from '@angular/material/card';
 
 @Component({
@@ -8,16 +7,12 @@ import {MatCardModule} from '@angular/material/card';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatCardModule],
+  imports: [MatCardModule],
 })
 export class HomeComponent implements OnInit {
-  constructor() {
-
-  }
+  protected readonly environment = inject(APP_CONFIG);
 
   ngOnInit(): void {
   }
 
-
-  protected readonly environment = environment;
 }

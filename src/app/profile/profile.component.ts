@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, signal, inject} from '@angular/core';
 import {UserFormComponent} from '../_shared-components/user-form/user-form.component';
 import {AuthService} from '../_services/auth/auth.service';
 import {CustomUser} from '../_models/user/custom-user';
@@ -10,8 +10,7 @@ import {ChangePasswordDialogComponent} from './change-password-dialog/change-pas
 
 import {ImageCropperData, ImageCropperDialogComponent} from './image-cropper-dialog/image-cropper-dialog.component';
 import {ImagePreviewData, ImagePreviewDialogComponent} from './image-preview-dialog/image-preview-dialog.component';
-import {PublicSettingsService} from '../_database/settings/public-settings.service';
-import {CommonModule} from '@angular/common';
+import {PublicSettingsFacade} from '../_database/settings/public-settings.facade';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
@@ -25,7 +24,6 @@ import {MatTooltipModule} from '@angular/material/tooltip';
   standalone: true,
   imports: [
     UserFormComponent,
-    CommonModule,
     TranslateModule,
     MatCardModule,
     MatButtonModule,
@@ -39,38 +37,25 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 })
 export class ProfileComponent implements OnInit {
   @ViewChild('userFormComponent') userFormComponent!: UserFormComponent;
-  user: CustomUser | null = null;
-  isLoading = true;
-  allowForProfilePictureChange = false;
+  readonly user = signal<CustomUser | null>(null);
+  readonly isLoading = signal(true);
+  private authService = inject(AuthService);
+  private userDbService = inject(UserDbService);
+  private snackbarService = inject(SnackbarService);
+  private translateService = inject(CustomTranslateService);
+  private dialog = inject(MatDialog);
+  private facade = inject(PublicSettingsFacade);
 
-  constructor(
-    private authService: AuthService,
-    private userDbService: UserDbService,
-    private snackbarService: SnackbarService,
-    private translateService: CustomTranslateService,
-    private dialog: MatDialog,
-    private publicSettingsService: PublicSettingsService
-  ) {
-  }
+  readonly allowForProfilePictureChange = this.facade.allowForProfilePictureChange;
 
   async ngOnInit(): Promise<void> {
     try {
-      this.user = await this.authService.loggedUserPromise();
-      this.publicSettingsService.getDocument('general').subscribe({
-        next: data => {
-          if (data && data.allowForProfilePictureChange !== undefined) {
-            this.allowForProfilePictureChange = data.allowForProfilePictureChange;
-          } else {
-            this.allowForProfilePictureChange = false;
-          }
-        },
-        error: err => console.error('Failed to load public settings', err)
-      });
+      this.user.set(await this.authService.loggedUserPromise());
     } catch (error) {
       console.error('Failed to load user', error);
       this.snackbarService.openLongSnackBar(this.translateService.get('profile.error.load'));
     } finally {
-      this.isLoading = false;
+      this.isLoading.set(false);
     }
   }
 
@@ -82,21 +67,21 @@ export class ProfileComponent implements OnInit {
   }
 
   onFileSelected(event: any): void {
-    if (event.target.files && event.target.files.length > 0 && this.user) {
+    if (event.target.files && event.target.files.length > 0 && this.user()) {
       const dialogRef = this.dialog.open(ImageCropperDialogComponent, {
         width: '600px',
         data: {
           imageChangedEvent: event,
-          authUserUid: this.user.uid,
-          userDocId: this.user.id
+          authUserUid: this.user()!.uid,
+          userDocId: this.user()!.id
         } as ImageCropperData
       });
 
       dialogRef.afterClosed().subscribe((photoUrl: string | null) => {
         // Clear input to allow re-selection of the same file
         event.target.value = null;
-        if (photoUrl && this.user) {
-          this.user.photoUrl = photoUrl;
+        if (photoUrl && this.user()) {
+          this.user.set({ ...this.user()!, photoUrl: photoUrl });
         }
       });
     }
@@ -112,24 +97,24 @@ export class ProfileComponent implements OnInit {
   }
 
   async onFormSubmit(payload: any): Promise<void> {
-    if (!this.user) return;
+    const currentUser = this.user();
+    if (!currentUser) return;
 
     try {
-      this.isLoading = true;
-      await this.userDbService.update(this.user.id, {
+      this.isLoading.set(true);
+      await this.userDbService.update(currentUser.id, {
         firstName: payload.firstName,
         lastName: payload.lastName
       });
       // Optionally update local context if needed, but standard auth stream might catch it
-      this.user.firstName = payload.firstName;
-      this.user.lastName = payload.lastName;
+      this.user.set({ ...currentUser, firstName: payload.firstName, lastName: payload.lastName });
 
       this.snackbarService.openSnackBar(this.translateService.get('profile.success.update'));
     } catch (error) {
       console.error('Failed to update user', error);
       this.snackbarService.openLongSnackBar(this.translateService.get('profile.error.update'));
     } finally {
-      this.isLoading = false;
+      this.isLoading.set(false);
     }
   }
 

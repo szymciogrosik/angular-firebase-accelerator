@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, computed, effect, OnInit, signal, inject} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CustomTranslateService} from '../_services/translate/custom-translate.service';
 import {SnackbarService} from '../_services/util/snackbar.service';
@@ -10,8 +10,7 @@ import {EmbeddedBrowserWarningData} from '../_models/dialog/embedded-browser-war
 import {FirebaseError} from '@angular/fire/app';
 import {CustomValidators} from '../_services/validator/custom-validators';
 import {MatTabChangeEvent, MatTabsModule} from '@angular/material/tabs';
-import {PublicSettingsService} from '../_database/settings/public-settings.service';
-import {CommonModule} from '@angular/common';
+import {PublicSettingsFacade} from '../_database/settings/public-settings.facade';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
@@ -25,65 +24,50 @@ import {MatInputModule} from '@angular/material/input';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   standalone: true,
-  imports: [CommonModule, TranslateModule, MatCardModule, MatButtonModule, MatProgressSpinnerModule, MatIconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatDialogModule, MatTabsModule],
+  imports: [TranslateModule, MatCardModule, MatButtonModule, MatProgressSpinnerModule, MatIconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatDialogModule, MatTabsModule],
 })
 export class LoginComponent implements OnInit {
-  checkingIfUserIsAlreadyLoggedIn: boolean = true;
+  checkingIfUserIsAlreadyLoggedIn = signal(true);
   loginForm: FormGroup;
   registerForm: FormGroup;
-  loading: boolean = false;
-  submitted: boolean = false;
-  hidePassword: boolean = true;
-  isRegistrationMode: boolean = false;
+  loading = signal(false);
+  submitted = signal(false);
+  hidePassword = signal(true);
+  isRegistrationMode = signal(false);
   returnUrl: string = '';
 
-  allowForRegistering: boolean = false;
-  fetchingSettings: boolean = true;
+  private formBuilder = inject(FormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private authService = inject(AuthService);
+  private snackbarService = inject(SnackbarService);
+  private translateService = inject(CustomTranslateService);
+  private dialog = inject(MatDialog);
+  private publicSettingsFacade = inject(PublicSettingsFacade);
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private authService: AuthService,
-    private snackbarService: SnackbarService,
-    private translateService: CustomTranslateService,
-    private dialog: MatDialog,
-    private publicSettingsService: PublicSettingsService
-  ) {
+  allowForRegistering = this.publicSettingsFacade.allowForRegistering;
+  fetchingSettings = computed(() => this.publicSettingsFacade.settings() === undefined);
+
+  constructor() {
+    effect(() => {
+      if (this.authService.isLoggedIn()) {
+        this.router.navigateByUrl(this.returnUrl || '/');
+      }
+    });
+
     setTimeout(() => {
-      this.authService.isAuthenticated().subscribe({
-        next: (isLoggedUser: boolean) => {
-          if (isLoggedUser) {
-            this.router.navigateByUrl(this.returnUrl || '/');
-          } else {
-            this.checkingIfUserIsAlreadyLoggedIn = false;
-          }
-        }
-      });
-
-      this.authService.getAuthErrorLogout().subscribe(() => {
-        this.loading = false;
-        this.loginForm.enable();
-      });
+      if (!this.authService.isLoggedIn()) {
+        this.checkingIfUserIsAlreadyLoggedIn.set(false);
+      }
     }, 600);
+
+    this.authService.getAuthErrorLogout().subscribe(() => {
+      this.loading.set(false);
+      this.loginForm.enable();
+    });
   }
 
   ngOnInit(): void {
-    this.publicSettingsService.getDocument('general').subscribe({
-      next: (data) => {
-        if (data && data.allowForRegistering !== undefined) {
-          this.allowForRegistering = data.allowForRegistering;
-        } else {
-          this.allowForRegistering = false;
-        }
-        this.fetchingSettings = false;
-      },
-      error: (err) => {
-        console.error('Failed to fetch public settings.', err);
-        this.allowForRegistering = false;
-        this.fetchingSettings = false;
-      }
-    });
 
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -111,16 +95,16 @@ export class LoginComponent implements OnInit {
   }
 
   onTabChange(event: MatTabChangeEvent): void {
-    this.isRegistrationMode = event.index === 1;
-    this.hidePassword = true;
+    this.isRegistrationMode.set(event.index === 1);
+    this.hidePassword.set(true);
   }
 
   onSubmitLogin(): void {
-    this.submitted = true;
+    this.submitted.set(true);
     if (this.loginForm.invalid) return;
 
     const {email, password} = this.loginForm.getRawValue();
-    this.loading = true;
+    this.loading.set(true);
     this.loginForm.disable();
 
     this.authService.loginWithEmailAndPassword(email, password)
@@ -129,17 +113,17 @@ export class LoginComponent implements OnInit {
       })
       .catch((err): void => {
         this.snackbarService.openLongSnackBar(err);
-        this.loading = false;
+        this.loading.set(false);
         this.loginForm.enable();
       });
   }
 
   onSubmitRegister(): void {
-    this.submitted = true;
+    this.submitted.set(true);
     if (this.registerForm.invalid) return;
 
     const {email, password, firstName, lastName} = this.registerForm.getRawValue();
-    this.loading = true;
+    this.loading.set(true);
     this.registerForm.disable();
 
     this.authService.registerUserWithDetails(email, password, firstName, lastName)
@@ -152,7 +136,7 @@ export class LoginComponent implements OnInit {
         } else {
           this.snackbarService.openLongSnackBar(err);
         }
-        this.loading = false;
+        this.loading.set(false);
         this.registerForm.enable();
       });
   }
@@ -206,18 +190,18 @@ export class LoginComponent implements OnInit {
   }
 
   private loginGoogleSsoPopup(): void {
-    this.loading = true;
-    if (this.isRegistrationMode && this.allowForRegistering) this.registerForm.disable();
+    this.loading.set(true);
+    if (this.isRegistrationMode() && this.allowForRegistering()) this.registerForm.disable();
     else this.loginForm.disable();
 
-    this.authService.loginWithGoogleSso(this.isRegistrationMode && this.allowForRegistering)
+    this.authService.loginWithGoogleSso(this.isRegistrationMode() && this.allowForRegistering())
       .then((): void => {
         // success; leave loading = true so spinner stays until redirection
       })
       .catch((err): void => {
         this.snackbarService.openLongSnackBar(err);
-        this.loading = false;
-        if (this.isRegistrationMode && this.allowForRegistering) this.registerForm.enable();
+        this.loading.set(false);
+        if (this.isRegistrationMode() && this.allowForRegistering()) this.registerForm.enable();
         else this.loginForm.enable();
       });
   }
