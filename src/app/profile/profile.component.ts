@@ -18,6 +18,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
 
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {SkeletonComponent} from '../_shared-components/skeleton/skeleton.component';
 
 @Component({
   selector: 'app-profile',
@@ -30,7 +31,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatProgressSpinnerModule,
     MatIconModule,
     MatDialogModule,
-    MatTooltipModule
+    MatTooltipModule,
+    SkeletonComponent
   ],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']

@@ -10,10 +10,8 @@ import {UserDetailsComponent} from "./user-details/user-details.component";
 import {UserDetailsPopupData} from "../../../_models/dialog/user-details/user-details-popup-data";
 import {UserDetailsType} from "../../../_models/dialog/user-details/user-details-type";
 import {DialogService} from "../../../_services/util/dialog.service";
-import {DialogData} from "../../../_models/dialog/dialog-data";
 import {DialogType} from "../../../_models/dialog/dialog-type";
 import {FirebaseError} from '@angular/fire/app';
-import {AccessRole} from "../../../_models/user/access-role";
 import {TranslateModule} from '@ngx-translate/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -38,7 +36,8 @@ export class UsersComponent {
   private authService = inject(AuthService);
   private dialogService = inject(DialogService);
 
-  protected allUsers = this.userFacade.activeUsers;
+  protected facadeAllUsers = this.userFacade.allUsers;
+  protected activeUsers = this.userFacade.activeUsers;
   protected deletedUsers = this.userFacade.deletedUsers;
 
   protected addUserAction = {
@@ -179,7 +178,7 @@ export class UsersComponent {
   }
 
   protected openUpdateUser(id: string): any {
-    const currentUsers = this.allUsers();
+    const currentUsers = this.activeUsers();
     let user: CustomUser | undefined = currentUsers ? currentUsers.find(elem => elem.id === id) : undefined;
     if (user === undefined) {
       this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
