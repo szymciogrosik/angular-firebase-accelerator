@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, signal} from '@angular/core';
 import {UserDbService} from "../../../_database/auth/user-db-service.service";
 import {CustomUser} from "../../../_models/user/custom-user";
 import {first, Subscription} from "rxjs";
@@ -31,8 +31,8 @@ import {SmartTableColumn} from "../../../_shared-components/smart-table/smart-ta
   imports: [TranslateModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatTabsModule, SmartTableComponent],
 })
 export class UsersComponent implements OnDestroy {
-  protected allUsers: CustomUser[];
-  protected deletedUsers: CustomUser[];
+  protected allUsers = signal<CustomUser[] | undefined>(undefined);
+  protected deletedUsers = signal<CustomUser[] | undefined>(undefined);
   protected allUsersSubscription: Subscription;
 
   protected addUserAction = {
@@ -105,8 +105,8 @@ export class UsersComponent implements OnDestroy {
       .then((isAuthorized: boolean): void => {
         if (isAuthorized) {
           this.allUsersSubscription = this.userDb.getAll().subscribe(allUsers => {
-            this.allUsers = allUsers.filter(u => !u.isDeleted).sort((a, b) => a.firstName.localeCompare(b.firstName));
-            this.deletedUsers = allUsers.filter(u => u.isDeleted).sort((a, b) => a.firstName.localeCompare(b.firstName));
+            this.allUsers.set(allUsers.filter(u => !u.isDeleted).sort((a, b) => a.firstName.localeCompare(b.firstName)));
+            this.deletedUsers.set(allUsers.filter(u => u.isDeleted).sort((a, b) => a.firstName.localeCompare(b.firstName)));
           });
         }
       });
@@ -122,7 +122,9 @@ export class UsersComponent implements OnDestroy {
       {
         maxWidth: '900px',
         disableClose: true,
-        data: new UserDetailsPopupData(new CustomUser(), UserDetailsType.CREATE)
+        data: new UserDetailsPopupData({
+          id: '', uid: '', email: '', firstName: '', lastName: '', roles: []
+        }, UserDetailsType.CREATE)
       }
     );
 
@@ -180,13 +182,13 @@ export class UsersComponent implements OnDestroy {
   private openConfirmCreateUserDialog() {
     const confirmPopup =
       this.dialogService.openConfirmDialogWithData(
-        new DialogData(
-          this.translateService.get('admin.panel.settings.warning.popupWarning'),
-          DialogType.CONFIRMATION,
-          this.translateService.get('admin.panel.settings.users.addedSuccessfully'),
-          null,
-          this.translateService.get('registeredUsers.details.confirm')
-        ));
+        {
+          title: this.translateService.get('admin.panel.settings.warning.popupWarning'),
+          popupType: DialogType.CONFIRMATION,
+          message: this.translateService.get('admin.panel.settings.users.addedSuccessfully'),
+          cancelButtonText: null,
+          confirmButtonText: this.translateService.get('registeredUsers.details.confirm')
+        });
     confirmPopup.afterClosed().subscribe(result => {
       if (result) {
         window.location.reload();
@@ -195,7 +197,8 @@ export class UsersComponent implements OnDestroy {
   }
 
   protected openUpdateUser(id: string): any {
-    let user: CustomUser | undefined = this.allUsers.find(elem => elem.id === id);
+    const currentUsers = this.allUsers();
+    let user: CustomUser | undefined = currentUsers ? currentUsers.find(elem => elem.id === id) : undefined;
     if (user === undefined) {
       this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
       return;

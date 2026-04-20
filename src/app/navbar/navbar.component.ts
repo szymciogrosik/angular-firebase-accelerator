@@ -6,7 +6,6 @@ import {AuthService} from '../_services/auth/auth.service';
 import {AccessRoleService} from '../_services/auth/access-role.service';
 import {AccessRole} from '../_models/user/access-role';
 import {CustomUser} from '../_models/user/custom-user';
-import {Observable} from 'rxjs';
 import {Router, RouterModule} from '@angular/router';
 import {ThemeService} from '../_services/util/theme.service';
 import {CommonModule} from '@angular/common';
@@ -15,6 +14,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {toSignal} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-navbar',
@@ -34,10 +34,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 export class NavbarComponent implements OnInit {
   protected readonly LanguageEnum = LanguageEnum;
   protected readonly rp = RedirectionEnum;
-  protected isAdmin$: Observable<boolean>;
-  protected currentUser$: Observable<CustomUser | null>;
-  protected isDarkTheme$: Observable<boolean>;
-  protected allowDarkMode$: Observable<boolean>;
 
   constructor(
     protected translateService: CustomTranslateService,
@@ -46,11 +42,13 @@ export class NavbarComponent implements OnInit {
     private router: Router,
     public themeService: ThemeService
   ) {
-    this.isAdmin$ = this.accessService.isAuthorized$(AccessRole.ADMIN_PAGE_ACCESS);
-    this.currentUser$ = this.authService.loggedUser();
-    this.isDarkTheme$ = this.themeService.isDarkTheme$;
-    this.allowDarkMode$ = this.themeService.allowDarkMode$;
   }
+
+  protected isAdmin = toSignal(this.accessService.isAuthorized$(AccessRole.ADMIN_PAGE_ACCESS));
+  protected currentUser = toSignal(this.authService.loggedUser());
+  protected isDarkTheme = toSignal(this.themeService.isDarkTheme$);
+  protected allowDarkMode = toSignal(this.themeService.allowDarkMode$);
+  protected isAuthenticated = toSignal(this.authService.isAuthenticated());
 
   ngOnInit(): void {
   }

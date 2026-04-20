@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {Status} from "../_models/status/status";
 import {AssetsService} from "../_services/util/assets.service";
 import {TranslateModule} from '@ngx-translate/core';
@@ -15,11 +15,11 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 export class StatusComponent {
   private STATUS_URL: string = 'status/status.json';
 
-  lastDeployTime: string = '';
+  lastDeployTime = signal<string>('');
 
   constructor(private readAssetsService: AssetsService) {
     this.readAssetsService.getResource(this.STATUS_URL).subscribe({
-      next: (data: Status) => this.lastDeployTime = data.lastDeployTime,
+      next: (data: Status) => this.lastDeployTime.set(data.lastDeployTime || ''),
       error: (error) => console.error(error)
     });
   }

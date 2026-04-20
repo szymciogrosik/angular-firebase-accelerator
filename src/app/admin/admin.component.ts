@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {AccessRoleService} from "../_services/auth/access-role.service";
 import {AuthService} from "../_services/auth/auth.service";
-import {environment} from "../../environments/environment";
+import {APP_CONFIG} from '../app.config.token';
 import {SettingsComponent} from "./settings/settings.component";
 import {AccessRole} from "../_models/user/access-role";
 import {TranslateModule} from '@ngx-translate/core';
@@ -17,9 +17,9 @@ import {MatIconModule} from '@angular/material/icon';
   imports: [SettingsComponent, TranslateModule, MatCardModule, MatTabsModule, MatIconModule],
 })
 export class AdminComponent {
-  protected readonly environment = environment;
-  protected loggedUserName: string = '';
-  protected settingsVisible: boolean = false;
+  protected readonly environment = inject(APP_CONFIG);
+  protected loggedUserName = signal<string>('');
+  protected settingsVisible = signal<boolean>(false);
 
   constructor(
     private accessService: AccessRoleService,
@@ -28,13 +28,13 @@ export class AdminComponent {
     this.authService.loggedUser().subscribe({
       next: user => {
         if (user !== null) {
-          this.loggedUserName = user.firstName;
+          this.loggedUserName.set(user.firstName);
         } else {
-          this.loggedUserName = '';
+          this.loggedUserName.set('');
         }
       },
       error: (err) => {
-        this.loggedUserName = '';
+        this.loggedUserName.set('');
         console.error(err);
       }
     });
@@ -42,7 +42,7 @@ export class AdminComponent {
     this.accessService.isAuthorized(AccessRole.ADMIN_PAGE_ACCESS)
       .then((isAuthorized: boolean): void => {
         if (isAuthorized) {
-          this.settingsVisible = true;
+          this.settingsVisible.set(true);
         }
       });
   }

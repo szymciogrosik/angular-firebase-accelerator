@@ -62,13 +62,15 @@ export class AuthService {
           } else {
             // Check if this is a pending registration
             if (this.pendingRegistrationInfo) {
-              const newUser = new CustomUser();
-              newUser.uid = firebaseUser.uid;
-              newUser.email = firebaseUser.email || '';
-              newUser.firstName = this.pendingRegistrationInfo.firstName;
-              newUser.lastName = this.pendingRegistrationInfo.lastName;
-              newUser.roles = this.pendingRegistrationInfo.roles;
-              newUser.isDeleted = false;
+              const newUser: CustomUser = {
+                id: '',
+                uid: firebaseUser.uid,
+                email: firebaseUser.email || '',
+                firstName: this.pendingRegistrationInfo.firstName,
+                lastName: this.pendingRegistrationInfo.lastName,
+                roles: this.pendingRegistrationInfo.roles,
+                isDeleted: false
+              };
 
               await this.standardUserService.create(newUser);
 

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, signal} from '@angular/core';
 import {UserFormComponent} from '../_shared-components/user-form/user-form.component';
 import {AuthService} from '../_services/auth/auth.service';
 import {CustomUser} from '../_models/user/custom-user';
@@ -37,9 +37,9 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 })
 export class ProfileComponent implements OnInit {
   @ViewChild('userFormComponent') userFormComponent!: UserFormComponent;
-  user: CustomUser | null = null;
-  isLoading = true;
-  allowForProfilePictureChange = false;
+  readonly user = signal<CustomUser | null>(null);
+  readonly isLoading = signal(true);
+  readonly allowForProfilePictureChange = signal(false);
 
   constructor(
     private authService: AuthService,
@@ -53,13 +53,13 @@ export class ProfileComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
-      this.user = await this.authService.loggedUserPromise();
+      this.user.set(await this.authService.loggedUserPromise());
       this.publicSettingsService.getDocument('general').subscribe({
         next: data => {
           if (data && data.allowForProfilePictureChange !== undefined) {
-            this.allowForProfilePictureChange = data.allowForProfilePictureChange;
+            this.allowForProfilePictureChange.set(data.allowForProfilePictureChange);
           } else {
-            this.allowForProfilePictureChange = false;
+            this.allowForProfilePictureChange.set(false);
           }
         },
         error: err => console.error('Failed to load public settings', err)
@@ -68,7 +68,7 @@ export class ProfileComponent implements OnInit {
       console.error('Failed to load user', error);
       this.snackbarService.openLongSnackBar(this.translateService.get('profile.error.load'));
     } finally {
-      this.isLoading = false;
+      this.isLoading.set(false);
     }
   }
 
@@ -80,21 +80,21 @@ export class ProfileComponent implements OnInit {
   }
 
   onFileSelected(event: any): void {
-    if (event.target.files && event.target.files.length > 0 && this.user) {
+    if (event.target.files && event.target.files.length > 0 && this.user()) {
       const dialogRef = this.dialog.open(ImageCropperDialogComponent, {
         width: '600px',
         data: {
           imageChangedEvent: event,
-          authUserUid: this.user.uid,
-          userDocId: this.user.id
+          authUserUid: this.user()!.uid,
+          userDocId: this.user()!.id
         } as ImageCropperData
       });
 
       dialogRef.afterClosed().subscribe((photoUrl: string | null) => {
         // Clear input to allow re-selection of the same file
         event.target.value = null;
-        if (photoUrl && this.user) {
-          this.user.photoUrl = photoUrl;
+        if (photoUrl && this.user()) {
+          this.user.set({ ...this.user()!, photoUrl: photoUrl });
         }
       });
     }
@@ -110,24 +110,24 @@ export class ProfileComponent implements OnInit {
   }
 
   async onFormSubmit(payload: any): Promise<void> {
-    if (!this.user) return;
+    const currentUser = this.user();
+    if (!currentUser) return;
 
     try {
-      this.isLoading = true;
-      await this.userDbService.update(this.user.id, {
+      this.isLoading.set(true);
+      await this.userDbService.update(currentUser.id, {
         firstName: payload.firstName,
         lastName: payload.lastName
       });
       // Optionally update local context if needed, but standard auth stream might catch it
-      this.user.firstName = payload.firstName;
-      this.user.lastName = payload.lastName;
+      this.user.set({ ...currentUser, firstName: payload.firstName, lastName: payload.lastName });
 
       this.snackbarService.openSnackBar(this.translateService.get('profile.success.update'));
     } catch (error) {
       console.error('Failed to update user', error);
       this.snackbarService.openLongSnackBar(this.translateService.get('profile.error.update'));
     } finally {
-      this.isLoading = false;
+      this.isLoading.set(false);
     }
   }
 

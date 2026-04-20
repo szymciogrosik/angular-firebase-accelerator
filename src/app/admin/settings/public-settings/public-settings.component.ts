@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, signal} from '@angular/core';
 import {PublicSettingsService} from '../../../_database/settings/public-settings.service';
 import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {SnackbarService} from '../../../_services/util/snackbar.service';
@@ -23,8 +23,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 })
 export class PublicSettingsComponent implements OnInit, OnDestroy {
   settingsForm: FormGroup;
-  loading: boolean = true;
-  saving: boolean = false;
+  loading = signal<boolean>(true);
+  saving = signal<boolean>(false);
   private settingsSub?: Subscription;
 
   constructor(
@@ -58,11 +58,11 @@ export class PublicSettingsComponent implements OnInit, OnDestroy {
         } else {
           this.settingsForm.patchValue({allowDarkMode: false});
         }
-        this.loading = false;
+        this.loading.set(false);
       },
       error: err => {
         console.error(err);
-        this.loading = false;
+        this.loading.set(false);
       }
     });
   }
@@ -74,7 +74,7 @@ export class PublicSettingsComponent implements OnInit, OnDestroy {
   }
 
   async saveSettings(): Promise<void> {
-    this.saving = true;
+    this.saving.set(true);
     this.settingsForm.disable();
     try {
       const payload = {
@@ -95,7 +95,7 @@ export class PublicSettingsComponent implements OnInit, OnDestroy {
       console.error(err);
       this.snackbarService.openLongSnackBar('Failed to save settings.');
     } finally {
-      this.saving = false;
+      this.saving.set(false);
       this.settingsForm.enable();
     }
   }

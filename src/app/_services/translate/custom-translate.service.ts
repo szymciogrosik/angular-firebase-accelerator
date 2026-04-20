@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
+import {Injectable, inject} from '@angular/core';
 import {TranslateService, Translation} from '@ngx-translate/core';
-import {environment} from '../../../environments/environment';
+import {APP_CONFIG} from '../../app.config.token';
 import {DateAdapter} from "@angular/material/core";
 import {registerLocaleData} from "@angular/common";
 import localePl from '@angular/common/locales/pl';
@@ -14,6 +14,7 @@ import {BehaviorSubject, firstValueFrom} from "rxjs";
 export class CustomTranslateService {
 
   private selectedLanguage: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
+  private appConfig = inject(APP_CONFIG);
 
   constructor(
     private translateService: TranslateService,
@@ -25,7 +26,7 @@ export class CustomTranslateService {
     this.translateService.use(language);
     this.dateAdapter.setLocale(language);
     registerLocaleData(this.findApplicationLocalLanguage(language));
-    localStorage.setItem(environment.selected_language_key, language);
+    localStorage.setItem(this.appConfig.selected_language_key, language);
 
     this.selectedLanguage.next(language);
   }

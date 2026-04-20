@@ -22,13 +22,13 @@ export class DialogService {
         maxWidth: '600px',
         width: '400px',
         disableClose: true,
-        data: new DialogData(
-          this.translateService.get('admin.panel.settings.warning.popupWarning'),
-          null,
-          this.translateService.get(messageKey),
-          this.translateService.get('registeredUsers.details.cancel'),
-          this.translateService.get('registeredUsers.details.confirm')
-        )
+        data: {
+          title: this.translateService.get('admin.panel.settings.warning.popupWarning'),
+          popupType: null,
+          message: this.translateService.get(messageKey),
+          cancelButtonText: this.translateService.get('registeredUsers.details.cancel'),
+          confirmButtonText: this.translateService.get('registeredUsers.details.confirm')
+        }
       }
     );
   }
