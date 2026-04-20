@@ -1,4 +1,4 @@
-import {Component, Inject, inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {ImageCroppedEvent, ImageCropperComponent} from 'ngx-image-cropper';
 import {StorageService} from '../../_services/storage/storage.service';

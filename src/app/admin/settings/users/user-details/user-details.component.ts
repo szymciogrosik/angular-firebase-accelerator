@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewChild, inject} from '@angular/core';
+import {Component, OnInit, ViewChild, inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {UserDetailsPopupData} from "../../../../_models/dialog/user-details/user-details-popup-data";
 import {UserDetailsType} from "../../../../_models/dialog/user-details/user-details-type";

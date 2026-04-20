@@ -3,7 +3,7 @@
 
   <mat-dialog-content class="mat-typography dialog-font">
     <div style="margin-top: 10px;">
-      <image-cropper [imageChangedEvent]="data.imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1 / 1"
+      <image-cropper [imageChangedEvent]="data.imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1"
                      [roundCropper]="true" format="webp" [resizeToWidth]="512" (imageCropped)="imageCropped($event)">
       </image-cropper>
     </div>
