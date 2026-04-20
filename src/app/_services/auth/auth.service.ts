@@ -1,4 +1,4 @@
-import {inject, Injectable, Injector, runInInjectionContext} from '@angular/core';
+import {computed, inject, Injectable, Injector, runInInjectionContext} from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
@@ -14,6 +14,7 @@ import {
   deleteUser
 } from '@angular/fire/auth';
 import {BehaviorSubject, firstValueFrom, map, Observable, Subject} from 'rxjs';
+import {toSignal} from '@angular/core/rxjs-interop';
 import {FirebaseError} from '@angular/fire/app';
 import {Router} from '@angular/router';
 import {SnackbarService} from '../util/snackbar.service';
@@ -33,16 +34,17 @@ export class AuthService {
 
   private pendingRegistrationInfo: { firstName: string, lastName: string, roles: AccessRole[] } | null = null;
 
-  private readonly injector: Injector;
+  public readonly currentUser = toSignal(this.user, { initialValue: null });
+  public readonly isLoggedIn = computed(() => !!this.currentUser());
 
-  constructor(
-    private auth: Auth,
-    private router: Router,
-    private snackbarService: SnackbarService,
-    private standardUserService: StandardUserDbService,
-    private translateService: CustomTranslateService
-  ) {
-    this.injector = inject(Injector);
+  private auth = inject(Auth);
+  private router = inject(Router);
+  private snackbarService = inject(SnackbarService);
+  private standardUserService = inject(StandardUserDbService);
+  private translateService = inject(CustomTranslateService);
+  private readonly injector = inject(Injector);
+
+  constructor() {
     this.listenForAuthChanges();
   }
 
@@ -62,13 +64,15 @@ export class AuthService {
           } else {
             // Check if this is a pending registration
             if (this.pendingRegistrationInfo) {
-              const newUser = new CustomUser();
-              newUser.uid = firebaseUser.uid;
-              newUser.email = firebaseUser.email || '';
-              newUser.firstName = this.pendingRegistrationInfo.firstName;
-              newUser.lastName = this.pendingRegistrationInfo.lastName;
-              newUser.roles = this.pendingRegistrationInfo.roles;
-              newUser.isDeleted = false;
+              const newUser: CustomUser = {
+                id: '',
+                uid: firebaseUser.uid,
+                email: firebaseUser.email || '',
+                firstName: this.pendingRegistrationInfo.firstName,
+                lastName: this.pendingRegistrationInfo.lastName,
+                roles: this.pendingRegistrationInfo.roles,
+                isDeleted: false
+              };
 
               await this.standardUserService.create(newUser);
 

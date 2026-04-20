@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild,} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, computed, effect, input, viewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
@@ -28,42 +28,43 @@ import {MatTooltipModule} from '@angular/material/tooltip';
   ],
   templateUrl: './smart-table.component.html',
   styleUrl: './smart-table.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SmartTableComponent<T> implements OnChanges, AfterViewInit {
-  @Input() data: T[] = [];
-  @Input() columns: SmartTableColumn<T>[] = [];
-  @Input() filterPlaceholderKey: string = 'admin.panel.table.filter.placeholder';
-  @Input() headerAction?: {
+export class SmartTableComponent<T> implements AfterViewInit {
+  data = input<T[]>([]);
+  columns = input<SmartTableColumn<T>[]>([]);
+  filterPlaceholderKey = input<string>('admin.panel.table.filter.placeholder');
+  headerAction = input<{
     icon: string;
     tooltipKey: string;
     color?: 'primary' | 'accent' | 'warn';
     onClick: () => void;
-  };
+  } | undefined>(undefined);
 
   protected dataSource = new MatTableDataSource<T>([]);
-  protected displayedColumns: string[] = [];
+  protected displayedColumns = computed(() => this.columns().map(col => col.key));
 
-  @ViewChild(MatPaginator) set paginator(paginator: MatPaginator) {
-    this.dataSource.paginator = paginator;
-  }
+  paginator = viewChild(MatPaginator);
+  sort = viewChild(MatSort);
 
-  @ViewChild(MatSort) set sort(sort: MatSort) {
-    this.dataSource.sort = sort;
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['data']) {
-      this.dataSource.data = this.data;
-    }
-    if (changes['columns'] && this.columns) {
-      this.displayedColumns = this.columns.map((col) => col.key);
-    }
+  constructor() {
+    effect(() => {
+      this.dataSource.data = this.data();
+    });
+    effect(() => {
+      const p = this.paginator();
+      if (p) this.dataSource.paginator = p;
+    });
+    effect(() => {
+      const s = this.sort();
+      if (s) this.dataSource.sort = s;
+    });
   }
 
   ngAfterViewInit(): void {
     // Default sorting logic for nested objects if needed, but defaults are usually fine
     this.dataSource.sortingDataAccessor = (item: T, property: string) => {
-      const column = this.columns.find(c => c.key === property);
+      const column = this.columns().find(c => c.key === property);
       if (column && column.valueFn) {
         return column.valueFn(item);
       }

@@ -2,14 +2,14 @@
   <div class="filter-element" style="margin-top: 1rem; margin-bottom: 1rem;">
     <mat-form-field appearance="outline" style="width: 100%;">
       <mat-label>{{ 'admin.panel.table.filter' | translate }}</mat-label>
-      <input matInput type="text" (keyup)="applyFilter($event)" [placeholder]="filterPlaceholderKey | translate"
+      <input matInput type="text" (keyup)="applyFilter($event)" [placeholder]="filterPlaceholderKey() | translate"
              #filterInput>
     </mat-form-field>
-    @if (headerAction) {
-      <button mat-fab [color]="headerAction.color || 'primary'" (click)="headerAction.onClick()"
-              [matTooltip]="headerAction.tooltipKey | translate"
+    @if (headerAction()) {
+      <button mat-fab [color]="headerAction()!.color || 'primary'" (click)="headerAction()!.onClick()"
+              [matTooltip]="headerAction()!.tooltipKey | translate"
               style="margin-bottom: 22px; width: 56px; height: 56px;">
-        <mat-icon>{{ headerAction.icon }}</mat-icon>
+        <mat-icon>{{ headerAction()!.icon }}</mat-icon>
       </button>
     }
   </div>
@@ -17,7 +17,7 @@
   <div class="enable-vertical-scrolling mat-elevation-z8 smart-table-border-wrapper">
     <table mat-table [dataSource]="dataSource" matSort style="width: 100%;">
 
-      @for (col of columns; track col.key) {
+      @for (col of columns(); track col.key) {
         <ng-container [matColumnDef]="col.key">
           <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="col.type === 'action'"
               [ngClass]="{'smart-table-col-action': col.type === 'action', 'smart-table-col-index': col.type === 'index'}">
@@ -68,12 +68,12 @@
         </ng-container>
       }
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns();"></tr>
 
       <!-- Row shown when there is no matching data. -->
       <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" [attr.colspan]="displayedColumns.length" style="padding: 16px; text-align: center;">
+        <td class="mat-cell" [attr.colspan]="displayedColumns().length" style="padding: 16px; text-align: center;">
           @if (filterInput.value) {
             {{ 'admin.panel.table.filter.noResult' | translate }} "{{ filterInput.value }}"
           } @else {

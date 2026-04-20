@@ -9,7 +9,7 @@
       </mat-form-field>
     </p>
 
-    @if (showPassword) {
+    @if (showPassword()) {
       <p>
         <mat-form-field appearance="outline" class="user-details-bigger-error">
           <mat-label>{{ 'login.enterPassword' | translate }}</mat-label>
@@ -40,7 +40,7 @@
       </mat-form-field>
     </p>
 
-    @if (showRoles) {
+    @if (showRoles()) {
       <p>
         <mat-form-field appearance="outline">
           <mat-label>{{ 'admin.panel.users.roles' | translate }}</mat-label>

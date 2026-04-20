@@ -1,4 +1,4 @@
-import {enableProdMode, importProvidersFrom, provideZoneChangeDetection} from '@angular/core';
+import {enableProdMode, importProvidersFrom, provideZonelessChangeDetection} from '@angular/core';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
@@ -16,13 +16,16 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatPaginatorIntl} from '@angular/material/paginator';
 import {CustomPaginatorIntl} from './app/_services/util/custom-paginator-intl.service';
 
+import {APP_CONFIG} from './app/app.config.token';
+
 if (environment.production) {
   enableProdMode();
 }
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideZoneChangeDetection(), provideHttpClient(withInterceptorsFromDi()),
+    provideZonelessChangeDetection(), provideHttpClient(withInterceptorsFromDi()),
+    {provide: APP_CONFIG, useValue: environment},
     provideTranslateService({
       loader: provideTranslateHttpLoader({
         prefix: AssetsService.BASE_PATH + "i18n/",
