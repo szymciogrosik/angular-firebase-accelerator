@@ -2,7 +2,7 @@
 
 ## General rules
 - If you are changing some general approach, like using "signals" instead "promises" then scan whole application and fix all related issues
-- Prefer dependency injection by inject(...) than constructor injection
+- Always inject services by inject(...) pattern, never by constructor
 
 ## Modern Control Flow
 - Strictly use built-in control flow (`@if`, `@for`, `@switch`).
