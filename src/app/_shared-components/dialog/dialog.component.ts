@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {DialogData} from "../../_models/dialog/dialog-data";
 import {DialogType} from "../../_models/dialog/dialog-type";
@@ -11,6 +11,7 @@ import {MatIconModule} from '@angular/material/icon';
   styleUrl: './dialog.component.scss',
   standalone: true,
   imports: [MatButtonModule, MatIconModule, MatDialogModule],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DialogComponent {
 

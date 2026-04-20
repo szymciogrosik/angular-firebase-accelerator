@@ -1,11 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {RedirectionEnum} from '../../utils/redirection.enum';
 import {CustomTranslateService} from '../_services/translate/custom-translate.service';
 import {LanguageEnum} from '../_services/translate/language-enum';
 import {AuthService} from '../_services/auth/auth.service';
 import {AccessRoleService} from '../_services/auth/access-role.service';
 import {AccessRole} from '../_models/user/access-role';
-import {CustomUser} from '../_models/user/custom-user';
 import {Router, RouterModule} from '@angular/router';
 import {ThemeService} from '../_services/util/theme.service';
 import {CommonModule} from '@angular/common';
@@ -29,7 +28,8 @@ import {toSignal} from '@angular/core/rxjs-interop';
     MatMenuModule,
     RouterModule,
     MatToolbarModule
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavbarComponent implements OnInit {
   protected readonly LanguageEnum = LanguageEnum;

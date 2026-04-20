@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, input, OnInit, output, viewChild} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {CustomUser} from "../../_models/user/custom-user";
 import {AccessRole} from "../../_models/user/access-role";
@@ -17,17 +17,18 @@ import {MatSelectModule} from '@angular/material/select';
   standalone: true,
   imports: [TranslateModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatDialogModule, MatSelectModule],
   templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.scss']
+  styleUrls: ['./user-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserFormComponent implements OnInit {
-  @Input() user: CustomUser | null = null;
-  @Input() showPassword = false;
-  @Input() showRoles = true;
-  @Input() disableEmail = false;
+  user = input<CustomUser | null>(null);
+  showPassword = input<boolean>(false);
+  showRoles = input<boolean>(true);
+  disableEmail = input<boolean>(false);
 
-  @Output() formSubmit = new EventEmitter<any>();
+  formSubmit = output<any>();
 
-  @ViewChild('submitBtn') submitBtn!: ElementRef;
+  submitBtn = viewChild<ElementRef>('submitBtn');
 
   userForm!: FormGroup;
   hidePassword = true;
@@ -40,19 +41,20 @@ export class UserFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const defaultRoles = this.user?.roles || [];
+    const userVal = this.user();
+    const defaultRoles = userVal?.roles || [];
 
     this.userForm = this.formBuilder.group({
-      email: [{value: this.user?.email || '', disabled: this.disableEmail}, [Validators.required, Validators.email]],
-      firstName: [this.user?.firstName || '', [Validators.required]],
-      lastName: [this.user?.lastName || '', [Validators.required]],
+      email: [{value: userVal?.email || '', disabled: this.disableEmail()}, [Validators.required, Validators.email]],
+      firstName: [userVal?.firstName || '', [Validators.required]],
+      lastName: [userVal?.lastName || '', [Validators.required]],
     });
 
-    if (this.showRoles) {
+    if (this.showRoles()) {
       this.userForm.addControl('roles', this.formBuilder.control(defaultRoles));
     }
 
-    if (this.showPassword) {
+    if (this.showPassword()) {
       this.userForm.addControl(
         'password',
         this.formBuilder.control('', [Validators.required, Validators.minLength(6), CustomValidators.passwordValidator])
@@ -68,9 +70,10 @@ export class UserFormComponent implements OnInit {
 
     const payload = {...this.userForm.getRawValue()};
 
-    if (this.user) {
-      payload.id = this.user.id;
-      payload.uid = this.user.uid;
+    const userVal = this.user();
+    if (userVal) {
+      payload.id = userVal.id;
+      payload.uid = userVal.uid;
     }
 
     // We no longer hack the password into payload.id; it stays as payload.password.
@@ -82,7 +85,7 @@ export class UserFormComponent implements OnInit {
   }
 
   triggerSubmit(): void {
-    this.submitBtn.nativeElement.click();
+    this.submitBtn()?.nativeElement.click();
   }
 
   getErrorMessage(formControlName: string): string {
