@@ -10,6 +10,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {SkeletonComponent} from '../skeleton/skeleton.component';
 
 @Component({
   selector: 'app-smart-table',
@@ -25,6 +26,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatFormFieldModule,
     MatInputModule,
     MatTooltipModule,
+    SkeletonComponent,
   ],
   templateUrl: './smart-table.component.html',
   styleUrl: './smart-table.component.scss',
@@ -51,7 +53,7 @@ export class SmartTableComponent<T> implements AfterViewInit {
   constructor() {
     effect(() => {
       if (this.loading() && (!this.data() || this.data().length === 0)) {
-        this.dataSource.data = [{} as T, {} as T, {} as T, {} as T, {} as T];
+        this.dataSource.data = [{} as any, {} as any, {} as any, {} as any, {} as any];
       } else {
         this.dataSource.data = this.data();
       }

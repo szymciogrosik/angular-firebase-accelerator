@@ -30,7 +30,7 @@
               [ngClass]="{'smart-table-col-action': col.type === 'action', 'smart-table-col-index': col.type === 'index'}">
 
             @if (loading()) {
-              <div class="skeleton-loader" style="height: 20px; width: 80%; border-radius: 4px;"></div>
+              <app-skeleton width="80%"></app-skeleton>
             } @else {
               @if (col.type === 'index') {
                 {{ (dataSource.paginator?.pageIndex || 0) * (dataSource.paginator?.pageSize || 0) + i + 1 }}

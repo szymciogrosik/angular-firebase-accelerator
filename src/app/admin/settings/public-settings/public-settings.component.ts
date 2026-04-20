@@ -7,6 +7,7 @@ import {Subscription} from 'rxjs';
 import {MatSlideToggle, MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {SkeletonComponent} from '../../../_shared-components/skeleton/skeleton.component';
 
 @Component({
   selector: 'app-public-settings',
@@ -14,9 +15,9 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
   imports: [
     ReactiveFormsModule,
     MatSlideToggle,
-    TranslateModule,
     MatProgressSpinnerModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    SkeletonComponent
   ],
   templateUrl: './public-settings.component.html',
   styleUrl: './public-settings.component.scss'

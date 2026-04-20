@@ -7,8 +7,8 @@
           <div [innerHTML]="lastDeployTime()" style="text-align: center;"></div>
         }
         @if (!lastDeployTime()) {
-          <div>
-            <div class="skeleton-loader" style="height: 30px; width: 250px; border-radius: 8px; margin: 0 auto;"></div>
+          <div style="display: flex; justify-content: center;">
+            <app-skeleton width="250px" height="30px" borderRadius="8px"></app-skeleton>
           </div>
         }
       </p>

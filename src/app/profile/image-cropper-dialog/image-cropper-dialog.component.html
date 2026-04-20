@@ -18,7 +18,7 @@
       <button type="submit" mat-raised-button color="primary" class="app-action-button" (click)="onSave()"
               [disabled]="isSaving || !croppedImageBlob">
         @if (isSaving) {
-          <div class="skeleton-loader" style="height: 14px; width: 60px; margin: 0 auto; border-radius: 10px;"></div>
+          <app-skeleton width="60px" height="14px" borderRadius="10px" style="margin: 0 auto;"></app-skeleton>
         } @else {
           {{ 'dialog.save' | translate }}
         }

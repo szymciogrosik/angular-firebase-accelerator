@@ -8,6 +8,7 @@ import {CustomTranslateService} from '../../_services/translate/custom-translate
 import {TranslateModule} from '@ngx-translate/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {SkeletonComponent} from '../../_shared-components/skeleton/skeleton.component';
 
 export interface ImageCropperData {
   imageChangedEvent: Event;
@@ -18,7 +19,7 @@ export interface ImageCropperData {
 @Component({
   selector: 'app-image-cropper-dialog',
   standalone: true,
-  imports: [ImageCropperComponent, TranslateModule, MatButtonModule, MatProgressSpinnerModule, MatDialogModule],
+  imports: [ImageCropperComponent, TranslateModule, MatButtonModule, MatProgressSpinnerModule, MatDialogModule, SkeletonComponent],
   templateUrl: './image-cropper-dialog.component.html',
   styleUrls: ['./image-cropper-dialog.component.scss']
 })

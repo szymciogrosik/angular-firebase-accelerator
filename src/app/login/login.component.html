@@ -7,11 +7,10 @@
 
     <mat-card-content>
       @if (checkingIfUserIsAlreadyLoggedIn() || fetchingSettings()) {
-        <div class="checking-if-user-is-logged-in"
-             style="display: flex; flex-direction: column; gap: 16px; margin-top: 20px;">
-          <div class="skeleton-loader" style="height: 56px; width: 100%; border-radius: 4px;"></div>
-          <div class="skeleton-loader" style="height: 56px; width: 100%; border-radius: 4px;"></div>
-          <div class="skeleton-loader" style="height: 36px; width: 100%; border-radius: 4px; margin-top: 10px;"></div>
+        <div style="display: flex; flex-direction: column; gap: 16px; padding: 20px;">
+          <app-skeleton height="56px"></app-skeleton>
+          <app-skeleton height="56px"></app-skeleton>
+          <app-skeleton height="36px" style="margin-top: 10px;"></app-skeleton>
         </div>
       } @else {
         <div class="login-tabs-container">
