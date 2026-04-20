@@ -1,4 +1,4 @@
-import {Component, inject, signal} from '@angular/core';
+import {Component, computed, inject} from '@angular/core';
 import {AccessRoleService} from "../_services/auth/access-role.service";
 import {AuthService} from "../_services/auth/auth.service";
 import {APP_CONFIG} from '../app.config.token';
@@ -18,32 +18,11 @@ import {MatIconModule} from '@angular/material/icon';
 })
 export class AdminComponent {
   protected readonly environment = inject(APP_CONFIG);
-  protected loggedUserName = signal<string>('');
-  protected settingsVisible = signal<boolean>(false);
+  protected settingsVisible = inject(AccessRoleService).isAuthorizedSignal(AccessRole.ADMIN_PAGE_ACCESS);
+  protected loggedUserName = computed(() => this.authService.currentUser()?.firstName ?? '');
 
   constructor(
     private accessService: AccessRoleService,
     private authService: AuthService
-  ) {
-    this.authService.loggedUser().subscribe({
-      next: user => {
-        if (user !== null) {
-          this.loggedUserName.set(user.firstName);
-        } else {
-          this.loggedUserName.set('');
-        }
-      },
-      error: (err) => {
-        this.loggedUserName.set('');
-        console.error(err);
-      }
-    });
-
-    this.accessService.isAuthorized(AccessRole.ADMIN_PAGE_ACCESS)
-      .then((isAuthorized: boolean): void => {
-        if (isAuthorized) {
-          this.settingsVisible.set(true);
-        }
-      });
-  }
+  ) {}
 }

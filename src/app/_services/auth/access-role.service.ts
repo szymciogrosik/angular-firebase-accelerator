@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {computed, Injectable, Signal} from '@angular/core';
 import {AuthService} from "./auth.service";
 import {AccessRole} from "../../_models/user/access-role";
 import {catchError, map, Observable, of} from "rxjs";
@@ -13,17 +13,26 @@ export class AccessRoleService {
   ) {
   }
 
+  public isAuthorizedSignal(requestedRole: AccessRole): Signal<boolean> {
+    return computed(() => {
+      const user = this.authService.currentUser();
+      return !!user?.roles.includes(requestedRole);
+    });
+  }
+
   public isAuthorized(requestedRole: AccessRole): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      this.authService.loggedUser().subscribe({
+    return new Promise((resolve) => {
+      const sub = this.authService.loggedUser().subscribe({
         next: (customUser) => {
           if (customUser !== null) {
             resolve(customUser.roles.includes(requestedRole));
-          } else {
-            reject("User is null");
+            sub.unsubscribe();
           }
         },
-        error: (err) => reject(err)
+        error: (err) => {
+          resolve(false);
+          sub.unsubscribe();
+        }
       });
     });
   }

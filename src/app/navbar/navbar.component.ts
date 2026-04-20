@@ -45,10 +45,10 @@ export class NavbarComponent implements OnInit {
   }
 
   protected isAdmin = toSignal(this.accessService.isAuthorized$(AccessRole.ADMIN_PAGE_ACCESS));
-  protected currentUser = toSignal(this.authService.loggedUser());
+  protected currentUser = this.authService.currentUser;
   protected isDarkTheme = toSignal(this.themeService.isDarkTheme$);
   protected allowDarkMode = toSignal(this.themeService.allowDarkMode$);
-  protected isAuthenticated = toSignal(this.authService.isAuthenticated());
+  protected isAuthenticated = this.authService.isLoggedIn;
 
   ngOnInit(): void {
   }

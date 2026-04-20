@@ -99,12 +99,6 @@ export class UsersComponent {
     private authService: AuthService,
     private dialogService: DialogService
   ) {
-    this.accessService.isAuthorized(AccessRole.ADMIN_PAGE_ACCESS)
-      .then((isAuthorized: boolean): void => {
-        if (isAuthorized) {
-          // Access checks only, UserFacade lazily evaluates automatically!
-        }
-      });
   }
 
   protected openAddUser(): any {

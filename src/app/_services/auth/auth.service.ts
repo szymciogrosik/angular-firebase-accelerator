@@ -1,4 +1,4 @@
-import {inject, Injectable, Injector, runInInjectionContext} from '@angular/core';
+import {computed, inject, Injectable, Injector, runInInjectionContext} from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
@@ -14,6 +14,7 @@ import {
   deleteUser
 } from '@angular/fire/auth';
 import {BehaviorSubject, firstValueFrom, map, Observable, Subject} from 'rxjs';
+import {toSignal} from '@angular/core/rxjs-interop';
 import {FirebaseError} from '@angular/fire/app';
 import {Router} from '@angular/router';
 import {SnackbarService} from '../util/snackbar.service';
@@ -32,6 +33,9 @@ export class AuthService {
   private authErrorLogoutSubject = new Subject<void>();
 
   private pendingRegistrationInfo: { firstName: string, lastName: string, roles: AccessRole[] } | null = null;
+
+  public readonly currentUser = toSignal(this.user, { initialValue: null });
+  public readonly isLoggedIn = computed(() => !!this.currentUser());
 
   private readonly injector: Injector;
 
