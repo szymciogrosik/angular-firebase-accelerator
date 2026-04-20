@@ -1,5 +1,8 @@
 # Angular 21+ Strict Clean Code Standards
 
+## General rules
+- If you are changing some general approach, like using "signals" instead "promises" then scan whole application and fix all related issues
+
 ## Modern Control Flow
 - Strictly use built-in control flow (`@if`, `@for`, `@switch`).
 - Ban legacy directives (`*ngIf`, `*ngFor`, `*ngSwitch`).
