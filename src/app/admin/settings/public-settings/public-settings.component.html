@@ -1,31 +1,35 @@
 <div class="highlight-tab-content">
   @if (loading()) {
-    <mat-spinner diameter="30"></mat-spinner>
+    <div style="display: flex; flex-direction: column; gap: 20px; padding: 10px;">
+      <div class="skeleton-loader" style="height: 32px; width: 300px;"></div>
+      <div class="skeleton-loader" style="height: 32px; width: 340px;"></div>
+      <div class="skeleton-loader" style="height: 32px; width: 280px;"></div>
+    </div>
   } @else {
     <form [formGroup]="settingsForm">
       <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 15px;">
-        <div style="display: flex; align-items: center;">
+        <div style="display: flex; align-items: center; width: 100%;">
           <mat-slide-toggle formControlName="allowForRegistering" color="primary" (change)="saveSettings()">
             {{ 'admin.panel.settings.public.allowForRegistering' | translate }}
           </mat-slide-toggle>
           @if (saving()) {
-            <mat-spinner diameter="20" style="margin-left: 15px;"></mat-spinner>
+            <div class="skeleton-loader" style="height: 14px; width: 60px; margin-left: 15px; border-radius: 10px;"></div>
           }
         </div>
-        <div style="display: flex; align-items: center;">
+        <div style="display: flex; align-items: center; width: 100%;">
           <mat-slide-toggle formControlName="allowForProfilePictureChange" color="primary" (change)="saveSettings()">
             {{ 'admin.panel.settings.public.allowForProfilePictureChange' | translate }}
           </mat-slide-toggle>
           @if (saving()) {
-            <mat-spinner diameter="20" style="margin-left: 15px;"></mat-spinner>
+            <div class="skeleton-loader" style="height: 14px; width: 60px; margin-left: 15px; border-radius: 10px;"></div>
           }
         </div>
-        <div style="display: flex; align-items: center;">
+        <div style="display: flex; align-items: center; width: 100%;">
           <mat-slide-toggle formControlName="allowDarkMode" color="primary" (change)="saveSettings()">
             {{ 'admin.panel.settings.public.allowDarkMode' | translate }}
           </mat-slide-toggle>
           @if (saving()) {
-            <mat-spinner diameter="20" style="margin-left: 15px;"></mat-spinner>
+            <div class="skeleton-loader" style="height: 14px; width: 60px; margin-left: 15px; border-radius: 10px;"></div>
           }
         </div>
       </div>

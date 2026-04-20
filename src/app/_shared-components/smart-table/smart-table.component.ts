@@ -32,6 +32,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 })
 export class SmartTableComponent<T> implements AfterViewInit {
   data = input<T[]>([]);
+  loading = input<boolean>(false);
   columns = input<SmartTableColumn<T>[]>([]);
   filterPlaceholderKey = input<string>('admin.panel.table.filter.placeholder');
   headerAction = input<{
@@ -49,7 +50,11 @@ export class SmartTableComponent<T> implements AfterViewInit {
 
   constructor() {
     effect(() => {
-      this.dataSource.data = this.data();
+      if (this.loading() && (!this.data() || this.data().length === 0)) {
+        this.dataSource.data = [{} as T, {} as T, {} as T, {} as T, {} as T];
+      } else {
+        this.dataSource.data = this.data();
+      }
     });
     effect(() => {
       const p = this.paginator();

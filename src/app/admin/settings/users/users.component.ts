@@ -38,7 +38,8 @@ export class UsersComponent {
   private authService = inject(AuthService);
   private dialogService = inject(DialogService);
 
-  protected allUsers = this.userFacade.activeUsers;
+  protected facadeAllUsers = this.userFacade.allUsers;
+  protected activeUsers = this.userFacade.activeUsers;
   protected deletedUsers = this.userFacade.deletedUsers;
 
   protected addUserAction = {
@@ -179,7 +180,7 @@ export class UsersComponent {
   }
 
   protected openUpdateUser(id: string): any {
-    const currentUsers = this.allUsers();
+    const currentUsers = this.activeUsers();
     let user: CustomUser | undefined = currentUsers ? currentUsers.find(elem => elem.id === id) : undefined;
     if (user === undefined) {
       this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));

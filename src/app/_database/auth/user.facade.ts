@@ -12,9 +12,6 @@ export class UserFacade {
   private userDb = inject(UserDbService);
   private authService = inject(AuthService);
 
-  /**
-   * Raw signal of all users in the database, automatically un-subscribed on logout
-   */
   public readonly allUsers = toSignal(
     this.authService.loggedUser().pipe(
       switchMap(user => {
@@ -24,8 +21,7 @@ export class UserFacade {
           return of([]);
         }
       })
-    ),
-    { initialValue: [] }
+    )
   );
 
   /**
