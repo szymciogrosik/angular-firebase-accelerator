@@ -1,4 +1,4 @@
-import {Component, effect, OnDestroy, OnInit, signal} from '@angular/core';
+import {Component, effect, OnDestroy, OnInit, signal, inject} from '@angular/core';
 import {PublicSettingsFacade} from '../../../_database/settings/public-settings.facade';
 import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {SnackbarService} from '../../../_services/util/snackbar.service';
@@ -27,12 +27,12 @@ export class PublicSettingsComponent implements OnInit, OnDestroy {
   saving = signal<boolean>(false);
   private settingsSub?: Subscription;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private facade: PublicSettingsFacade,
-    private snackbarService: SnackbarService,
-    private translateService: CustomTranslateService
-  ) {
+  private formBuilder = inject(FormBuilder);
+  private facade = inject(PublicSettingsFacade);
+  private snackbarService = inject(SnackbarService);
+  private translateService = inject(CustomTranslateService);
+
+  constructor() {
     this.settingsForm = this.formBuilder.group({
       allowForRegistering: [false],
       allowForProfilePictureChange: [false],

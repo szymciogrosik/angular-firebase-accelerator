@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, inject} from '@angular/core';
 import {DialogComponent} from "../../_shared-components/dialog/dialog.component";
 import {DialogData} from "../../_models/dialog/dialog-data";
 import {MatDialog} from "@angular/material/dialog";
@@ -9,11 +9,10 @@ import {CustomTranslateService} from "../translate/custom-translate.service";
 })
 export class DialogService {
 
-  constructor(
-    private dialog: MatDialog,
-    private translateService: CustomTranslateService,
-  ) {
-  }
+  private dialog = inject(MatDialog);
+  private translateService = inject(CustomTranslateService);
+  
+  constructor() {}
 
   public openConfirmDialog(messageKey: string) {
     return this.dialog.open(

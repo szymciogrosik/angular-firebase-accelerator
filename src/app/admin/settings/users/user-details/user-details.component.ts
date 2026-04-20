@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild, inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {UserDetailsPopupData} from "../../../../_models/dialog/user-details/user-details-popup-data";
 import {UserDetailsType} from "../../../../_models/dialog/user-details/user-details-type";
@@ -20,14 +20,11 @@ export class UserDetailsComponent implements OnInit {
   @ViewChild('userFormComponent') userFormComponent!: UserFormComponent;
   protected readonly UserDetailsType = UserDetailsType;
 
-  constructor(
-    public dialogRef: MatDialogRef<UserDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: UserDetailsPopupData,
-    private translateService: CustomTranslateService,
-    private authService: AuthService,
-    private snackbarService: SnackbarService
-  ) {
-  }
+  public dialogRef = inject<MatDialogRef<UserDetailsComponent>>(MatDialogRef);
+  public data = inject<UserDetailsPopupData>(MAT_DIALOG_DATA);
+  private translateService = inject(CustomTranslateService);
+  private authService = inject(AuthService);
+  private snackbarService = inject(SnackbarService);
 
   ngOnInit(): void {
   }

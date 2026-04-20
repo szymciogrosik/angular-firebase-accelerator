@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Directive, ElementRef, HostListener} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Directive, ElementRef, HostListener, inject} from '@angular/core';
 
 @Directive({
   selector: '[appAutoResize]',
@@ -11,7 +11,8 @@ export class AutoResizeDirective implements AfterViewInit {
     this.adjustHeight();
   }
 
-  constructor(private el: ElementRef<HTMLTextAreaElement>, private cdr: ChangeDetectorRef) {}
+  private el = inject<ElementRef<HTMLTextAreaElement>>(ElementRef);
+  private cdr = inject(ChangeDetectorRef);
 
   ngAfterViewInit(): void {
     this.cdr.detectChanges();

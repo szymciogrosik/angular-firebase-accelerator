@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
 import {RedirectionEnum} from '../../utils/redirection.enum';
 import {CustomTranslateService} from '../_services/translate/custom-translate.service';
 import {LanguageEnum} from '../_services/translate/language-enum';
@@ -35,14 +35,11 @@ export class NavbarComponent implements OnInit {
   protected readonly LanguageEnum = LanguageEnum;
   protected readonly rp = RedirectionEnum;
 
-  constructor(
-    protected translateService: CustomTranslateService,
-    protected authService: AuthService,
-    private accessService: AccessRoleService,
-    private router: Router,
-    public themeService: ThemeService
-  ) {
-  }
+  protected translateService = inject(CustomTranslateService);
+  protected authService = inject(AuthService);
+  private accessService = inject(AccessRoleService);
+  private router = inject(Router);
+  public themeService = inject(ThemeService);
 
   protected isAdmin = toSignal(this.accessService.isAuthorized$(AccessRole.ADMIN_PAGE_ACCESS));
   protected currentUser = this.authService.currentUser;

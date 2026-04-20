@@ -9,13 +9,8 @@ import {publicSettingsConverter} from './public-settings.converter';
 })
 export class PublicSettingsService {
   private dbPathBase = 'public_settings';
-  private readonly firestore: Firestore;
-  private readonly injector: Injector;
-
-  constructor() {
-    this.firestore = inject(Firestore);
-    this.injector = inject(Injector);
-  }
+  private readonly firestore = inject(Firestore);
+  private readonly injector = inject(Injector);
 
   public getDocument(docId: string): Observable<PublicSettings | undefined> {
     return runInInjectionContext(this.injector, () => {

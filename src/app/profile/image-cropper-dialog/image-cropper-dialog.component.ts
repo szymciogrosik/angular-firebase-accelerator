@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {ImageCroppedEvent, ImageCropperComponent} from 'ngx-image-cropper';
 import {StorageService} from '../../_services/storage/storage.service';
@@ -26,15 +26,12 @@ export class ImageCropperDialogComponent {
   croppedImageBlob: Blob | null | undefined = null;
   isSaving = false;
 
-  constructor(
-    public dialogRef: MatDialogRef<ImageCropperDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ImageCropperData,
-    private storageService: StorageService,
-    private userDbService: UserDbService,
-    private snackbarService: SnackbarService,
-    private translateService: CustomTranslateService
-  ) {
-  }
+  public dialogRef = inject<MatDialogRef<ImageCropperDialogComponent>>(MatDialogRef);
+  public data = inject<ImageCropperData>(MAT_DIALOG_DATA);
+  private storageService = inject(StorageService);
+  private userDbService = inject(UserDbService);
+  private snackbarService = inject(SnackbarService);
+  private translateService = inject(CustomTranslateService);
 
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImageBlob = event.blob;

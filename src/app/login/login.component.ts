@@ -1,4 +1,4 @@
-import {Component, computed, effect, OnInit, signal} from '@angular/core';
+import {Component, computed, effect, OnInit, signal, inject} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CustomTranslateService} from '../_services/translate/custom-translate.service';
 import {SnackbarService} from '../_services/util/snackbar.service';
@@ -36,19 +36,19 @@ export class LoginComponent implements OnInit {
   isRegistrationMode = signal(false);
   returnUrl: string = '';
 
+  private formBuilder = inject(FormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private authService = inject(AuthService);
+  private snackbarService = inject(SnackbarService);
+  private translateService = inject(CustomTranslateService);
+  private dialog = inject(MatDialog);
+  private publicSettingsFacade = inject(PublicSettingsFacade);
+
   allowForRegistering = this.publicSettingsFacade.allowForRegistering;
   fetchingSettings = computed(() => this.publicSettingsFacade.settings() === undefined);
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private authService: AuthService,
-    private snackbarService: SnackbarService,
-    private translateService: CustomTranslateService,
-    private dialog: MatDialog,
-    private publicSettingsFacade: PublicSettingsFacade
-  ) {
+  constructor() {
     effect(() => {
       if (this.authService.isLoggedIn()) {
         this.router.navigateByUrl(this.returnUrl || '/');

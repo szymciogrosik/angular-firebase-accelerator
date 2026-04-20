@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, ElementRef, input, OnInit, output, viewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, inject, input, OnInit, output, viewChild} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {CustomUser} from "../../_models/user/custom-user";
 import {AccessRole} from "../../_models/user/access-role";
@@ -34,11 +34,8 @@ export class UserFormComponent implements OnInit {
   hidePassword = true;
   accessRoleValues: AccessRole[] = Object.values(AccessRole);
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private translateService: CustomTranslateService,
-  ) {
-  }
+  private formBuilder = inject(FormBuilder);
+  private translateService = inject(CustomTranslateService);
 
   ngOnInit(): void {
     const userVal = this.user();

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {catchError, map, of} from 'rxjs';
 import {Status} from "../_models/status/status";
@@ -17,6 +17,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 export class StatusComponent {
   private STATUS_URL: string = 'status/status.json';
 
+  private readAssetsService = inject(AssetsService);
+  
   lastDeployTime = toSignal(
     this.readAssetsService.getResource(this.STATUS_URL).pipe(
       map((data: any) => data?.lastDeployTime || ''),
@@ -27,7 +29,5 @@ export class StatusComponent {
     ),
     { initialValue: '' }
   );
-
-  constructor(private readAssetsService: AssetsService) {}
 
 }

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {UserFacade} from "../../../_database/auth/user.facade";
 import {CustomUser} from "../../../_models/user/custom-user";
 import {AccessRoleService} from "../../../_services/auth/access-role.service";
@@ -30,6 +30,14 @@ import {SmartTableColumn} from "../../../_shared-components/smart-table/smart-ta
   imports: [TranslateModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatTabsModule, SmartTableComponent],
 })
 export class UsersComponent {
+  private accessService = inject(AccessRoleService);
+  private userFacade = inject(UserFacade);
+  private translateService = inject(CustomTranslateService);
+  private dialog = inject(MatDialog);
+  private snackbarService = inject(SnackbarService);
+  private authService = inject(AuthService);
+  private dialogService = inject(DialogService);
+
   protected allUsers = this.userFacade.activeUsers;
   protected deletedUsers = this.userFacade.deletedUsers;
 
@@ -89,17 +97,6 @@ export class UsersComponent {
       ]
     }
   ];
-
-  constructor(
-    private accessService: AccessRoleService,
-    private userFacade: UserFacade,
-    private translateService: CustomTranslateService,
-    private dialog: MatDialog,
-    private snackbarService: SnackbarService,
-    private authService: AuthService,
-    private dialogService: DialogService
-  ) {
-  }
 
   protected openAddUser(): any {
     const createRef = this.dialog.open(

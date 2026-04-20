@@ -37,16 +37,14 @@ export class AuthService {
   public readonly currentUser = toSignal(this.user, { initialValue: null });
   public readonly isLoggedIn = computed(() => !!this.currentUser());
 
-  private readonly injector: Injector;
+  private auth = inject(Auth);
+  private router = inject(Router);
+  private snackbarService = inject(SnackbarService);
+  private standardUserService = inject(StandardUserDbService);
+  private translateService = inject(CustomTranslateService);
+  private readonly injector = inject(Injector);
 
-  constructor(
-    private auth: Auth,
-    private router: Router,
-    private snackbarService: SnackbarService,
-    private standardUserService: StandardUserDbService,
-    private translateService: CustomTranslateService
-  ) {
-    this.injector = inject(Injector);
+  constructor() {
     this.listenForAuthChanges();
   }
 

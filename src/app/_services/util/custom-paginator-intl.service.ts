@@ -1,4 +1,4 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import {Injectable, OnDestroy, inject} from '@angular/core';
 import {MatPaginatorIntl} from '@angular/material/paginator';
 import {CustomTranslateService} from '../translate/custom-translate.service';
 import {TranslateService} from '@ngx-translate/core';
@@ -7,11 +7,11 @@ import {Subject, takeUntil} from 'rxjs';
 @Injectable()
 export class CustomPaginatorIntl extends MatPaginatorIntl implements OnDestroy {
   private destroy$ = new Subject<void>();
+  
+  private customTranslateService = inject(CustomTranslateService);
+  private translateService = inject(TranslateService);
 
-  constructor(
-    private customTranslateService: CustomTranslateService,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     super();
 
     this.translateService.onLangChange

@@ -1,4 +1,4 @@
-import {computed, Injectable, Signal} from '@angular/core';
+import {computed, inject, Injectable, Signal} from '@angular/core';
 import {AuthService} from "./auth.service";
 import {AccessRole} from "../../_models/user/access-role";
 import {catchError, map, Observable, of} from "rxjs";
@@ -8,10 +8,9 @@ import {catchError, map, Observable, of} from "rxjs";
 })
 export class AccessRoleService {
 
-  constructor(
-    private authService: AuthService
-  ) {
-  }
+  private authService = inject(AuthService);
+
+  constructor() {}
 
   public isAuthorizedSignal(requestedRole: AccessRole): Signal<boolean> {
     return computed(() => {

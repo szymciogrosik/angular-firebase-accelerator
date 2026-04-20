@@ -1,4 +1,4 @@
-import {Injectable, effect} from '@angular/core';
+import {Injectable, effect, inject} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {PublicSettingsFacade} from '../../_database/settings/public-settings.facade';
 
@@ -15,7 +15,9 @@ export class ThemeService {
   private isDarkTheme = new BehaviorSubject<boolean>(false);
   public isDarkTheme$ = this.isDarkTheme.asObservable();
 
-  constructor(private facade: PublicSettingsFacade) {
+  private facade = inject(PublicSettingsFacade);
+
+  constructor() {
     // Always start in light mode immediately
     this.applyTheme(false);
 

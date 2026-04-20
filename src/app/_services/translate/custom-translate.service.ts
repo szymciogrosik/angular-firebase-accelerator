@@ -15,12 +15,10 @@ export class CustomTranslateService {
 
   private selectedLanguage: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
   private appConfig = inject(APP_CONFIG);
+  private translateService = inject(TranslateService);
+  private dateAdapter = inject(DateAdapter<any>);
 
-  constructor(
-    private translateService: TranslateService,
-    private dateAdapter: DateAdapter<any>
-  ) {
-  }
+  constructor() {}
 
   public setLanguage(language: string): void {
     this.translateService.use(language);

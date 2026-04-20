@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {EmbeddedBrowserWarningData} from "../../_models/dialog/embedded-browser-warning/embedded-browser-warning-data";
 import {TranslateModule} from '@ngx-translate/core';
@@ -13,11 +13,8 @@ import {MatIconModule} from '@angular/material/icon';
   imports: [TranslateModule, MatButtonModule, MatIconModule, MatDialogModule],
 })
 export class EmbeddedBrowserPopupComponent {
-  constructor(
-    public dialogRef: MatDialogRef<EmbeddedBrowserPopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: EmbeddedBrowserWarningData
-  ) {
-  }
+  public dialogRef = inject<MatDialogRef<EmbeddedBrowserPopupComponent>>(MatDialogRef);
+  public data = inject<EmbeddedBrowserWarningData>(MAT_DIALOG_DATA);
 
   protected onCancelClick(): void {
     this.dialogRef.close(false);

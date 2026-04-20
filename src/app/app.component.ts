@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {CustomTranslateService} from './_services/translate/custom-translate.service';
 import {FooterComponent} from "./footer/footer.component";
 import {NavbarComponent} from "./navbar/navbar.component";
@@ -15,10 +15,10 @@ import {RouterModule} from '@angular/router';
 })
 export class AppComponent {
 
-  constructor(
-    private translateService: CustomTranslateService,
-    private titleService: Title,
-  ) {
+  private translateService = inject(CustomTranslateService);
+  private titleService = inject(Title);
+
+  constructor() {
     this.translateService.getPromise('page.title')
       .then(value => this.titleService.setTitle(value))
       .catch(err => console.error(err));

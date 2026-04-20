@@ -12,8 +12,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FooterComponent {
-  constructor() {
-  }
 
   protected openLink(link: string) {
     window.open(link, '_blank');

@@ -12,9 +12,6 @@ import {MatCardModule} from '@angular/material/card';
 export class HomeComponent implements OnInit {
   protected readonly environment = inject(APP_CONFIG);
 
-  constructor() {
-  }
-
   ngOnInit(): void {
   }
 

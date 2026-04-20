@@ -1,4 +1,4 @@
-import {Component, signal} from '@angular/core';
+import {Component, signal, inject} from '@angular/core';
 import {AccessRoleService} from "../../_services/auth/access-role.service";
 import {UsersComponent} from "./users/users.component";
 import {AccessRole} from "../../_models/user/access-role";
@@ -16,9 +16,9 @@ import {MatTabsModule} from '@angular/material/tabs';
 export class SettingsComponent {
   protected isAuthorized = signal<boolean>(false);
 
-  constructor(
-    private accessService: AccessRoleService
-  ) {
+  private accessService = inject(AccessRoleService);
+
+  constructor() {
     this.accessService.isAuthorized(AccessRole.ADMIN_PAGE_ACCESS)
       .then((isAuthorized: boolean): void => {
         if (isAuthorized) {

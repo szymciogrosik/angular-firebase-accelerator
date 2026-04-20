@@ -19,13 +19,8 @@ import {userConverter} from './user.converter';
 })
 export class UserDbService {
   private dbPathBase = 'users';
-  private readonly firestore: Firestore;
-  private readonly injector: Injector;
-
-  constructor() {
-    this.firestore = inject(Firestore);
-    this.injector = inject(Injector);
-  }
+  private readonly firestore = inject(Firestore);
+  private readonly injector = inject(Injector);
 
   public getUser(uid: string, email: string): Observable<CustomUser[]> {
     return runInInjectionContext(this.injector, () => {

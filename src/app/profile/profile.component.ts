@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, signal} from '@angular/core';
+import {Component, OnInit, ViewChild, signal, inject} from '@angular/core';
 import {UserFormComponent} from '../_shared-components/user-form/user-form.component';
 import {AuthService} from '../_services/auth/auth.service';
 import {CustomUser} from '../_models/user/custom-user';
@@ -39,17 +39,14 @@ export class ProfileComponent implements OnInit {
   @ViewChild('userFormComponent') userFormComponent!: UserFormComponent;
   readonly user = signal<CustomUser | null>(null);
   readonly isLoading = signal(true);
-  readonly allowForProfilePictureChange = this.facade.allowForProfilePictureChange;
+  private authService = inject(AuthService);
+  private userDbService = inject(UserDbService);
+  private snackbarService = inject(SnackbarService);
+  private translateService = inject(CustomTranslateService);
+  private dialog = inject(MatDialog);
+  private facade = inject(PublicSettingsFacade);
 
-  constructor(
-    private authService: AuthService,
-    private userDbService: UserDbService,
-    private snackbarService: SnackbarService,
-    private translateService: CustomTranslateService,
-    private dialog: MatDialog,
-    private facade: PublicSettingsFacade
-  ) {
-  }
+  readonly allowForProfilePictureChange = this.facade.allowForProfilePictureChange;
 
   async ngOnInit(): Promise<void> {
     try {

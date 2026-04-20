@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, inject} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {CustomTranslateService} from '../../_services/translate/custom-translate.service';
@@ -24,14 +24,11 @@ export class ChangePasswordDialogComponent implements OnInit {
   hideConfirmPassword = true;
   isLoading = false;
 
-  constructor(
-    private dialogRef: MatDialogRef<ChangePasswordDialogComponent>,
-    private formBuilder: FormBuilder,
-    private authService: AuthService,
-    private translateService: CustomTranslateService,
-    private snackbarService: SnackbarService
-  ) {
-  }
+  private dialogRef = inject<MatDialogRef<ChangePasswordDialogComponent>>(MatDialogRef);
+  private formBuilder = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private translateService = inject(CustomTranslateService);
+  private snackbarService = inject(SnackbarService);
 
   ngOnInit(): void {
     this.passwordForm = this.formBuilder.group({
