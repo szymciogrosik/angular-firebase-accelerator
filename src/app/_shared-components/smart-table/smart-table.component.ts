@@ -10,6 +10,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {SkeletonComponent} from '../skeleton/skeleton.component';
 
 @Component({
   selector: 'app-smart-table',
@@ -25,6 +26,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatFormFieldModule,
     MatInputModule,
     MatTooltipModule,
+    SkeletonComponent,
   ],
   templateUrl: './smart-table.component.html',
   styleUrl: './smart-table.component.scss',
@@ -32,6 +34,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 })
 export class SmartTableComponent<T> implements AfterViewInit {
   data = input<T[]>([]);
+  loading = input<boolean>(false);
   columns = input<SmartTableColumn<T>[]>([]);
   filterPlaceholderKey = input<string>('admin.panel.table.filter.placeholder');
   headerAction = input<{
@@ -49,7 +52,11 @@ export class SmartTableComponent<T> implements AfterViewInit {
 
   constructor() {
     effect(() => {
-      this.dataSource.data = this.data();
+      if (this.loading() && (!this.data() || this.data().length === 0)) {
+        this.dataSource.data = [{} as any, {} as any, {} as any, {} as any, {} as any];
+      } else {
+        this.dataSource.data = this.data();
+      }
     });
     effect(() => {
       const p = this.paginator();
