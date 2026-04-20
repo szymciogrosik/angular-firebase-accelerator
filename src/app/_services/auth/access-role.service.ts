@@ -1,7 +1,7 @@
 import {computed, inject, Injectable, Signal} from '@angular/core';
 import {AuthService} from "./auth.service";
 import {AccessRole} from "../../_models/user/access-role";
-import {catchError, map, Observable, of} from "rxjs";
+import {catchError, map, Observable, of, Subscription} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -21,16 +21,17 @@ export class AccessRoleService {
 
   public isAuthorized(requestedRole: AccessRole): Promise<boolean> {
     return new Promise((resolve) => {
-      const sub = this.authService.loggedUser().subscribe({
+      let sub: Subscription;
+      sub = this.authService.loggedUser().subscribe({
         next: (customUser) => {
           if (customUser !== null) {
             resolve(customUser.roles.includes(requestedRole));
-            sub.unsubscribe();
+            if (sub) sub.unsubscribe();
           }
         },
         error: (err) => {
           resolve(false);
-          sub.unsubscribe();
+          if (sub) sub.unsubscribe();
         }
       });
     });

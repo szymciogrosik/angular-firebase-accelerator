@@ -1,19 +1,32 @@
 import {computed, inject, Injectable} from '@angular/core';
 import {toSignal} from '@angular/core/rxjs-interop';
-import {firstValueFrom} from 'rxjs';
+import {firstValueFrom, of, switchMap} from 'rxjs';
 import {UserDbService} from './user-db-service.service';
 import {CustomUser} from '../../_models/user/custom-user';
+import {AuthService} from '../../_services/auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserFacade {
   private userDb = inject(UserDbService);
+  private authService = inject(AuthService);
 
   /**
-   * Raw signal of all users in the database
+   * Raw signal of all users in the database, automatically un-subscribed on logout
    */
-  public readonly allUsers = toSignal(this.userDb.getAll());
+  public readonly allUsers = toSignal(
+    this.authService.loggedUser().pipe(
+      switchMap(user => {
+        if (user) {
+          return this.userDb.getAll();
+        } else {
+          return of([]);
+        }
+      })
+    ),
+    { initialValue: [] }
+  );
 
   /**
    * Computed signal of active, non-deleted users, sorted alphabetically
