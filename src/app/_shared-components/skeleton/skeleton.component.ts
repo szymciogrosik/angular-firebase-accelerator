@@ -6,7 +6,7 @@ import {CommonModule} from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './skeleton.component.html',
-  styleUrl: './skeleton.component.css',
+  styleUrl: './skeleton.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SkeletonComponent {

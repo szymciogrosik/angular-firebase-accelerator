@@ -17,7 +17,8 @@ import {SkeletonComponent} from '../../../_shared-components/skeleton/skeleton.c
     MatSlideToggle,
     MatProgressSpinnerModule,
     MatSlideToggleModule,
-    SkeletonComponent
+    SkeletonComponent,
+    TranslateModule
   ],
   templateUrl: './public-settings.component.html',
   styleUrl: './public-settings.component.scss'
