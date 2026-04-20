@@ -1,9 +1,9 @@
 # Angular 21+ Strict Clean Code Standards
-always when loading data (when page is open and data could not be fetched yet), do the same modern loading, use the "skeleton-loader" class
+
 ## General rules
 - If you are changing some general approach, like using "signals" instead "promises" then scan whole application and fix all related issues
 - Always inject services by inject(...) pattern, never by constructor
-- 
+- always when loading data (when page is open and data could not be fetched yet), do the same modern loading, use the "skeleton-loader" class
 
 ## Modern Control Flow
 - Strictly use built-in control flow (`@if`, `@for`, `@switch`).
