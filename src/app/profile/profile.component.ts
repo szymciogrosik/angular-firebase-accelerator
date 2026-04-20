@@ -10,7 +10,7 @@ import {ChangePasswordDialogComponent} from './change-password-dialog/change-pas
 
 import {ImageCropperData, ImageCropperDialogComponent} from './image-cropper-dialog/image-cropper-dialog.component';
 import {ImagePreviewData, ImagePreviewDialogComponent} from './image-preview-dialog/image-preview-dialog.component';
-import {PublicSettingsService} from '../_database/settings/public-settings.service';
+import {PublicSettingsFacade} from '../_database/settings/public-settings.facade';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
@@ -39,7 +39,7 @@ export class ProfileComponent implements OnInit {
   @ViewChild('userFormComponent') userFormComponent!: UserFormComponent;
   readonly user = signal<CustomUser | null>(null);
   readonly isLoading = signal(true);
-  readonly allowForProfilePictureChange = signal(false);
+  readonly allowForProfilePictureChange = this.facade.allowForProfilePictureChange;
 
   constructor(
     private authService: AuthService,
@@ -47,23 +47,13 @@ export class ProfileComponent implements OnInit {
     private snackbarService: SnackbarService,
     private translateService: CustomTranslateService,
     private dialog: MatDialog,
-    private publicSettingsService: PublicSettingsService
+    private facade: PublicSettingsFacade
   ) {
   }
 
   async ngOnInit(): Promise<void> {
     try {
       this.user.set(await this.authService.loggedUserPromise());
-      this.publicSettingsService.getDocument('general').subscribe({
-        next: data => {
-          if (data && data.allowForProfilePictureChange !== undefined) {
-            this.allowForProfilePictureChange.set(data.allowForProfilePictureChange);
-          } else {
-            this.allowForProfilePictureChange.set(false);
-          }
-        },
-        error: err => console.error('Failed to load public settings', err)
-      });
     } catch (error) {
       console.error('Failed to load user', error);
       this.snackbarService.openLongSnackBar(this.translateService.get('profile.error.load'));

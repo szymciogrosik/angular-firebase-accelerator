@@ -1,4 +1,6 @@
-import {Component, signal} from '@angular/core';
+import {Component} from '@angular/core';
+import {toSignal} from '@angular/core/rxjs-interop';
+import {catchError, map, of} from 'rxjs';
 import {Status} from "../_models/status/status";
 import {AssetsService} from "../_services/util/assets.service";
 import {TranslateModule} from '@ngx-translate/core';
@@ -15,13 +17,17 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 export class StatusComponent {
   private STATUS_URL: string = 'status/status.json';
 
-  lastDeployTime = signal<string>('');
+  lastDeployTime = toSignal(
+    this.readAssetsService.getResource(this.STATUS_URL).pipe(
+      map((data: any) => data?.lastDeployTime || ''),
+      catchError(error => {
+        console.error(error);
+        return of('');
+      })
+    ),
+    { initialValue: '' }
+  );
 
-  constructor(private readAssetsService: AssetsService) {
-    this.readAssetsService.getResource(this.STATUS_URL).subscribe({
-      next: (data: Status) => this.lastDeployTime.set(data.lastDeployTime || ''),
-      error: (error) => console.error(error)
-    });
-  }
+  constructor(private readAssetsService: AssetsService) {}
 
 }

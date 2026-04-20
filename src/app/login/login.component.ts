@@ -1,4 +1,4 @@
-import {Component, computed, OnInit, signal} from '@angular/core';
+import {Component, computed, effect, OnInit, signal} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CustomTranslateService} from '../_services/translate/custom-translate.service';
 import {SnackbarService} from '../_services/util/snackbar.service';
@@ -49,22 +49,22 @@ export class LoginComponent implements OnInit {
     private dialog: MatDialog,
     private publicSettingsFacade: PublicSettingsFacade
   ) {
-    setTimeout(() => {
-      this.authService.isAuthenticated().subscribe({
-        next: (isLoggedUser: boolean) => {
-          if (isLoggedUser) {
-            this.router.navigateByUrl(this.returnUrl || '/');
-          } else {
-            this.checkingIfUserIsAlreadyLoggedIn.set(false);
-          }
-        }
-      });
+    effect(() => {
+      if (this.authService.isLoggedIn()) {
+        this.router.navigateByUrl(this.returnUrl || '/');
+      }
+    });
 
-      this.authService.getAuthErrorLogout().subscribe(() => {
-        this.loading.set(false);
-        this.loginForm.enable();
-      });
+    setTimeout(() => {
+      if (!this.authService.isLoggedIn()) {
+        this.checkingIfUserIsAlreadyLoggedIn.set(false);
+      }
     }, 600);
+
+    this.authService.getAuthErrorLogout().subscribe(() => {
+      this.loading.set(false);
+      this.loginForm.enable();
+    });
   }
 
   ngOnInit(): void {
