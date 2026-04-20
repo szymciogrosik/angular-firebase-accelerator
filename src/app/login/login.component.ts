@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, computed, OnInit, signal} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CustomTranslateService} from '../_services/translate/custom-translate.service';
 import {SnackbarService} from '../_services/util/snackbar.service';
@@ -10,7 +10,7 @@ import {EmbeddedBrowserWarningData} from '../_models/dialog/embedded-browser-war
 import {FirebaseError} from '@angular/fire/app';
 import {CustomValidators} from '../_services/validator/custom-validators';
 import {MatTabChangeEvent, MatTabsModule} from '@angular/material/tabs';
-import {PublicSettingsService} from '../_database/settings/public-settings.service';
+import {PublicSettingsFacade} from '../_database/settings/public-settings.facade';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
@@ -36,8 +36,8 @@ export class LoginComponent implements OnInit {
   isRegistrationMode = signal(false);
   returnUrl: string = '';
 
-  allowForRegistering = signal(false);
-  fetchingSettings = signal(true);
+  allowForRegistering = this.publicSettingsFacade.allowForRegistering;
+  fetchingSettings = computed(() => this.publicSettingsFacade.settings() === undefined);
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
     private snackbarService: SnackbarService,
     private translateService: CustomTranslateService,
     private dialog: MatDialog,
-    private publicSettingsService: PublicSettingsService
+    private publicSettingsFacade: PublicSettingsFacade
   ) {
     setTimeout(() => {
       this.authService.isAuthenticated().subscribe({
@@ -68,21 +68,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.publicSettingsService.getDocument('general').subscribe({
-      next: (data) => {
-        if (data && data.allowForRegistering !== undefined) {
-          this.allowForRegistering.set(data.allowForRegistering);
-        } else {
-          this.allowForRegistering.set(false);
-        }
-        this.fetchingSettings.set(false);
-      },
-      error: (err) => {
-        console.error('Failed to fetch public settings.', err);
-        this.allowForRegistering.set(false);
-        this.fetchingSettings.set(false);
-      }
-    });
 
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],

@@ -12,6 +12,7 @@ import {
 } from '@angular/fire/firestore';
 import {CustomUser} from '../../_models/user/custom-user';
 import {Observable} from 'rxjs';
+import {userConverter} from './user.converter';
 
 @Injectable({
   providedIn: 'root'
@@ -28,24 +29,24 @@ export class UserDbService {
 
   public getUser(uid: string, email: string): Observable<CustomUser[]> {
     return runInInjectionContext(this.injector, () => {
-      const usersRef = collection(this.firestore, this.dbPathBase);
+      const usersRef = collection(this.firestore, this.dbPathBase).withConverter(userConverter);
       const q = query(usersRef, where('uid', '==', uid), where('email', '==', email));
-      return collectionData(q, {idField: 'id'}) as Observable<CustomUser[]>;
+      return collectionData(q);
     });
   }
 
   public getUserByEmail(email: string): Observable<CustomUser[]> {
     return runInInjectionContext(this.injector, () => {
-      const usersRef = collection(this.firestore, this.dbPathBase);
+      const usersRef = collection(this.firestore, this.dbPathBase).withConverter(userConverter);
       const q = query(usersRef, where('email', '==', email));
-      return collectionData(q, {idField: 'id'}) as Observable<CustomUser[]>;
+      return collectionData(q);
     });
   }
 
   public getAll(): Observable<CustomUser[]> {
     return runInInjectionContext(this.injector, () => {
-      const usersRef = collection(this.firestore, this.dbPathBase);
-      return collectionData(usersRef, {idField: 'id'}) as Observable<CustomUser[]>;
+      const usersRef = collection(this.firestore, this.dbPathBase).withConverter(userConverter);
+      return collectionData(usersRef);
     });
   }
 
@@ -60,7 +61,7 @@ export class UserDbService {
   }
 
   public async create(newUser: CustomUser): Promise<void> {
-    const usersRef = collection(this.firestore, this.dbPathBase);
-    await addDoc(usersRef, {...newUser});
+    const usersRef = collection(this.firestore, this.dbPathBase).withConverter(userConverter);
+    await addDoc(usersRef, newUser);
   }
 }

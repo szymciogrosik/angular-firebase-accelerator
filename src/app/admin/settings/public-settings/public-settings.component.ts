@@ -1,5 +1,5 @@
-import {Component, OnDestroy, OnInit, signal} from '@angular/core';
-import {PublicSettingsService} from '../../../_database/settings/public-settings.service';
+import {Component, effect, OnDestroy, OnInit, signal} from '@angular/core';
+import {PublicSettingsFacade} from '../../../_database/settings/public-settings.facade';
 import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {SnackbarService} from '../../../_services/util/snackbar.service';
 import {CustomTranslateService} from '../../../_services/translate/custom-translate.service';
@@ -29,7 +29,7 @@ export class PublicSettingsComponent implements OnInit, OnDestroy {
 
   constructor(
     private formBuilder: FormBuilder,
-    private publicSettingsService: PublicSettingsService,
+    private facade: PublicSettingsFacade,
     private snackbarService: SnackbarService,
     private translateService: CustomTranslateService
   ) {
@@ -38,33 +38,21 @@ export class PublicSettingsComponent implements OnInit, OnDestroy {
       allowForProfilePictureChange: [false],
       allowDarkMode: [false]
     });
+
+    effect(() => {
+      const settings = this.facade.settings();
+      if (settings !== undefined) {  // Finished fetching
+         this.settingsForm.patchValue(settings || {
+            allowForRegistering: false,
+            allowForProfilePictureChange: false,
+            allowDarkMode: false
+         });
+         this.loading.set(false);
+      }
+    });
   }
 
   ngOnInit(): void {
-    this.settingsSub = this.publicSettingsService.getDocument('general').subscribe({
-      next: data => {
-        if (data && data.allowForRegistering !== undefined) {
-          this.settingsForm.patchValue({allowForRegistering: data.allowForRegistering});
-        } else {
-          this.settingsForm.patchValue({allowForRegistering: false});
-        }
-        if (data && data.allowForProfilePictureChange !== undefined) {
-          this.settingsForm.patchValue({allowForProfilePictureChange: data.allowForProfilePictureChange});
-        } else {
-          this.settingsForm.patchValue({allowForProfilePictureChange: false});
-        }
-        if (data && data.allowDarkMode !== undefined) {
-          this.settingsForm.patchValue({allowDarkMode: data.allowDarkMode});
-        } else {
-          this.settingsForm.patchValue({allowDarkMode: false});
-        }
-        this.loading.set(false);
-      },
-      error: err => {
-        console.error(err);
-        this.loading.set(false);
-      }
-    });
   }
 
   ngOnDestroy(): void {
@@ -83,12 +71,11 @@ export class PublicSettingsComponent implements OnInit, OnDestroy {
         allowDarkMode: this.settingsForm.getRawValue().allowDarkMode
       };
 
-      await this.publicSettingsService.update('general', payload).catch(async e => {
-        if (e.code === 'not-found') {
-          await this.publicSettingsService.setDocument('general', payload);
-        } else {
-          throw e;
-        }
+      await this.facade.saveSettings({
+         id: 'general',
+         allowForRegistering: payload.allowForRegistering ?? false,
+         allowForProfilePictureChange: payload.allowForProfilePictureChange ?? false,
+         allowDarkMode: payload.allowDarkMode ?? false
       });
       this.snackbarService.openSnackBar(this.translateService.get('admin.panel.settings.public.savedSuccessfully'));
     } catch (err) {

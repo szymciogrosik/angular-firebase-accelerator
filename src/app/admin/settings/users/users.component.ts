@@ -1,7 +1,6 @@
-import {Component, OnDestroy, signal} from '@angular/core';
-import {UserDbService} from "../../../_database/auth/user-db-service.service";
+import {Component} from '@angular/core';
+import {UserFacade} from "../../../_database/auth/user.facade";
 import {CustomUser} from "../../../_models/user/custom-user";
-import {first, Subscription} from "rxjs";
 import {AccessRoleService} from "../../../_services/auth/access-role.service";
 import {CustomTranslateService} from "../../../_services/translate/custom-translate.service";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
@@ -30,10 +29,9 @@ import {SmartTableColumn} from "../../../_shared-components/smart-table/smart-ta
   standalone: true,
   imports: [TranslateModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatTabsModule, SmartTableComponent],
 })
-export class UsersComponent implements OnDestroy {
-  protected allUsers = signal<CustomUser[] | undefined>(undefined);
-  protected deletedUsers = signal<CustomUser[] | undefined>(undefined);
-  protected allUsersSubscription: Subscription;
+export class UsersComponent {
+  protected allUsers = this.userFacade.activeUsers;
+  protected deletedUsers = this.userFacade.deletedUsers;
 
   protected addUserAction = {
     icon: 'person_add',
@@ -94,7 +92,7 @@ export class UsersComponent implements OnDestroy {
 
   constructor(
     private accessService: AccessRoleService,
-    private userDb: UserDbService,
+    private userFacade: UserFacade,
     private translateService: CustomTranslateService,
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
@@ -104,16 +102,9 @@ export class UsersComponent implements OnDestroy {
     this.accessService.isAuthorized(AccessRole.ADMIN_PAGE_ACCESS)
       .then((isAuthorized: boolean): void => {
         if (isAuthorized) {
-          this.allUsersSubscription = this.userDb.getAll().subscribe(allUsers => {
-            this.allUsers.set(allUsers.filter(u => !u.isDeleted).sort((a, b) => a.firstName.localeCompare(b.firstName)));
-            this.deletedUsers.set(allUsers.filter(u => u.isDeleted).sort((a, b) => a.firstName.localeCompare(b.firstName)));
-          });
+          // Access checks only, UserFacade lazily evaluates automatically!
         }
       });
-  }
-
-  ngOnDestroy(): void {
-    this.allUsersSubscription?.unsubscribe();
   }
 
   protected openAddUser(): any {
@@ -140,7 +131,7 @@ export class UsersComponent implements OnDestroy {
           return;
         }
 
-        this.userDb.getUserByEmail(user.email).pipe(first()).subscribe(existingUsers => {
+        this.userFacade.getUserByEmailAsync(user.email).then(existingUsers => {
           const deletedUser = existingUsers.find(u => u.isDeleted);
           const activeUser = existingUsers.find(u => !u.isDeleted);
 
@@ -157,7 +148,7 @@ export class UsersComponent implements OnDestroy {
           this.authService.registerUser(user.email, password)
             .then((uid: string): void => {
               user.uid = uid;
-              this.userDb.create(user)
+              this.userFacade.createUser(user)
                 .then((): void => {
                   this.openConfirmCreateUserDialog();
                 })
@@ -214,7 +205,7 @@ export class UsersComponent implements OnDestroy {
 
     updateRef.afterClosed().subscribe(user => {
       if (user) {
-        this.userDb.update(user.id, user)
+        this.userFacade.updateUser(user.id, user)
           .then((): void => {
             this.snackbarService.openSnackBar(this.translateService.get('admin.panel.settings.users.updatedSuccessfully'));
           })
@@ -237,7 +228,7 @@ export class UsersComponent implements OnDestroy {
   }
 
   private removeUser(id: string): any {
-    this.userDb.update(id, {isDeleted: true})
+    this.userFacade.updateUser(id, {isDeleted: true})
       .then((): void => {
         this.snackbarService.openSnackBar(this.translateService.get('admin.panel.settings.users.deletedSuccessfully'));
       })
@@ -248,7 +239,7 @@ export class UsersComponent implements OnDestroy {
   }
 
   protected restoreUser(id: string): any {
-    this.userDb.update(id, {isDeleted: false})
+    this.userFacade.updateUser(id, {isDeleted: false})
       .then((): void => {
         this.snackbarService.openSnackBar(this.translateService.get('admin.panel.settings.users.restoredSuccessfully'));
       })
