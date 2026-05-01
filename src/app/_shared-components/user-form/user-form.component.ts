@@ -1,9 +1,9 @@
-import {ChangeDetectionStrategy, Component, ElementRef, inject, input, OnInit, output, viewChild} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {CustomUser} from "../../_models/user/custom-user";
-import {AccessRole} from "../../_models/user/access-role";
-import {CustomTranslateService} from "../../_services/translate/custom-translate.service";
-import {CustomValidators} from "../../_services/validator/custom-validators";
+import {ChangeDetectionStrategy, Component, effect, ElementRef, inject, input, output, viewChild} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {CustomUser} from '../../_models/user/custom-user';
+import {AccessRole} from '../../_models/user/access-role';
+import {CustomTranslateService} from '../../_services/translate/custom-translate.service';
+import {CustomValidators} from '../../_services/validator/custom-validators';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
@@ -15,32 +15,54 @@ import {MatSelectModule} from '@angular/material/select';
 @Component({
   selector: 'app-user-form',
   standalone: true,
-  imports: [TranslateModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatDialogModule, MatSelectModule],
+  imports: [
+    TranslateModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatSelectModule
+  ],
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserFormComponent implements OnInit {
-  user = input<CustomUser | null>(null);
-  showPassword = input<boolean>(false);
-  showRoles = input<boolean>(true);
-  disableEmail = input<boolean>(false);
+export class UserFormComponent {
+  readonly user = input<CustomUser | null>(null);
+  readonly showPassword = input<boolean>(false);
+  readonly showRoles = input<boolean>(true);
+  readonly disableEmail = input<boolean>(false);
 
-  formSubmit = output<any>();
-
-  submitBtn = viewChild<ElementRef>('submitBtn');
+  readonly formSubmit = output<any>();
+  readonly submitBtn = viewChild<ElementRef>('submitBtn');
 
   userForm!: FormGroup;
   hidePassword = true;
-  accessRoleValues: AccessRole[] = Object.values(AccessRole);
+  readonly accessRoleValues: AccessRole[] = Object.values(AccessRole);
 
-  private formBuilder = inject(FormBuilder);
-  private translateService = inject(CustomTranslateService);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly translateService = inject(CustomTranslateService);
 
-  ngOnInit(): void {
+  constructor() {
+    this.createForm();
+
+    effect(() => {
+      const user = this.user();
+      if (user) {
+        this.userForm.patchValue({
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          roles: user.roles || []
+        }, { emitEvent: false });
+      }
+    });
+  }
+
+  private createForm(): void {
     const userVal = this.user();
-    const defaultRoles = userVal?.roles || [];
-
     this.userForm = this.formBuilder.group({
       email: [{value: userVal?.email || '', disabled: this.disableEmail()}, [Validators.required, Validators.email]],
       firstName: [userVal?.firstName || '', [Validators.required]],
@@ -48,7 +70,7 @@ export class UserFormComponent implements OnInit {
     });
 
     if (this.showRoles()) {
-      this.userForm.addControl('roles', this.formBuilder.control(defaultRoles));
+      this.userForm.addControl('roles', this.formBuilder.control(userVal?.roles || []));
     }
 
     if (this.showPassword()) {

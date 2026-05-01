@@ -1,7 +1,7 @@
-import {Component, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {CustomTranslateService} from './_services/translate/custom-translate.service';
-import {FooterComponent} from "./footer/footer.component";
-import {NavbarComponent} from "./navbar/navbar.component";
+import {FooterComponent} from './footer/footer.component';
+import {NavbarComponent} from './navbar/navbar.component';
 import {Title} from '@angular/platform-browser';
 import {TranslateModule} from '@ngx-translate/core';
 import {RouterModule} from '@angular/router';
@@ -12,11 +12,11 @@ import {RouterModule} from '@angular/router';
   styleUrls: ['./app.component.scss'],
   standalone: true,
   imports: [FooterComponent, NavbarComponent, TranslateModule, RouterModule],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-
-  private translateService = inject(CustomTranslateService);
-  private titleService = inject(Title);
+  private readonly translateService = inject(CustomTranslateService);
+  private readonly titleService = inject(Title);
 
   constructor() {
     this.translateService.getPromise('page.title')
