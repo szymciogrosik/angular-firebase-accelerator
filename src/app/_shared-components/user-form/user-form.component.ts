@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, effect, ElementRef, inject, input, output, viewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, ElementRef, inject, input, OnInit, output, viewChild} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CustomUser} from '../../_models/user/custom-user';
 import {AccessRole} from '../../_models/user/access-role';
@@ -29,7 +29,7 @@ import {MatSelectModule} from '@angular/material/select';
   styleUrls: ['./user-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserFormComponent {
+export class UserFormComponent implements OnInit {
   readonly user = input<CustomUser | null>(null);
   readonly showPassword = input<boolean>(false);
   readonly showRoles = input<boolean>(true);
@@ -46,11 +46,9 @@ export class UserFormComponent {
   private readonly translateService = inject(CustomTranslateService);
 
   constructor() {
-    this.createForm();
-
     effect(() => {
       const user = this.user();
-      if (user) {
+      if (user && this.userForm) {
         this.userForm.patchValue({
           email: user.email,
           firstName: user.firstName,
@@ -59,6 +57,10 @@ export class UserFormComponent {
         }, { emitEvent: false });
       }
     });
+  }
+
+  ngOnInit(): void {
+    this.createForm();
   }
 
   private createForm(): void {
