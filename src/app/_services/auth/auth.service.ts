@@ -1,4 +1,4 @@
-import {computed, inject, Injectable, Injector, runInInjectionContext} from '@angular/core';
+import {computed, inject, Injectable, Injector, runInInjectionContext, signal} from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
@@ -28,21 +28,22 @@ import {AccessRole} from '../../_models/user/access-role';
   providedIn: 'root'
 })
 export class AuthService {
-  private userSubject = new BehaviorSubject<CustomUser | null>(null);
-  private user: Observable<CustomUser | null> = this.userSubject.asObservable();
-  private authErrorLogoutSubject = new Subject<void>();
+  private readonly auth = inject(Auth);
+  private readonly router = inject(Router);
+  private readonly snackbarService = inject(SnackbarService);
+  private readonly standardUserService = inject(StandardUserDbService);
+  private readonly translateService = inject(CustomTranslateService);
+  private readonly injector = inject(Injector);
+
+  private readonly userSubject = new BehaviorSubject<CustomUser | null>(null);
+  private readonly user$ = this.userSubject.asObservable();
+  private readonly authErrorLogoutSubject = new Subject<void>();
 
   private pendingRegistrationInfo: { firstName: string, lastName: string, roles: AccessRole[] } | null = null;
 
-  public readonly currentUser = toSignal(this.user, { initialValue: null });
+  public readonly currentUser = toSignal(this.user$, {initialValue: null});
   public readonly isLoggedIn = computed(() => !!this.currentUser());
-
-  private auth = inject(Auth);
-  private router = inject(Router);
-  private snackbarService = inject(SnackbarService);
-  private standardUserService = inject(StandardUserDbService);
-  private translateService = inject(CustomTranslateService);
-  private readonly injector = inject(Injector);
+  public readonly isLoading = signal(true);
 
   constructor() {
     this.listenForAuthChanges();
@@ -50,6 +51,7 @@ export class AuthService {
 
   private listenForAuthChanges() {
     onAuthStateChanged(this.auth, async (firebaseUser: User | null) => {
+      this.isLoading.set(true);
       if (firebaseUser) {
         try {
           const foundUser = await this.standardUserService.getUser(firebaseUser.uid, firebaseUser.email);
@@ -95,6 +97,7 @@ export class AuthService {
       } else {
         this.logout(false);
       }
+      this.isLoading.set(false);
     });
   }
 
@@ -203,11 +206,18 @@ export class AuthService {
   }
 
   public isAuthenticated(): Observable<boolean> {
-    return this.user.pipe(map(u => !!u));
+    return this.user$.pipe(map(u => !!u));
   }
 
   public loggedUser(): Observable<CustomUser | null> {
-    return this.user;
+    return this.user$;
+  }
+
+  public updateLocalUser(data: Partial<CustomUser>): void {
+    const current = this.userSubject.value;
+    if (current) {
+      this.userSubject.next({ ...current, ...data });
+    }
   }
 
   public async loggedUserPromise(): Promise<CustomUser | null> {

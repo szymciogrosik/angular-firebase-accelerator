@@ -1,24 +1,25 @@
-import {Component, inject} from '@angular/core';
-import {UserFacade} from "../../../_database/auth/user.facade";
-import {CustomUser} from "../../../_models/user/custom-user";
-import {AccessRoleService} from "../../../_services/auth/access-role.service";
-import {CustomTranslateService} from "../../../_services/translate/custom-translate.service";
-import {MatDialog, MatDialogModule} from "@angular/material/dialog";
-import {SnackbarService} from "../../../_services/util/snackbar.service";
-import {AuthService} from "../../../_services/auth/auth.service";
-import {UserDetailsComponent} from "./user-details/user-details.component";
-import {UserDetailsPopupData} from "../../../_models/dialog/user-details/user-details-popup-data";
-import {UserDetailsType} from "../../../_models/dialog/user-details/user-details-type";
-import {DialogService} from "../../../_services/util/dialog.service";
-import {DialogType} from "../../../_models/dialog/dialog-type";
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {UserFacade} from '../../../_database/auth/user.facade';
+import {CustomUser} from '../../../_models/user/custom-user';
+import {AccessRoleService} from '../../../_services/auth/access-role.service';
+import {CustomTranslateService} from '../../../_services/translate/custom-translate.service';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {SnackbarService} from '../../../_services/util/snackbar.service';
+import {AuthService} from '../../../_services/auth/auth.service';
+import {UserDetailsComponent} from './user-details/user-details.component';
+import {UserDetailsPopupData} from '../../../_models/dialog/user-details/user-details-popup-data';
+import {UserDetailsType} from '../../../_models/dialog/user-details/user-details-type';
+import {DialogService} from '../../../_services/util/dialog.service';
+import {DialogType} from '../../../_models/dialog/dialog-type';
 import {FirebaseError} from '@angular/fire/app';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatTabsModule} from '@angular/material/tabs';
-import {SmartTableComponent} from "../../../_shared-components/smart-table/smart-table.component";
-import {SmartTableColumn} from "../../../_shared-components/smart-table/smart-table.model";
+import {SmartTableComponent} from '../../../_shared-components/smart-table/smart-table.component';
+import {SmartTableColumn} from '../../../_shared-components/smart-table/smart-table.model';
+import {firstValueFrom} from 'rxjs';
 
 @Component({
   selector: 'app-users',
@@ -26,15 +27,16 @@ import {SmartTableColumn} from "../../../_shared-components/smart-table/smart-ta
   styleUrl: './users.component.scss',
   standalone: true,
   imports: [TranslateModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatTabsModule, SmartTableComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UsersComponent {
-  private accessService = inject(AccessRoleService);
-  private userFacade = inject(UserFacade);
-  private translateService = inject(CustomTranslateService);
-  private dialog = inject(MatDialog);
-  private snackbarService = inject(SnackbarService);
-  private authService = inject(AuthService);
-  private dialogService = inject(DialogService);
+  private readonly accessService = inject(AccessRoleService);
+  private readonly userFacade = inject(UserFacade);
+  private readonly translateService = inject(CustomTranslateService);
+  private readonly dialog = inject(MatDialog);
+  private readonly snackbarService = inject(SnackbarService);
+  private readonly authService = inject(AuthService);
+  private readonly dialogService = inject(DialogService);
 
   protected facadeAllUsers = this.userFacade.allUsers;
   protected activeUsers = this.userFacade.activeUsers;
@@ -97,7 +99,7 @@ export class UsersComponent {
     }
   ];
 
-  protected openAddUser(): any {
+  protected async openAddUser(): Promise<void> {
     const createRef = this.dialog.open(
       UserDetailsComponent,
       {
@@ -109,58 +111,49 @@ export class UsersComponent {
       }
     );
 
-    createRef.afterClosed().subscribe(user => {
-      if (user) {
-        let password = user.password;
-        delete user.password;
-        user.id = null;
+    const user = await firstValueFrom(createRef.afterClosed());
+    if (user) {
+      let password = user.password;
+      delete user.password;
+      user.id = null;
 
-        if (!password) {
-          console.error('Password missing from form payload');
-          this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
+      if (!password) {
+        console.error('Password missing from form payload');
+        this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
+        return;
+      }
+
+      try {
+        const existingUsers = await this.userFacade.getUserByEmailAsync(user.email);
+        const deletedUser = existingUsers.find(u => u.isDeleted);
+        const activeUser = existingUsers.find(u => !u.isDeleted);
+
+        if (activeUser) {
+          this.snackbarService.openLongSnackBar(this.translateService.get('login.error.emailAlreadyUsed'));
           return;
         }
 
-        this.userFacade.getUserByEmailAsync(user.email).then(existingUsers => {
-          const deletedUser = existingUsers.find(u => u.isDeleted);
-          const activeUser = existingUsers.find(u => !u.isDeleted);
+        if (deletedUser) {
+          this.snackbarService.openLongSnackBar(this.translateService.get('admin.panel.settings.users.error.userDeletedOnlyRestore'));
+          return;
+        }
 
-          if (activeUser) {
-            this.snackbarService.openLongSnackBar(this.translateService.get('login.error.emailAlreadyUsed'));
-            return;
-          }
-
-          if (deletedUser) {
-            this.snackbarService.openLongSnackBar(this.translateService.get('admin.panel.settings.users.error.userDeletedOnlyRestore'));
-            return;
-          }
-
-          this.authService.registerUser(user.email, password)
-            .then((uid: string): void => {
-              user.uid = uid;
-              this.userFacade.createUser(user)
-                .then((): void => {
-                  this.openConfirmCreateUserDialog();
-                })
-                .catch((err): void => {
-                  console.error(err);
-                  this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
-                });
-            })
-            .catch((err) => {
-              console.error(err);
-              if (err instanceof FirebaseError && err.code === 'auth/email-already-in-use') {
-                this.snackbarService.openLongSnackBar(this.translateService.get('login.error.emailAlreadyUsed'));
-              } else {
-                this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
-              }
-            });
-        });
+        const uid = await this.authService.registerUser(user.email, password);
+        user.uid = uid;
+        await this.userFacade.createUser(user);
+        await this.openConfirmCreateUserDialog();
+      } catch (err) {
+        console.error(err);
+        if (err instanceof FirebaseError && err.code === 'auth/email-already-in-use') {
+          this.snackbarService.openLongSnackBar(this.translateService.get('login.error.emailAlreadyUsed'));
+        } else {
+          this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
+        }
       }
-    });
+    }
   }
 
-  private openConfirmCreateUserDialog() {
+  private async openConfirmCreateUserDialog(): Promise<void> {
     const confirmPopup =
       this.dialogService.openConfirmDialogWithData(
         {
@@ -170,14 +163,12 @@ export class UsersComponent {
           cancelButtonText: null,
           confirmButtonText: this.translateService.get('registeredUsers.details.confirm')
         });
-    confirmPopup.afterClosed().subscribe(result => {
-      if (result) {
-        window.location.reload();
-      }
-    });
+
+    await firstValueFrom(confirmPopup.afterClosed());
+    // Removed window.location.reload() - let the signals handle the UI update
   }
 
-  protected openUpdateUser(id: string): any {
+  protected async openUpdateUser(id: string): Promise<void> {
     const currentUsers = this.activeUsers();
     let user: CustomUser | undefined = currentUsers ? currentUsers.find(elem => elem.id === id) : undefined;
     if (user === undefined) {
@@ -193,28 +184,25 @@ export class UsersComponent {
       }
     );
 
-    updateRef.afterClosed().subscribe(user => {
-      if (user) {
-        this.userFacade.updateUser(user.id, user)
-          .then((): void => {
-            this.snackbarService.openSnackBar(this.translateService.get('admin.panel.settings.users.updatedSuccessfully'));
-          })
-          .catch((err): void => {
-            console.error(err);
-            this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
-          });
+    const updatedUser = await firstValueFrom(updateRef.afterClosed());
+    if (updatedUser) {
+      try {
+        await this.userFacade.updateUser(updatedUser.id, updatedUser);
+        this.snackbarService.openSnackBar(this.translateService.get('admin.panel.settings.users.updatedSuccessfully'));
+      } catch (err) {
+        console.error(err);
+        this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
       }
-    });
+    }
   }
 
-  protected openConfirmRemoveUserDialog(id: string) {
+  protected async openConfirmRemoveUserDialog(id: string): Promise<void> {
     const confirmPopup =
       this.dialogService.openConfirmDialog('admin.panel.users.warning.removedUser');
-    confirmPopup.afterClosed().subscribe(result => {
-      if (result) {
-        this.removeUser(id);
-      }
-    });
+    const result = await firstValueFrom(confirmPopup.afterClosed());
+    if (result) {
+      await this.removeUser(id);
+    }
   }
 
   private removeUser(id: string): any {
