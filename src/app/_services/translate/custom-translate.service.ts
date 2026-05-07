@@ -7,6 +7,7 @@ import localePl from '@angular/common/locales/pl';
 import {LanguageEnum} from './language-enum';
 import {BehaviorSubject, firstValueFrom} from 'rxjs';
 import {toSignal} from '@angular/core/rxjs-interop';
+import {Settings} from 'luxon';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,7 @@ export class CustomTranslateService {
   public setLanguage(language: string): void {
     this.translateService.use(language);
     this.dateAdapter.setLocale(language);
+    Settings.defaultLocale = language;
     registerLocaleData(this.findApplicationLocalLanguage(language));
     localStorage.setItem(this.appConfig.selected_language_key, language);
 
