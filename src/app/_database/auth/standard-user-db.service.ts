@@ -1,7 +1,7 @@
 import {Injectable, inject} from '@angular/core';
 import {UserDbService} from './user-db-service.service';
 import {CustomUser} from '../../_models/user/custom-user';
-import {firstValueFrom, map, Observable} from 'rxjs';
+import {map, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
