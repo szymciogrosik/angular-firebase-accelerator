@@ -22,16 +22,16 @@ import {APP_CONFIG} from './app/app.config.token';
 
 const CUSTOM_DATE_FORMATS = {
   parse: {
-    dateInput: 'dd-MM-yyyy',
-    timeInput: 'HH-mm',
+    dateInput: 'dd.MM.yyyy',
+    timeInput: 'HH:mm',
   },
   display: {
-    dateInput: 'dd-MM-yyyy',
+    dateInput: 'dd.MM.yyyy',
     monthYearLabel: 'LLLL yyyy',
     dateA11yLabel: 'dd LLLL yyyy',
     monthYearA11yLabel: 'LLLL yyyy',
-    timeInput: 'HH-mm',
-    timeOptionLabel: 'HH-mm',
+    timeInput: 'HH:mm',
+    timeOptionLabel: 'HH:mm',
   },
 };
 
