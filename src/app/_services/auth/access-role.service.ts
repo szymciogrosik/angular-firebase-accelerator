@@ -1,7 +1,7 @@
 import {computed, inject, Injectable, Signal} from '@angular/core';
 import {AuthService} from './auth.service';
 import {AccessRole} from '../../_models/user/access-role';
-import {catchError, firstValueFrom, map, Observable, of} from 'rxjs';
+import {firstValueFrom} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,14 @@ export class AccessRoleService {
     });
   }
 
+  public hasAnyRoleSignal(requestedRoles: AccessRole[]): Signal<boolean> {
+    return computed(() => {
+      const user = this.authService.currentUser();
+      if (!user?.roles) return false;
+      return requestedRoles.some(role => user.roles.includes(role));
+    });
+  }
+
   public async isAuthorized(requestedRole: AccessRole): Promise<boolean> {
     try {
       const user = await firstValueFrom(this.authService.loggedUser());
@@ -23,12 +31,5 @@ export class AccessRoleService {
     } catch {
       return false;
     }
-  }
-
-  public isAuthorized$(requestedRole: AccessRole): Observable<boolean> {
-    return this.authService.loggedUser().pipe(
-      map(customUser => !!customUser && customUser.roles.includes(requestedRole)),
-      catchError(() => of(false))
-    );
   }
 }

@@ -121,7 +121,7 @@ Then create manually a fist user:
     - `email` (string): `your-email@gmail.com`
     - `firstName` (string): `Adam`
     - `lastName` (string): `Abacki`
-    - `roles` (array of string): `ADMIN_PAGE_ACCESS`
+    - `roles` (array of string): `ADMIN_PAGE_ACCESS`, `ADMIN_CORE_SETTINGS`
     - `uid` (string): `<copied from Authentication>`
 - **Rules** → replace with:
   ```js
