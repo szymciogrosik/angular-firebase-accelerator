@@ -58,7 +58,7 @@ export class UsersComponent {
       valueFn: (row) => row.firstName + ' ' + row.lastName
     },
     {key: 'email', headerLabelKey: 'admin.panel.table.header.email', type: 'text'},
-    {key: 'roles', headerLabelKey: 'admin.panel.table.header.role', type: 'text'},
+    {key: 'roles', headerLabelKey: 'admin.panel.table.header.role', type: 'text', truncateLength: 40},
     {
       key: 'actions', headerLabelKey: '', type: 'action', actions: [
         {
