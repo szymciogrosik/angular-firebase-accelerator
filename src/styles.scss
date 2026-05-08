@@ -339,15 +339,8 @@ mat-card-content {
 }
 
 mat-card {
-  margin: 20px;
-  padding: 2rem;
-}
-
-@media (max-width: 440px) {
-  mat-card {
-    padding: 2rem 5px;
-    margin: 10px;
-  }
+  margin: clamp(5px, 5cqi, 20px);
+  padding: clamp(1rem, 5cqi, 2rem) clamp(0.5rem, 5cqi, 2rem);
 }
 
 mat-form-field {
