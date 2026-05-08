@@ -6,6 +6,8 @@ import {Title} from '@angular/platform-browser';
 import {TranslateModule} from '@ngx-translate/core';
 import {RouterModule} from '@angular/router';
 import {APP_CONFIG} from './app.config.token';
+import {MatDatepickerIntl} from '@angular/material/datepicker';
+import {CustomDatepickerIntl} from './_services/util/custom-datepicker-intl.service';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +15,9 @@ import {APP_CONFIG} from './app.config.token';
   styleUrls: ['./app.component.scss'],
   standalone: true,
   imports: [FooterComponent, NavbarComponent, TranslateModule, RouterModule],
+  providers: [
+    {provide: MatDatepickerIntl, useClass: CustomDatepickerIntl}
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {

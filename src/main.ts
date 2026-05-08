@@ -15,23 +15,21 @@ import {AssetsService} from "./app/_services/util/assets.service";
 import {provideLuxonDateAdapter} from '@angular/material-luxon-adapter';
 import {MatPaginatorIntl} from '@angular/material/paginator';
 import {CustomPaginatorIntl} from './app/_services/util/custom-paginator-intl.service';
-import {MatDatepickerIntl} from '@angular/material/datepicker';
-import {CustomDatepickerIntl} from './app/_services/util/custom-datepicker-intl.service';
 
 import {APP_CONFIG} from './app/app.config.token';
 
 const CUSTOM_DATE_FORMATS = {
   parse: {
     dateInput: 'dd.MM.yyyy',
-    timeInput: 'HH:mm',
+    timeInput: 'HH:mm:ss',
   },
   display: {
     dateInput: 'dd.MM.yyyy',
     monthYearLabel: 'LLLL yyyy',
     dateA11yLabel: 'dd LLLL yyyy',
     monthYearA11yLabel: 'LLLL yyyy',
-    timeInput: 'HH:mm',
-    timeOptionLabel: 'HH:mm',
+    timeInput: 'HH:mm:ss',
+    timeOptionLabel: 'HH:mm:ss',
   },
 };
 
@@ -60,7 +58,6 @@ bootstrapApplication(AppComponent, {
     provideStorage(() => getStorage()),
     provideAnalytics(() => getAnalytics()),
     {provide: MatPaginatorIntl, useClass: CustomPaginatorIntl},
-    {provide: MatDatepickerIntl, useClass: CustomDatepickerIntl},
   ]
 }).catch(error => {
   console.error("Init failed: " + error)

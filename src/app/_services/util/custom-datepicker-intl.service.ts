@@ -3,7 +3,9 @@ import {MatDatepickerIntl} from '@angular/material/datepicker';
 import {TranslateService} from '@ngx-translate/core';
 import {toSignal} from '@angular/core/rxjs-interop';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class CustomDatepickerIntl extends MatDatepickerIntl {
   private readonly translateService = inject(TranslateService);
   private readonly langChange = toSignal(this.translateService.onLangChange);
@@ -18,6 +20,14 @@ export class CustomDatepickerIntl extends MatDatepickerIntl {
     });
 
     this.getTranslations();
+  }
+
+  override formatYearRange(start: string, end: string): string {
+    return `${start} – ${end}`;
+  }
+
+  override formatYearRangeLabel(start: string, end: string): string {
+    return `${start} do ${end}`;
   }
 
   private getTranslations(): void {
