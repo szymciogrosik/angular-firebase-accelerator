@@ -315,7 +315,7 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  font-size: clamp(1rem, 5cqi, 1.2rem);
+  font-size: 1rem;
   color: $main-font-color;
   background-color: $app-background-color;
 }
