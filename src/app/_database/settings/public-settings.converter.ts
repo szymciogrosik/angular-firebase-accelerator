@@ -10,9 +10,10 @@ export const publicSettingsConverter: FirestoreDataConverter<PublicSettings> = {
     const data = snapshot.data(options);
     return {
       id: snapshot.id,
+      ...data,
       allowForRegistering: data['allowForRegistering'] ?? false,
       allowForProfilePictureChange: data['allowForProfilePictureChange'] ?? false,
       allowDarkMode: data['allowDarkMode'] ?? false
-    };
+    } as PublicSettings;
   }
 };

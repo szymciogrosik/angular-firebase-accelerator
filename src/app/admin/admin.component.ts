@@ -18,7 +18,8 @@ import {MatIconModule} from '@angular/material/icon';
 })
 export class AdminComponent {
   protected readonly environment = inject(APP_CONFIG);
-  protected settingsVisible = inject(AccessRoleService).isAuthorizedSignal(AccessRole.ADMIN_PAGE_ACCESS);
+  private accessRoleService = inject(AccessRoleService);
+  protected settingsTabVisible = this.accessRoleService.hasAnyRoleSignal([AccessRole.ADMIN_CORE_SETTINGS]);
   private authService = inject(AuthService);
   protected loggedUserName = computed(() => this.authService.currentUser()?.firstName ?? '');
 }

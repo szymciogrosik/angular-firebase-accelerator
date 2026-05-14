@@ -87,4 +87,25 @@ export class SmartTableComponent<T> implements AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  protected getCellValue(col: SmartTableColumn<T>, element: T): any {
+    if (col.valueFn) {
+      return col.valueFn(element);
+    }
+    return (element as any)[col.key];
+  }
+
+  protected getTruncatedValue(value: any, length?: number): string {
+    if (value === null || value === undefined) return '';
+    const strValue = String(value);
+    if (!length || strValue.length <= length) {
+      return strValue;
+    }
+    return strValue.substring(0, length) + '...';
+  }
+
+  protected shouldShowTooltip(value: any, length?: number): boolean {
+    if (value === null || value === undefined) return false;
+    return length !== undefined && String(value).length > length;
+  }
 }
