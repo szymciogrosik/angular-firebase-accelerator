@@ -12,4 +12,5 @@ export interface SmartTableColumn<T> {
   type: 'text' | 'action' | 'index';
   valueFn?: (row: T) => any;
   actions?: SmartTableAction<T>[];
+  truncateLength?: number;
 }

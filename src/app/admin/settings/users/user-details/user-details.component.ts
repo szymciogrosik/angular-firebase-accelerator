@@ -1,11 +1,11 @@
-import {Component, OnInit, ViewChild, inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
-import {UserDetailsPopupData} from "../../../../_models/dialog/user-details/user-details-popup-data";
-import {UserDetailsType} from "../../../../_models/dialog/user-details/user-details-type";
-import {CustomTranslateService} from "../../../../_services/translate/custom-translate.service";
-import {UserFormComponent} from "../../../../_shared-components/user-form/user-form.component";
-import {AuthService} from "../../../../_services/auth/auth.service";
-import {SnackbarService} from "../../../../_services/util/snackbar.service";
+import {ChangeDetectionStrategy, Component, inject, viewChild} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
+import {UserDetailsPopupData} from '../../../../_models/dialog/user-details/user-details-popup-data';
+import {UserDetailsType} from '../../../../_models/dialog/user-details/user-details-type';
+import {CustomTranslateService} from '../../../../_services/translate/custom-translate.service';
+import {UserFormComponent} from '../../../../_shared-components/user-form/user-form.component';
+import {AuthService} from '../../../../_services/auth/auth.service';
+import {SnackbarService} from '../../../../_services/util/snackbar.service';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatButtonModule} from '@angular/material/button';
 
@@ -15,9 +15,10 @@ import {MatButtonModule} from '@angular/material/button';
   styleUrl: './user-details.component.scss',
   standalone: true,
   imports: [UserFormComponent, TranslateModule, MatButtonModule, MatDialogModule],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserDetailsComponent implements OnInit {
-  @ViewChild('userFormComponent') userFormComponent!: UserFormComponent;
+export class UserDetailsComponent {
+  readonly userFormComponent = viewChild(UserFormComponent);
   protected readonly UserDetailsType = UserDetailsType;
 
   public dialogRef = inject<MatDialogRef<UserDetailsComponent>>(MatDialogRef);
@@ -26,15 +27,13 @@ export class UserDetailsComponent implements OnInit {
   private authService = inject(AuthService);
   private snackbarService = inject(SnackbarService);
 
-  ngOnInit(): void {
-  }
 
   protected onCancelClick(): void {
     this.dialogRef.close(null);
   }
 
   protected onApproveClick(): void {
-    this.userFormComponent.triggerSubmit();
+    this.userFormComponent()?.triggerSubmit();
   }
 
   protected onFormSubmit(payload: any): void {

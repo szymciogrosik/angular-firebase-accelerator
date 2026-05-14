@@ -1,4 +1,4 @@
-import {Component, computed, effect, OnInit, signal, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, effect, inject, signal} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CustomTranslateService} from '../_services/translate/custom-translate.service';
 import {SnackbarService} from '../_services/util/snackbar.service';
@@ -19,57 +19,72 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {SkeletonComponent} from '../_shared-components/skeleton/skeleton.component';
+import {RedirectionEnum} from '../../utils/redirection.enum';
+import {firstValueFrom} from 'rxjs';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   standalone: true,
-  imports: [TranslateModule, MatCardModule, MatButtonModule, MatProgressSpinnerModule, MatIconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatDialogModule, MatTabsModule, SkeletonComponent],
+  imports: [
+    TranslateModule,
+    MatCardModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatTabsModule,
+    SkeletonComponent
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginComponent implements OnInit {
-  checkingIfUserIsAlreadyLoggedIn = signal(true);
-  loginForm: FormGroup;
-  registerForm: FormGroup;
-  loading = signal(false);
-  submitted = signal(false);
-  hidePassword = signal(true);
-  isRegistrationMode = signal(false);
-  returnUrl: string = '';
+export class LoginComponent {
+  loginForm!: FormGroup;
+  registerForm!: FormGroup;
+  readonly loading = signal(false);
+  readonly submitted = signal(false);
+  readonly hidePassword = signal(true);
+  readonly isRegistrationMode = signal(false);
+  returnUrl = '';
 
-  private formBuilder = inject(FormBuilder);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private authService = inject(AuthService);
-  private snackbarService = inject(SnackbarService);
-  private translateService = inject(CustomTranslateService);
-  private dialog = inject(MatDialog);
-  private publicSettingsFacade = inject(PublicSettingsFacade);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly authService = inject(AuthService);
+  private readonly snackbarService = inject(SnackbarService);
+  private readonly translateService = inject(CustomTranslateService);
+  private readonly dialog = inject(MatDialog);
+  private readonly publicSettingsFacade = inject(PublicSettingsFacade);
 
-  allowForRegistering = this.publicSettingsFacade.allowForRegistering;
-  fetchingSettings = computed(() => this.publicSettingsFacade.settings() === undefined);
+  readonly checkingIfUserIsAlreadyLoggedIn = this.authService.isLoading;
+  readonly allowForRegistering = this.publicSettingsFacade.allowForRegistering;
+  readonly fetchingSettings = computed(() => this.publicSettingsFacade.settings() === undefined);
 
   constructor() {
+    this.createForms();
+
     effect(() => {
       if (this.authService.isLoggedIn()) {
-        this.router.navigateByUrl(this.returnUrl || '/');
+        this.router.navigate(['/' + RedirectionEnum.ADMIN]);
       }
     });
 
-    setTimeout(() => {
-      if (!this.authService.isLoggedIn()) {
-        this.checkingIfUserIsAlreadyLoggedIn.set(false);
-      }
-    }, 600);
+    this.authService.getAuthErrorLogout()
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => {
+        this.loading.set(false);
+        this.loginForm.enable();
+      });
 
-    this.authService.getAuthErrorLogout().subscribe(() => {
-      this.loading.set(false);
-      this.loginForm.enable();
-    });
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  ngOnInit(): void {
-
+  private createForms(): void {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
@@ -81,9 +96,6 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6), CustomValidators.passwordValidator]]
     });
-
-    // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   // convenience getter for easy access to form fields
@@ -172,7 +184,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  private openWarningPopup() {
+  private async openWarningPopup(): Promise<void> {
     const dialogRef = this.dialog.open(
       EmbeddedBrowserPopupComponent,
       {
@@ -183,11 +195,10 @@ export class LoginComponent implements OnInit {
       }
     );
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        navigator.clipboard.writeText(window.location.href);
-      }
-    });
+    const result = await firstValueFrom(dialogRef.afterClosed());
+    if (result) {
+      navigator.clipboard.writeText(window.location.href);
+    }
   }
 
   private loginGoogleSsoPopup(): void {

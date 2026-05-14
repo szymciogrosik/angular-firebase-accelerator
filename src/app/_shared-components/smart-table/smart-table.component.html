@@ -37,11 +37,9 @@
               }
 
               @if (col.type === 'text') {
-                @if (col.valueFn) {
-                  {{ col.valueFn(element) }}
-                } @else {
-                  {{ element[col.key] }}
-                }
+                <span [matTooltip]="shouldShowTooltip(getCellValue(col, element), col.truncateLength) ? getCellValue(col, element) : ''">
+                  {{ getTruncatedValue(getCellValue(col, element), col.truncateLength) }}
+                </span>
               }
 
               @if (col.type === 'action' && col.actions) {
