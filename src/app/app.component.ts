@@ -24,7 +24,8 @@ import {filter} from 'rxjs/operators';
 export class AppComponent implements OnInit {
   private readonly translateService = inject(CustomTranslateService);
   private readonly titleService = inject(Title);
-  private readonly appConfig = inject(APP_CONFIG);private readonly router = inject(Router);
+  private readonly appConfig = inject(APP_CONFIG);
+  private readonly router = inject(Router);
 
   @ViewChild('scrollContainer') scrollContainer!: ElementRef;
 
