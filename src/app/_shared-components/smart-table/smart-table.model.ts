@@ -4,6 +4,7 @@ export interface SmartTableAction<T> {
   icon?: string;
   color: 'primary' | 'accent' | 'warn' | '';
   onClick: (row: T) => void;
+  isHidden?: (row: T) => boolean;
 }
 
 export interface SmartTableColumn<T> {

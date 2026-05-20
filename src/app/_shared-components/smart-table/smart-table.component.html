@@ -45,21 +45,23 @@
               @if (col.type === 'action' && col.actions) {
                 <div class="smart-table-actions">
                   @for (action of col.actions; track action.labelKey || action.icon) {
-                    @if (action.labelKey) {
-                      <button mat-raised-button [color]="action.color"
-                              (click)="action.onClick(element); $event.stopPropagation()"
-                              [matTooltip]="action.tooltipKey ? (action.tooltipKey | translate) : ''">
-                        @if (action.icon) {
+                    @if (!action.isHidden || !action.isHidden(element)) {
+                      @if (action.labelKey) {
+                        <button mat-raised-button [color]="action.color"
+                                (click)="action.onClick(element); $event.stopPropagation()"
+                                [matTooltip]="action.tooltipKey ? (action.tooltipKey | translate) : ''">
+                          @if (action.icon) {
+                            <mat-icon>{{ action.icon }}</mat-icon>
+                          }
+                          {{ action.labelKey | translate }}
+                        </button>
+                      } @else {
+                        <button mat-icon-button [color]="action.color"
+                                (click)="action.onClick(element); $event.stopPropagation()"
+                                [matTooltip]="action.tooltipKey ? (action.tooltipKey | translate) : ''">
                           <mat-icon>{{ action.icon }}</mat-icon>
-                        }
-                        {{ action.labelKey | translate }}
-                      </button>
-                    } @else {
-                      <button mat-icon-button [color]="action.color"
-                              (click)="action.onClick(element); $event.stopPropagation()"
-                              [matTooltip]="action.tooltipKey ? (action.tooltipKey | translate) : ''">
-                        <mat-icon>{{ action.icon }}</mat-icon>
-                      </button>
+                        </button>
+                      }
                     }
                   }
                 </div>

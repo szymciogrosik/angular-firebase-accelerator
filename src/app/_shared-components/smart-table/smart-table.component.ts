@@ -52,10 +52,15 @@ export class SmartTableComponent<T> implements AfterViewInit {
 
   constructor() {
     effect(() => {
+      // By reading this.columns(), the effect will re-run when columns change.
+      // This is necessary because if a column's nested properties (like 'actions') change asynchronously,
+      // mat-table won't update existing rows unless the data array reference changes.
+      const cols = this.columns();
+
       if (this.loading() && (!this.data() || this.data().length === 0)) {
         this.dataSource.data = [{} as any, {} as any, {} as any, {} as any, {} as any];
       } else {
-        this.dataSource.data = this.data();
+        this.dataSource.data = [...this.data()];
       }
     });
     effect(() => {
