@@ -100,7 +100,7 @@ export class AuthService {
             }
           });
       } else {
-        this.logout(false);
+        this.unsubscribe();
         this.isLoading.set(false);
       }
     });
@@ -194,9 +194,7 @@ export class AuthService {
     if (this.injector) {
       runInInjectionContext(this.injector, () => {
         signOut(this.auth).then(() => {
-          this.userSubscription?.unsubscribe();
-          this.userSubscription = null;
-          this.userSubject.next(null);
+          this.unsubscribe();
           if (withRedirection) this.router.navigate([RedirectionEnum.LOGIN]);
         }).catch(err => {
           console.error(err);
@@ -206,12 +204,16 @@ export class AuthService {
       });
     } else {
       signOut(this.auth).then(() => {
-        this.userSubscription?.unsubscribe();
-        this.userSubscription = null;
-        this.userSubject.next(null);
+        this.unsubscribe();
         if (withRedirection) this.router.navigate([RedirectionEnum.LOGIN]);
       });
     }
+  }
+
+  private unsubscribe(): void {
+    this.userSubscription?.unsubscribe();
+    this.userSubscription = null;
+    this.userSubject.next(null);
   }
 
   public isAuthenticated(): Observable<boolean> {
