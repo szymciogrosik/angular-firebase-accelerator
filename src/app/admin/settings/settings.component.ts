@@ -14,17 +14,7 @@ import {MatTabsModule} from '@angular/material/tabs';
   imports: [UsersComponent, PublicSettingsComponent, TranslateModule, MatTabsModule],
 })
 export class SettingsComponent {
-  protected isAuthorized = signal<boolean>(false);
-
   private accessService = inject(AccessRoleService);
-
-  constructor() {
-    this.accessService.isAuthorized(AccessRole.ADMIN_PAGE_ACCESS)
-      .then((isAuthorized: boolean): void => {
-        if (isAuthorized) {
-          this.isAuthorized.set(true);
-        }
-      });
-  }
+  protected coreSettingsVisible = this.accessService.hasAnyRoleSignal([AccessRole.ADMIN_CORE_SETTINGS]);
 
 }

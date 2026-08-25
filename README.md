@@ -121,7 +121,7 @@ Then create manually a fist user:
     - `email` (string): `your-email@gmail.com`
     - `firstName` (string): `Adam`
     - `lastName` (string): `Abacki`
-    - `roles` (array of string): `ADMIN_PAGE_ACCESS`
+    - `roles` (array of string): `ADMIN_PAGE_ACCESS`, `ADMIN_CORE_SETTINGS`
     - `uid` (string): `<copied from Authentication>`
 - **Rules** → replace with:
   ```js
@@ -260,3 +260,4 @@ ng version
 ## Links
 - Angular CLI: https://github.com/angular/angular-cli
 - Firebase CLI: https://firebase.google.com/docs/cli
+
