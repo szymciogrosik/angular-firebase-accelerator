@@ -54,8 +54,8 @@
                 (click)="openChangePasswordDialog()">
           {{ 'profile.button.changePassword' | translate }}
         </button>
-        <button mat-raised-button color="primary" class="app-action-button" [disabled]="isLoading() || !user()"
-                (click)="userFormComponent.triggerSubmit()">
+        <button mat-raised-button color="primary" class="app-action-button" [disabled]="isLoading() || userFormComponent()?.userForm?.invalid"
+                (click)="userFormComponent()?.triggerSubmit()">
           {{ 'profile.button.save' | translate }}
         </button>
       </div>
