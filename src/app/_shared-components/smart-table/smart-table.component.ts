@@ -82,6 +82,15 @@ export class SmartTableComponent<T> implements AfterViewInit {
       }
       return (item as any)[property];
     };
+
+    this.dataSource.filterPredicate = (data: T, filter: string) => {
+      const dataStr = this.columns().reduce((currentTerm: string, col) => {
+        let val = this.getCellValue(col, data);
+        if (val === null || val === undefined) val = '';
+        return currentTerm + String(val).toLowerCase() + '◬';
+      }, '');
+      return dataStr.includes(filter);
+    };
   }
 
   protected applyFilter(event: Event): void {
