@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {EmbeddedBrowserWarningData} from "../../_models/dialog/embedded-browser-warning/embedded-browser-warning-data";
-import {TranslateModule} from '@ngx-translate/core';
+import {TranslatePipe} from '@ngx-translate/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 
@@ -10,7 +10,7 @@ import {MatIconModule} from '@angular/material/icon';
   templateUrl: './embedded-browser-popup.component.html',
   styleUrl: './embedded-browser-popup.component.scss',
   standalone: true,
-  imports: [TranslateModule, MatButtonModule, MatIconModule, MatDialogModule],
+  imports: [TranslatePipe, MatButtonModule, MatIconModule, MatDialogModule],
 })
 export class EmbeddedBrowserPopupComponent {
   public dialogRef = inject<MatDialogRef<EmbeddedBrowserPopupComponent>>(MatDialogRef);
@@ -25,3 +25,4 @@ export class EmbeddedBrowserPopupComponent {
   }
 
 }
+

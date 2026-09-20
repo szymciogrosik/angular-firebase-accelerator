@@ -9,7 +9,7 @@
     <form [formGroup]="settingsForm">
       <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 15px;">
         <div style="display: flex; align-items: center; width: 100%;">
-          <mat-slide-toggle formControlName="allowForRegistering" color="primary" (change)="saveSettings()">
+          <mat-slide-toggle formControlName="allowForRegistering" color="accent" (change)="saveSettings()">
             {{ 'admin.panel.settings.public.allowForRegistering' | translate }}
           </mat-slide-toggle>
           @if (saving()) {
@@ -17,7 +17,7 @@
           }
         </div>
         <div style="display: flex; align-items: center; width: 100%;">
-          <mat-slide-toggle formControlName="allowForProfilePictureChange" color="primary" (change)="saveSettings()">
+          <mat-slide-toggle formControlName="allowForProfilePictureChange" color="accent" (change)="saveSettings()">
             {{ 'admin.panel.settings.public.allowForProfilePictureChange' | translate }}
           </mat-slide-toggle>
           @if (saving()) {
@@ -25,7 +25,7 @@
           }
         </div>
         <div style="display: flex; align-items: center; width: 100%;">
-          <mat-slide-toggle formControlName="allowDarkMode" color="primary" (change)="saveSettings()">
+          <mat-slide-toggle formControlName="allowDarkMode" color="accent" (change)="saveSettings()">
             {{ 'admin.panel.settings.public.allowDarkMode' | translate }}
           </mat-slide-toggle>
           @if (saving()) {

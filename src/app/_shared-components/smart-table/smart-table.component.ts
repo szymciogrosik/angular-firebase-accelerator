@@ -4,7 +4,7 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {SmartTableColumn} from './smart-table.model';
-import {TranslateModule} from '@ngx-translate/core';
+import {TranslatePipe} from '@ngx-translate/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -20,7 +20,7 @@ import {SkeletonComponent} from '../skeleton/skeleton.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    TranslateModule,
+    TranslatePipe,
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,
@@ -52,10 +52,15 @@ export class SmartTableComponent<T> implements AfterViewInit {
 
   constructor() {
     effect(() => {
+      // By reading this.columns(), the effect will re-run when columns change.
+      // This is necessary because if a column's nested properties (like 'actions') change asynchronously,
+      // mat-table won't update existing rows unless the data array reference changes.
+      const cols = this.columns();
+
       if (this.loading() && (!this.data() || this.data().length === 0)) {
         this.dataSource.data = [{} as any, {} as any, {} as any, {} as any, {} as any];
       } else {
-        this.dataSource.data = this.data();
+        this.dataSource.data = [...this.data()];
       }
     });
     effect(() => {
@@ -77,6 +82,15 @@ export class SmartTableComponent<T> implements AfterViewInit {
       }
       return (item as any)[property];
     };
+
+    this.dataSource.filterPredicate = (data: T, filter: string) => {
+      const dataStr = this.columns().reduce((currentTerm: string, col) => {
+        let val = this.getCellValue(col, data);
+        if (val === null || val === undefined) val = '';
+        return currentTerm + String(val).toLowerCase() + '◬';
+      }, '');
+      return dataStr.includes(filter);
+    };
   }
 
   protected applyFilter(event: Event): void {
@@ -87,4 +101,26 @@ export class SmartTableComponent<T> implements AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  protected getCellValue(col: SmartTableColumn<T>, element: T): any {
+    if (col.valueFn) {
+      return col.valueFn(element);
+    }
+    return (element as any)[col.key];
+  }
+
+  protected getTruncatedValue(value: any, length?: number): string {
+    if (value === null || value === undefined) return '';
+    const strValue = String(value);
+    if (!length || strValue.length <= length) {
+      return strValue;
+    }
+    return strValue.substring(0, length) + '...';
+  }
+
+  protected shouldShowTooltip(value: any, length?: number): boolean {
+    if (value === null || value === undefined) return false;
+    return length !== undefined && String(value).length > length;
+  }
 }
+

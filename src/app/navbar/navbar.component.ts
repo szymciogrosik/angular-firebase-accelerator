@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {RedirectionEnum} from '../../utils/redirection.enum';
 import {CustomTranslateService} from '../_services/translate/custom-translate.service';
 import {LanguageEnum} from '../_services/translate/language-enum';
@@ -8,7 +8,7 @@ import {AccessRole} from '../_models/user/access-role';
 import {Router, RouterModule} from '@angular/router';
 import {ThemeService} from '../_services/util/theme.service';
 import {CommonModule} from '@angular/common';
-import {TranslateModule} from '@ngx-translate/core';
+import {TranslatePipe} from '@ngx-translate/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
@@ -22,7 +22,7 @@ import {toSignal} from '@angular/core/rxjs-interop';
   standalone: true,
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslatePipe,
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
@@ -31,7 +31,7 @@ import {toSignal} from '@angular/core/rxjs-interop';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
   protected readonly LanguageEnum = LanguageEnum;
   protected readonly rp = RedirectionEnum;
 
@@ -41,14 +41,11 @@ export class NavbarComponent implements OnInit {
   private router = inject(Router);
   public themeService = inject(ThemeService);
 
-  protected isAdmin = toSignal(this.accessService.isAuthorized$(AccessRole.ADMIN_PAGE_ACCESS));
+  protected isAdmin = this.accessService.isAuthorizedSignal(AccessRole.ADMIN_PAGE_ACCESS);
   protected currentUser = this.authService.currentUser;
   protected isDarkTheme = toSignal(this.themeService.isDarkTheme$);
   protected allowDarkMode = toSignal(this.themeService.allowDarkMode$);
   protected isAuthenticated = this.authService.isLoggedIn;
-
-  ngOnInit(): void {
-  }
 
   logout(): void {
     this.authService.logout(true);
@@ -69,3 +66,4 @@ export class NavbarComponent implements OnInit {
   protected readonly AccessRoleService = AccessRoleService;
   protected readonly AccessRole = AccessRole;
 }
+

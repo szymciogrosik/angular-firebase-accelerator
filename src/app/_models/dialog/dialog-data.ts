@@ -6,4 +6,7 @@ export interface DialogData {
   readonly message: string;
   readonly cancelButtonText: string | null;
   readonly confirmButtonText: string;
+  readonly icon?: string;
+  readonly iconColor?: 'primary' | 'accent' | 'warn';
+  readonly iconSize?: string;
 }

@@ -44,9 +44,9 @@
       <p>
         <mat-form-field appearance="outline">
           <mat-label>{{ 'admin.panel.users.roles' | translate }}</mat-label>
-          <mat-select formControlName="roles" multiple>
-            @for (role of accessRoleValues; track role) {
-              <mat-option [value]="role">{{ role }}</mat-option>
+          <mat-select formControlName="roles" multiple color="accent">
+            @for (role of selectRoles; track role.value) {
+              <mat-option [value]="role.value">{{ role.viewKey | translate }}</mat-option>
             }
           </mat-select>
           <mat-error>{{ getErrorMessage('roles') }}</mat-error>

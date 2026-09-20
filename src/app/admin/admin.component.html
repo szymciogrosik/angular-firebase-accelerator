@@ -13,12 +13,12 @@
       </mat-card>
       }
       <mat-tab-group dynamicHeight>
-        @if (settingsVisible()) {
-        <mat-tab label="{{ 'admin.panel.tab.header.settings' | translate }}">
-          <div>
-            <app-settings></app-settings>
-          </div>
-        </mat-tab>
+        @if (settingsTabVisible()) {
+          <mat-tab label="{{ 'admin.panel.tab.header.settings' | translate }}">
+            <div>
+              <app-settings></app-settings>
+            </div>
+          </mat-tab>
         }
       </mat-tab-group>
     </mat-card-content>
