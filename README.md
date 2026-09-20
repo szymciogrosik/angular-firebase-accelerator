@@ -29,6 +29,12 @@ npm install
 # run locally
 ng serve
 # open http://localhost:4200
+
+# run tests (interactive watch mode)
+npm test
+
+# run tests once headlessly with coverage
+npm run test:ci
 ```
 
 ---
@@ -280,6 +286,19 @@ Make a short review of changes and commit.
 4) **Service account secret**  
    During `firebase init` with GitHub, a repo secret like  
    `FIREBASE_SERVICE_ACCOUNT_<PROJECT_NAME>` is created. Verify if it is and keep it.
+
+5) **Branch protection & PR Quality Gate (Block Merge on Test Failure)**  
+   The project includes a GitHub Actions workflow (`.github/workflows/ci-pr-tests.yaml`) that runs all unit tests and reports coverage upon opening or updating any Pull Request targeting `main`, `release/firebase`, or `release/gh-pages`.
+   
+   To enforce that a PR **cannot be merged** if tests fail:
+   - Go to repository **Settings** → **Branches** (or **Rules** → **Rulesets**).
+   - Click **Add branch protection rule** (for `main`, and optionally for `release/*` branches).
+   - Check **Require a pull request before merging**.
+   - Check **Require status checks to pass before merging**.
+   - Check **Require branches to be up to date before merging**.
+   - Search for and select the status check: **`🧪 Unit Tests & Code Coverage`**.
+   - Save changes.
+   Now, any pull request with failing tests will have the merge button disabled by GitHub.
 
 ---
 

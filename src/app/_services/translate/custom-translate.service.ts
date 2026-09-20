@@ -21,10 +21,11 @@ export class CustomTranslateService {
   public readonly selectedLanguage = toSignal(this.selectedLanguageSubject);
 
   public setLanguage(language: string): void {
+    const localeData = this.findApplicationLocalLanguage(language);
     this.translateService.use(language);
     this.dateAdapter.setLocale(language);
     Settings.defaultLocale = language;
-    registerLocaleData(this.findApplicationLocalLanguage(language));
+    registerLocaleData(localeData);
     localStorage.setItem(this.appConfig.selected_language_key, language);
 
     this.selectedLanguageSubject.next(language);
