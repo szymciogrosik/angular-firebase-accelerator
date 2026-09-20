@@ -107,9 +107,22 @@ export class AuthService {
   }
 
   public async registerUser(email: string, password: string): Promise<string> {
-    const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
-    if (!userCredential.user?.uid) throw new Error('UID undefined');
-    return userCredential.user.uid;
+    const cleanEmail = email?.trim() || '';
+    const { initializeApp, getApps } = await import('firebase/app');
+    const { getAuth, createUserWithEmailAndPassword: createSecondaryUser, signOut: signSecondaryOut } = await import('firebase/auth');
+
+    const secondaryAppName = 'SecondaryAuthApp';
+    const secondaryApp = getApps().find(app => app.name === secondaryAppName)
+      || initializeApp(this.auth.app.options, secondaryAppName);
+    const secondaryAuth = getAuth(secondaryApp);
+
+    try {
+      const userCredential = await createSecondaryUser(secondaryAuth, cleanEmail, password);
+      if (!userCredential.user?.uid) throw new Error('UID undefined');
+      return userCredential.user.uid;
+    } finally {
+      await signSecondaryOut(secondaryAuth);
+    }
   }
 
   public async registerUserWithDetails(email: string, password: string, firstName: string, lastName: string): Promise<void> {

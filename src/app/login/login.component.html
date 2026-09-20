@@ -111,11 +111,21 @@
                           <mat-error>{{ this.getErrorMessage('password', true) }}</mat-error>
                         </mat-form-field>
                       </p>
+                    <div class="terms-checkbox-wrapper">
+                        <mat-checkbox formControlName="acceptTerms" color="primary" class="terms-checkbox" [disableRipple]="true">
+                          <span class="terms-label">
+                            {{ 'login.accept.terms' | translate }}&nbsp;<a [routerLink]="termsRoute" class="terms-link" (click)="$event.stopPropagation()">{{ 'login.accept.terms.termsLink' | translate }}</a>&nbsp;{{ 'login.accept.terms.and' | translate }}&nbsp;<a [routerLink]="privacyRoute" class="terms-link" (click)="$event.stopPropagation()">{{ 'login.accept.terms.privacyLink' | translate }}</a>
+                          </span>
+                        </mat-checkbox>
+                        @if ((registerFormControls['acceptTerms']?.touched || submitted()) && registerFormControls['acceptTerms']?.hasError('required')) {
+                          <mat-error class="terms-error">{{ 'login.accept.terms.error' | translate }}</mat-error>
+                        }
+                      </div>
                       <div>
                         @if (loading()) {
                           <mat-spinner [diameter]="30"></mat-spinner>
                         } @else {
-                          <button mat-flat-button type="submit" color="primary" class="app-action-button" style="margin-top: 10px !important">
+                          <button mat-flat-button type="submit" color="primary" class="app-action-button register-submit-btn">
                             {{ 'login.approve.button' | translate }}
                           </button>
                         }

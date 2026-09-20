@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, computed, effect, inject, signal} fr
 import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CustomTranslateService} from '../_services/translate/custom-translate.service';
 import {SnackbarService} from '../_services/util/snackbar.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Router, RouterModule} from '@angular/router';
 import {AuthService} from '../_services/auth/auth.service';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {EmbeddedBrowserPopupComponent} from './embedded-browser-popup/embedded-browser-popup.component';
@@ -18,6 +18,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import {SkeletonComponent} from '../_shared-components/skeleton/skeleton.component';
 import {RedirectionEnum} from '../../utils/redirection.enum';
 import {firstValueFrom} from 'rxjs';
@@ -39,6 +40,8 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     ReactiveFormsModule,
     MatDialogModule,
     MatTabsModule,
+    MatCheckboxModule,
+    RouterModule,
     SkeletonComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -84,6 +87,9 @@ export class LoginComponent {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
+  readonly termsRoute = '/' + RedirectionEnum.TERMS;
+  readonly privacyRoute = '/' + RedirectionEnum.PRIVACY_POLICY;
+
   private createForms(): void {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -94,7 +100,8 @@ export class LoginComponent {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6), CustomValidators.passwordValidator]]
+      password: ['', [Validators.required, Validators.minLength(6), CustomValidators.passwordValidator]],
+      acceptTerms: [false, [Validators.requiredTrue]]
     });
   }
 

@@ -10,7 +10,6 @@ import {UserDetailsComponent} from './user-details/user-details.component';
 import {UserDetailsPopupData} from '../../../../_models/dialog/user-details/user-details-popup-data';
 import {UserDetailsType} from '../../../../_models/dialog/user-details/user-details-type';
 import {DialogService} from '../../../../_services/util/dialog.service';
-import {DialogType} from '../../../../_models/dialog/dialog-type';
 import {FirebaseError} from '@angular/fire/app';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatButtonModule} from '@angular/material/button';
@@ -120,6 +119,9 @@ export class UsersComponent {
 
     const user = await firstValueFrom(createRef.afterClosed());
     if (user) {
+      if (user.email) {
+        user.email = user.email.trim();
+      }
       let password = user.password;
       delete user.password;
       user.id = null;
@@ -148,31 +150,22 @@ export class UsersComponent {
         const uid = await this.authService.registerUser(user.email, password);
         user.uid = uid;
         await this.userFacade.createUser(user);
-        await this.openConfirmCreateUserDialog();
+        this.snackbarService.openSnackBar(this.translateService.get('admin.panel.settings.users.addedSuccessfully'));
       } catch (err) {
         console.error(err);
-        if (err instanceof FirebaseError && err.code === 'auth/email-already-in-use') {
-          this.snackbarService.openLongSnackBar(this.translateService.get('login.error.emailAlreadyUsed'));
-        } else {
-          this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
+        if (err instanceof FirebaseError) {
+          if (err.code === 'auth/email-already-in-use') {
+            this.snackbarService.openLongSnackBar(this.translateService.get('login.error.emailAlreadyUsed'));
+            return;
+          }
+          if (err.code === 'auth/invalid-email') {
+            this.snackbarService.openLongSnackBar(this.translateService.get('login.validation.invalidEmail'));
+            return;
+          }
         }
+        this.snackbarService.openLongSnackBar(this.translateService.get('login.error.internal'));
       }
     }
-  }
-
-  private async openConfirmCreateUserDialog(): Promise<void> {
-    const confirmPopup =
-      this.dialogService.openConfirmDialogWithData(
-        {
-          title: this.translateService.get('admin.panel.settings.warning.popupWarning'),
-          popupType: DialogType.CONFIRMATION,
-          message: this.translateService.get('admin.panel.settings.users.addedSuccessfully'),
-          cancelButtonText: null,
-          confirmButtonText: this.translateService.get('registeredUsers.details.confirm')
-        });
-
-    await firstValueFrom(confirmPopup.afterClosed());
-    // Removed window.location.reload() - let the signals handle the UI update
   }
 
   protected async openUpdateUser(id: string): Promise<void> {
