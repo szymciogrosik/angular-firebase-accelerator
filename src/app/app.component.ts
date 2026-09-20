@@ -8,13 +8,14 @@ import {APP_CONFIG} from './app.config.token';
 import {MatDatepickerIntl} from '@angular/material/datepicker';
 import {CustomDatepickerIntl} from './_services/util/custom-datepicker-intl.service';
 import {filter} from 'rxjs/operators';
+import {CookieConsentComponent} from './_shared-components/cookie-consent/cookie-consent.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   standalone: true,
-  imports: [FooterComponent, NavbarComponent, RouterModule],
+  imports: [FooterComponent, NavbarComponent, RouterModule, CookieConsentComponent],
   providers: [
     {provide: MatDatepickerIntl, useClass: CustomDatepickerIntl}
   ],

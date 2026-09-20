@@ -144,9 +144,9 @@ $dark-theme: mat.m2-define-dark-theme((
   --separator-color: #{$app-text-secondary};
   --separator-line: #{$app-border-color};
   --google-btn-bg: #{$app-surface-color};
-  --google-btn-text: #3c4043;
-  --google-btn-hover: #f8f9fa;
-  --google-btn-border: #{$app-border-color};
+  --google-btn-text: #1f2937;
+  --google-btn-hover: #f8fafd;
+  --google-btn-border: #dadce0;
   --mesh-blob-1: rgba(45, 212, 191, 0.4);
   --mesh-blob-2: rgba(15, 95, 89, 0.6);
   --mesh-blob-3: rgba(79, 70, 229, 0.3);
@@ -410,8 +410,8 @@ mat-hint, mat-error { font-size: 0.85rem; }
   --separator-line: #{$dark-border-primary};
   --google-btn-bg: #2a3b3b;
   --google-btn-text: #{$dark-text-primary};
-  --google-btn-hover: #314444;
-  --google-btn-border: #{$dark-border-primary};
+  --google-btn-hover: #344848;
+  --google-btn-border: rgba(255, 255, 255, 0.2);
 
   // MDC Checkbox & Radio Fixes for Dark Mode
   --mdc-checkbox-unselected-icon-color: #{$dark-text-secondary};

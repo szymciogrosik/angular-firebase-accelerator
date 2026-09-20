@@ -91,6 +91,9 @@ export class UserFormComponent implements OnInit {
     }
 
     const payload = {...this.userForm.getRawValue()};
+    if (payload.email) {
+      payload.email = payload.email.trim();
+    }
 
     const userVal = this.user();
     if (userVal) {

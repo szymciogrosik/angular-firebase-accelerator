@@ -11,21 +11,9 @@ export class StandardUserDbService {
 
   constructor() {}
 
-  public watchUser(uid: string, email: string | null): Observable<CustomUser | null> {
-    if (email === null) {
-      throw new Error('Email cannot be null!');
-    }
-
-    return this.userDbService.getUser(uid, email).pipe(
-      map(users => {
-        if (users.length === 1) {
-          return users[0];
-        } else if (users.length === 0) {
-          return null;
-        } else {
-          throw new Error('There are more than one user saved with the same uid and id');
-        }
-      })
+  public watchUser(uid: string, _email?: string | null): Observable<CustomUser | null> {
+    return this.userDbService.getUser(uid).pipe(
+      map(user => user ?? null)
     );
   }
 

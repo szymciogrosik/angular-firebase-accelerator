@@ -1,6 +1,7 @@
 import {enableProdMode, importProvidersFrom, provideZonelessChangeDetection} from '@angular/core';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
+import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
 import {getAuth, provideAuth} from '@angular/fire/auth';
 import {getFirestore, provideFirestore} from '@angular/fire/firestore';
@@ -39,7 +40,9 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideZonelessChangeDetection(), provideHttpClient(withInterceptorsFromDi()),
+    provideZonelessChangeDetection(),
+    provideAnimationsAsync(),
+    provideHttpClient(withInterceptorsFromDi()),
     {provide: APP_CONFIG, useValue: environment},
     provideTranslateService({
       loader: provideTranslateHttpLoader({

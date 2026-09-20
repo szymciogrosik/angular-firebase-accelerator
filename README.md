@@ -112,18 +112,18 @@ Link to [Firebase](https://console.firebase.google.com/).
 
 3) **Firestore**
 Setup firestore:
-- Location: Warsaw.
+- Location: Warsaw (or closest region).
 - Mode: Firestore in **production** mode.
 
-Then create manually a fist user:
-- Create a `users` document for a first user:
-  - Document ID: AdamAbacki (or random uid)
-    - `email` (string): `your-email@gmail.com`
-    - `firstName` (string): `Adam`
-    - `lastName` (string): `Abacki`
-    - `roles` (array of string): `ADMIN_PAGE_ACCESS`, `ADMIN_CORE_SETTINGS`
-    - `uid` (string): `<copied from Authentication>`
-- **Rules** → replace with:
+- **Create first user:**
+  - In Firestore, create collection `users`:
+    - Document ID: `<copied from Authentication>` (use your Auth UID as the document ID)
+      - `email` (string): `your-email@gmail.com`
+      - `firstName` (string): `Adam`
+      - `lastName` (string): `Abacki`
+      - `roles` (array of string): `ADMIN_PAGE_ACCESS`, `ADMIN_CORE_SETTINGS`
+
+- **Rules** → replace with secure production rules:
   ```js
   rules_version = '2';
 
@@ -131,20 +131,57 @@ Then create manually a fist user:
     match /databases/{database}/documents {
       // Default deny
       match /{document=**} {
-        allow read: if false;
-        allow write: if false;
+        allow read, write: if false;
       }
 
-      // Public settings
-      match /public_settings/{document=**} {
+      // Helper function to check if the caller is an admin
+      function isAdmin() {
+        return request.auth != null &&
+          exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+          'ADMIN_CORE_SETTINGS' in get(/databases/$(database)/documents/users/$(request.auth.uid)).data.roles;
+      }
+
+      // Public settings (allowForRegistering, themes, etc.)
+      match /public_settings/{docId} {
+        // Anyone can read public settings (needed before login to check if registration is open)
         allow read: if true;
-        allow write: if request.auth != null;
+        // Only admins can alter application-wide settings
+        allow write: if isAdmin();
       }
 
-      // Users
-      match /users/{document=**} {
-        allow read: if request.auth != null;
-        allow write: if request.auth != null;
+      // Users collection
+      match /users/{userId} {
+        // Read:
+        // - Authenticated users can read their own document (by document path ID: userId == request.auth.uid)
+        // - Admins can read all users (needed for the Admin Panel)
+        allow read: if request.auth != null && (
+          userId == request.auth.uid ||
+          isAdmin()
+        );
+
+        // Create:
+        // - Authenticated users can create their own profile during registration (with empty roles, document ID matching their UID)
+        // - Admins can create user records directly
+        allow create: if request.auth != null && (
+          (userId == request.auth.uid && request.resource.data.roles.size() == 0) ||
+          isAdmin()
+        );
+
+        // Update:
+        // - Users can update their own personal info (name, dateOfBirth, photo), but CANNOT elevate their own roles or change isDeleted
+        // - Admins can update any user (including roles and status)
+        allow update: if request.auth != null && (
+          (
+            userId == request.auth.uid &&
+            request.resource.data.roles == resource.data.roles &&
+            request.resource.data.isDeleted == resource.data.isDeleted
+          ) ||
+          isAdmin()
+        );
+
+        // Delete / Archive:
+        // - Only admins can delete user records
+        allow delete: if isAdmin();
       }
     }
   }
@@ -212,6 +249,10 @@ Make a short review of changes and commit.
 - `FIREBASE_SERVICE_ACCOUNT_<APPLICATION_NAME>` → use your generated secret name from GitHub.
 
 12) **Revert unwanted changes in `firebase.json`** if init overwrote custom settings.
+
+13) **Update legal statements**
+- Replace all `PAGE_OWNER_NAME` by name of responsible person for this page
+- Replace all `PAGE_OWNER_EMAIL` by email of responsible person for this page
 
 ---
 
