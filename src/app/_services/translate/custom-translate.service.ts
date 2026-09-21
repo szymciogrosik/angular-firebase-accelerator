@@ -4,6 +4,7 @@ import {APP_CONFIG} from '../../app.config.token';
 import {DateAdapter} from '@angular/material/core';
 import {registerLocaleData} from '@angular/common';
 import localePl from '@angular/common/locales/pl';
+import localeEn from '@angular/common/locales/en';
 import {LanguageEnum} from './language-enum';
 import {BehaviorSubject, firstValueFrom} from 'rxjs';
 import {toSignal} from '@angular/core/rxjs-interop';
@@ -35,8 +36,8 @@ export class CustomTranslateService {
     switch (language) {
       case LanguageEnum.POLISH:
         return localePl;
-      // case LanguageEnum.ENGLISH:
-      //   return localeEn;
+      case LanguageEnum.ENGLISH:
+        return localeEn;
       default:
         throw new Error("Language '" + language + "' is not supported");
     }
