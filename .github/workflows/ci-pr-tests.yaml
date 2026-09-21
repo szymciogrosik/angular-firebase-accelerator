@@ -6,11 +6,9 @@ on:
       - main
       - release/firebase
       - release/gh-pages
-  push:
-    branches:
-      - main
-      - release/firebase
-      - release/gh-pages
+#  push:
+#    branches:
+#      - main
 
 permissions:
   contents: read
