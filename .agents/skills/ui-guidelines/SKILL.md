@@ -76,3 +76,8 @@ When using Angular Material components:
 ## 12. Dialogs and Popups
 - **Always Use the Generic Popup:** Whenever a new confirmation, warning, error, or informational popup is required, do NOT create a new component. You MUST use the existing `DialogComponent` via the `DialogService` (`openConfirmDialogWithData`).
 - **Customization:** The generic popup supports title, message, cancel/confirm button texts, built-in types (CONFIRMATION, WARNING, ERROR), as well as custom Material icons (`icon`, `iconColor`, `iconSize`) that automatically scale responsively.
+
+## 13. Scrolling to Elements
+- **Always Include Visual Padding (Offset):** When programmatically or declaratively scrolling to a specific element (e.g., via `scrollIntoView()`, `window.scrollTo()`, or anchor navigation), never scroll so the element sits flush against the very top edge of the viewport or sticky header.
+- **Keep Breathing Room:** Always maintain comfortable visual padding (e.g., `24px`–`32px` of extra space, or `80px`–`100px` when accounting for a sticky top bar). Prefer setting `scroll-margin-top` in CSS on target elements or calculating a top offset with `behavior: 'smooth'` so the scrolled-to element looks balanced and well-framed.
+
