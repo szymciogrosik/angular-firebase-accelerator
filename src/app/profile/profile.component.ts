@@ -10,6 +10,8 @@ import {ChangePasswordDialogComponent} from './change-password-dialog/change-pas
 import {ImageCropperData, ImageCropperDialogComponent} from './image-cropper-dialog/image-cropper-dialog.component';
 import {ImagePreviewData, ImagePreviewDialogComponent} from './image-preview-dialog/image-preview-dialog.component';
 import {PublicSettingsFacade} from '../_database/settings/public-settings.facade';
+import {DialogService} from '../_services/util/dialog.service';
+import {DialogType} from '../_models/dialog/dialog-type';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
@@ -42,6 +44,13 @@ import {select_roles} from '../_models/registration/select/select-roles';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileComponent {
+  private static readonly MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024; // 5 MB
+  private static readonly ALLOWED_MIME_TYPES = new Set([
+    'image/jpeg',
+    'image/png',
+    'image/webp'
+  ]);
+
   readonly userFormComponent = viewChild(UserFormComponent);
 
   private readonly authService = inject(AuthService);
@@ -49,6 +58,7 @@ export class ProfileComponent {
   private readonly snackbarService = inject(SnackbarService);
   private readonly translateService = inject(CustomTranslateService);
   private readonly dialog = inject(MatDialog);
+  private readonly dialogService = inject(DialogService);
   private readonly facade = inject(PublicSettingsFacade);
 
   readonly user = this.authService.currentUser;
@@ -67,24 +77,71 @@ export class ProfileComponent {
     });
   }
 
-  async onFileSelected(event: any): Promise<void> {
+  async onFileSelected(event: Event): Promise<void> {
+    const input = event.target as HTMLInputElement;
     const currentUser = this.user();
-    if (event.target.files && event.target.files.length > 0 && currentUser) {
-      const dialogRef = this.dialog.open(ImageCropperDialogComponent, {
-        width: '600px',
-        data: {
-          imageChangedEvent: event,
-          authUserUid: currentUser.uid,
-          userDocId: currentUser.id
-        } as ImageCropperData
-      });
+    if (!input?.files || input.files.length === 0 || !currentUser) {
+      return;
+    }
 
-      const photoUrl = await firstValueFrom(dialogRef.afterClosed());
-      // Clear input to allow re-selection of the same file
-      event.target.value = null;
-      if (photoUrl && currentUser) {
-        this.authService.updateLocalUser({ photoUrl });
-      }
+    const file = input.files[0];
+
+    if (!ProfileComponent.ALLOWED_MIME_TYPES.has(file.type)) {
+      input.value = '';
+      this.snackbarService.openLongSnackBar(this.translateService.get('profile.photo.error.invalidFormat'));
+      return;
+    }
+
+    if (file.size > ProfileComponent.MAX_FILE_SIZE_BYTES) {
+      input.value = '';
+      this.snackbarService.openLongSnackBar(this.translateService.get('profile.photo.error.fileTooLarge'));
+      return;
+    }
+
+    const dialogRef = this.dialog.open(ImageCropperDialogComponent, {
+      width: '600px',
+      data: {
+        imageChangedEvent: event,
+        authUserUid: currentUser.uid,
+        userDocId: currentUser.id
+      } as ImageCropperData
+    });
+
+    const photoUrl = await firstValueFrom(dialogRef.afterClosed());
+    // Clear input to allow re-selection of the same file
+    input.value = '';
+    if (photoUrl && currentUser) {
+      this.authService.updateLocalUser({ photoUrl });
+    }
+  }
+
+  async onRemovePhoto(): Promise<void> {
+    const currentUser = this.user();
+    if (!currentUser || !currentUser.photoUrl) return;
+
+    const dialogRef = this.dialogService.openConfirmDialogWithData({
+      title: this.translateService.get('profile.photo.removeConfirmTitle'),
+      popupType: DialogType.WARNING,
+      message: this.translateService.get('profile.photo.removeConfirmMessage'),
+      cancelButtonText: this.translateService.get('dialog.cancel'),
+      confirmButtonText: this.translateService.get('registeredUsers.details.confirm'),
+      icon: 'delete_outline',
+      iconColor: 'warn'
+    });
+
+    const confirmed = await firstValueFrom(dialogRef.afterClosed());
+    if (!confirmed) return;
+
+    try {
+      this.isLoading.set(true);
+      await this.userDbService.update(currentUser.id, { photoUrl: null });
+      this.authService.updateLocalUser({ photoUrl: null });
+      this.snackbarService.openSnackBar(this.translateService.get('profile.photo.removeSuccess'));
+    } catch (error) {
+      console.error('Failed to remove profile picture', error);
+      this.snackbarService.openLongSnackBar(this.translateService.get('profile.photo.removeError'));
+    } finally {
+      this.isLoading.set(false);
     }
   }
 

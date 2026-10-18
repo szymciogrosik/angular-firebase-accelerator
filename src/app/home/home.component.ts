@@ -1,20 +1,12 @@
-import {ChangeDetectionStrategy, Component, OnInit, inject} from '@angular/core';
-import {APP_CONFIG} from '../app.config.token';
-import {MatCardModule} from '@angular/material/card';
-import {TranslatePipe} from '@ngx-translate/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {StarterShowcaseComponent} from './starter-showcase/starter-showcase.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   standalone: true,
-  imports: [MatCardModule, TranslatePipe],
+  imports: [StarterShowcaseComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HomeComponent implements OnInit {
-  protected readonly environment = inject(APP_CONFIG);
-
-  ngOnInit(): void {
-  }
-
-}
+export class HomeComponent {}
