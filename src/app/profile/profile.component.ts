@@ -23,6 +23,7 @@ import {SkeletonComponent} from '../_shared-components/skeleton/skeleton.compone
 import {firstValueFrom} from 'rxjs';
 import {MatTabsModule} from '@angular/material/tabs';
 import {select_roles} from '../_models/registration/select/select-roles';
+import {StorageService} from '../_services/storage/storage.service';
 
 @Component({
   selector: 'app-profile',
@@ -44,12 +45,7 @@ import {select_roles} from '../_models/registration/select/select-roles';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileComponent {
-  private static readonly MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024; // 5 MB
-  private static readonly ALLOWED_MIME_TYPES = new Set([
-    'image/jpeg',
-    'image/png',
-    'image/webp'
-  ]);
+  readonly allowedImageAccept = StorageService.ALLOWED_IMAGE_ACCEPT;
 
   readonly userFormComponent = viewChild(UserFormComponent);
 
@@ -60,6 +56,7 @@ export class ProfileComponent {
   private readonly dialog = inject(MatDialog);
   private readonly dialogService = inject(DialogService);
   private readonly facade = inject(PublicSettingsFacade);
+  private readonly storageService = inject(StorageService);
 
   readonly user = this.authService.currentUser;
   readonly isLoading = this.authService.isLoading;
@@ -78,26 +75,17 @@ export class ProfileComponent {
   }
 
   async onFileSelected(event: Event): Promise<void> {
-    const input = event.target as HTMLInputElement;
     const currentUser = this.user();
-    if (!input?.files || input.files.length === 0 || !currentUser) {
+    if (!currentUser) {
       return;
     }
 
-    const file = input.files[0];
-
-    if (!ProfileComponent.ALLOWED_MIME_TYPES.has(file.type)) {
-      input.value = '';
-      this.snackbarService.openLongSnackBar(this.translateService.get('profile.photo.error.invalidFormat'));
+    const file = this.storageService.extractAndValidateFile(event);
+    if (!file) {
       return;
     }
 
-    if (file.size > ProfileComponent.MAX_FILE_SIZE_BYTES) {
-      input.value = '';
-      this.snackbarService.openLongSnackBar(this.translateService.get('profile.photo.error.fileTooLarge'));
-      return;
-    }
-
+    const input = event.target as HTMLInputElement;
     const dialogRef = this.dialog.open(ImageCropperDialogComponent, {
       width: '600px',
       data: {
