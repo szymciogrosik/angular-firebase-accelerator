@@ -264,6 +264,18 @@ mat-form-field {
     border-width: 1.5px !important;
     border-color: rgba(0,0,0,0.1) !important;
   }
+
+  // Fix for vertical line glitch (subpixel rendering / CSS conflict)
+  .mdc-notched-outline__leading {
+    border-right: none !important;
+  }
+  .mdc-notched-outline__notch {
+    border-left: none !important;
+    border-right: none !important;
+  }
+  .mdc-notched-outline__trailing {
+    border-left: none !important;
+  }
 }
 mat-spinner { margin: 0 auto; }
 mat-hint, mat-error { font-size: 0.85rem; }
