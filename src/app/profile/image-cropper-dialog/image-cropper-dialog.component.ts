@@ -54,7 +54,7 @@ export class ImageCropperDialogComponent {
     try {
       // 1. Upload to Cloudinary
       const folder = `users/${this.data.authUserUid}`;
-      const photoUrl = await this.storageService.uploadFile(folder, this.croppedImageBlob);
+      const photoUrl = await this.storageService.uploadFile(folder, this.croppedImageBlob, 'profile.webp');
 
       // 2. Update Firestore User Document
       await this.userDbService.update(this.data.userDocId, {photoUrl});

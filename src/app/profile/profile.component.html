@@ -44,7 +44,7 @@
                             [matTooltip]="'profile.button.changePhoto' | translate">
                       <mat-icon>photo_camera</mat-icon>
                     </button>
-                    <input type="file" #fileInput hidden accept="image/jpeg,image/png,image/webp" (change)="onFileSelected($event)">
+                    <input type="file" #fileInput hidden [accept]="allowedImageAccept" (change)="onFileSelected($event)">
                   }
                 </div>
               </div>

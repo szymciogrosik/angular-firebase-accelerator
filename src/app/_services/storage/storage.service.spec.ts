@@ -3,10 +3,14 @@ import {HttpTestingController, provideHttpClientTesting} from '@angular/common/h
 import {provideHttpClient} from '@angular/common/http';
 import {StorageService} from './storage.service';
 import {APP_CONFIG, AppConfig} from '../../app.config.token';
+import {SnackbarService} from '../util/snackbar.service';
+import {CustomTranslateService} from '../translate/custom-translate.service';
 
 describe('StorageService', () => {
   let service: StorageService;
   let httpMock: HttpTestingController;
+  let snackbarSpy: jasmine.SpyObj<SnackbarService>;
+  let translateSpy: jasmine.SpyObj<CustomTranslateService>;
 
   const mockConfig: AppConfig = {
     production: false,
@@ -28,12 +32,18 @@ describe('StorageService', () => {
   };
 
   const setupTestBed = (config: AppConfig = mockConfig) => {
+    snackbarSpy = jasmine.createSpyObj('SnackbarService', ['openLongSnackBar']);
+    translateSpy = jasmine.createSpyObj('CustomTranslateService', ['get']);
+    translateSpy.get.and.callFake((key: string) => key);
+
     TestBed.configureTestingModule({
       providers: [
         StorageService,
         provideHttpClient(),
         provideHttpClientTesting(),
-        {provide: APP_CONFIG, useValue: config}
+        {provide: APP_CONFIG, useValue: config},
+        {provide: SnackbarService, useValue: snackbarSpy},
+        {provide: CustomTranslateService, useValue: translateSpy}
       ]
     });
     service = TestBed.inject(StorageService);
@@ -87,5 +97,23 @@ describe('StorageService', () => {
     await expectAsync(service.uploadFile('users/1', blob)).toBeRejectedWithError(
       /Cloudinary is not configured/
     );
+  });
+
+  it('should validate allowed image MIME types and file size', () => {
+    setupTestBed();
+
+    const validFile = new File(['valid-image'], 'avatar.png', {type: 'image/png'});
+    expect(service.validateFile(validFile)).toBeTrue();
+    expect(snackbarSpy.openLongSnackBar).not.toHaveBeenCalled();
+
+    const invalidTypeFile = new File(['bad-type'], 'doc.pdf', {type: 'application/pdf'});
+    expect(service.validateFile(invalidTypeFile)).toBeFalse();
+    expect(snackbarSpy.openLongSnackBar).toHaveBeenCalledWith('profile.photo.error.invalidFormat');
+
+    const oversizedFile = new File([new ArrayBuffer(StorageService.MAX_FILE_SIZE_BYTES + 1)], 'huge.jpg', {
+      type: 'image/jpeg'
+    });
+    expect(service.validateFile(oversizedFile)).toBeFalse();
+    expect(snackbarSpy.openLongSnackBar).toHaveBeenCalledWith('profile.photo.error.fileTooLarge');
   });
 });
