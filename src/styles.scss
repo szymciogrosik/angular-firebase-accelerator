@@ -19,6 +19,7 @@ $app-surface-color: #ffffff;
 $app-on-background-color: #0f172a;
 $app-text-secondary: #64748b;
 $app-border-color: rgba(15, 23, 42, 0.05);
+$app-mobile-border-color: rgba(79, 70, 229, 0.35);
 
 $navbar-element-color: $app-on-primary-color;
 $footer-element-color: $app-on-primary-color;
@@ -32,6 +33,7 @@ $dark-text-secondary: #94a3b8;
 $dark-border-primary: rgba(255,255,255,0.08);
 $dark-border-secondary: rgba(255,255,255,0.12);
 $dark-border-hover: rgba(255,255,255,0.2);
+$dark-mobile-border: rgba(129, 140, 248, 0.45);
 $dark-error: #fb7185;
 $dark-tab-background: #233535;
 $dark-input-bg: #233535;
@@ -143,6 +145,9 @@ $dark-theme: mat.m2-define-dark-theme((
   --app-text-secondary: #{$app-text-secondary};
   --separator-color: #{$app-text-secondary};
   --separator-line: #{$app-border-color};
+  --mobile-card-border: #{$app-mobile-border-color};
+  --app-accent-selected-bg: rgba(79, 70, 229, 0.08);
+  --app-accent-selected-border: var(--app-accent-color);
   --google-btn-bg: #{$app-surface-color};
   --google-btn-text: #1f2937;
   --google-btn-hover: #f8fafd;
@@ -207,10 +212,15 @@ mat-card {
   border-radius: 20px !important; // Bento style
   border: 1px solid $app-border-color;
   box-shadow: 0 10px 40px -10px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.02) !important;
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
 
   &:hover {
+    border-color: var(--app-accent-color) !important;
     box-shadow: 0 15px 35px -5px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.02) !important;
+  }
+
+  @media (max-width: 768px), (hover: none) {
+    border-color: var(--app-accent-color) !important;
   }
 }
 
@@ -420,6 +430,9 @@ mat-hint, mat-error { font-size: 0.85rem; }
   --app-text-secondary: #{$dark-text-secondary};
   --separator-color: #{$dark-text-secondary};
   --separator-line: #{$dark-border-primary};
+  --mobile-card-border: #{$dark-mobile-border};
+  --app-accent-selected-bg: rgba(129, 140, 248, 0.16);
+  --app-accent-selected-border: #{$dark-mobile-border};
   --google-btn-bg: #2a3b3b;
   --google-btn-text: #{$dark-text-primary};
   --google-btn-hover: #344848;
@@ -475,6 +488,16 @@ mat-hint, mat-error { font-size: 0.85rem; }
     color: $dark-text-primary !important;
     border-color: $dark-border-primary !important;
     box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.1) !important;
+  }
+
+  mat-card, .mat-mdc-card {
+    &:hover {
+      border-color: var(--app-accent-color) !important;
+    }
+
+    @media (max-width: 768px), (hover: none) {
+      border-color: var(--app-accent-color) !important;
+    }
   }
 
   /* Table borders */

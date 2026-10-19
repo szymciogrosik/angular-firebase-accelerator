@@ -111,7 +111,7 @@ const SHOWCASE_DICTIONARY: Record<'pl' | 'en', ShowcaseCopy> = {
   pl: {
     badge: 'Angular 21 Zoneless • Firebase • Cloudinary CDN',
     heroTitlePrefix: 'Fundament nowej generacji dla',
-    heroTitleAccent: 'aplikacji chmurowych.',
+    heroTitleAccent: 'aplikacji SaaS.',
     heroSubtitle:
       'Kompletny akcelerator produkcyjny łączący reaktywność Angular Signals bez Zone.js, autoryzację i bazę Cloud Firestore oraz darmową optymalizację obrazów WebP/AVIF na brzegu sieci.',
     ctaLogin: 'Zaloguj lub utwórz konto',
@@ -246,7 +246,7 @@ const SHOWCASE_DICTIONARY: Record<'pl' | 'en', ShowcaseCopy> = {
   en: {
     badge: 'Angular 21 Zoneless • Firebase • Cloudinary CDN',
     heroTitlePrefix: 'Next-generation foundation for',
-    heroTitleAccent: 'cloud applications.',
+    heroTitleAccent: 'SaaS applications.',
     heroSubtitle:
       'A production-ready accelerator combining Zone-free Angular Signals reactivity, Firebase Authentication & Cloud Firestore, and zero-cost WebP/AVIF edge image optimization.',
     ctaLogin: 'Sign in or create account',
