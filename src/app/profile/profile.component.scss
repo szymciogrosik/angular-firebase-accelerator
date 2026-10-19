@@ -115,18 +115,10 @@
   align-items: flex-start;
   height: 100%;
   border-radius: 24px !important; // More rounded for bento
-  border: 1px solid var(--separator-line) !important;
+  border: 1px solid var(--app-primary-color) !important;
   background-color: var(--app-surface-color) !important;
   box-shadow: none !important;
-  transition: border-color 0.3s ease, background-color 0.3s ease;
-
-  &:hover {
-    border-color: var(--app-accent-color) !important;
-  }
-
-  @media (max-width: 768px), (hover: none) {
-    border-color: var(--app-accent-color) !important;
-  }
+  transition: background-color 0.3s ease;
 
   mat-card-header {
     padding: 0 !important;
