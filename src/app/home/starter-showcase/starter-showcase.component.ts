@@ -170,7 +170,7 @@ const SHOWCASE_DICTIONARY: Record<'pl' | 'en', ShowcaseCopy> = {
     },
 
     studioTag: '02 / PERSONALIZACJA NA ŻYWO',
-    studioTitle: 'Studio motywu i języka',
+    studioTitle: 'Ustawienia motywu i języka',
     studioSubtitle: 'Przełączaj motyw oraz język interfejsu bezpośrednio z karty — cały starter reaguje natychmiast.',
     themeLabel: 'Motyw kolorystyczny',
     themeLight: 'Jasny',
@@ -305,7 +305,7 @@ const SHOWCASE_DICTIONARY: Record<'pl' | 'en', ShowcaseCopy> = {
     },
 
     studioTag: '02 / LIVE CUSTOMIZATION',
-    studioTitle: 'Theme & locale studio',
+    studioTitle: 'Theme & locale settings',
     studioSubtitle: 'Switch the color theme and interface language right from this card — the entire starter reacts immediately.',
     themeLabel: 'Color theme',
     themeLight: 'Light',
