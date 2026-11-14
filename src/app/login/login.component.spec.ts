@@ -163,19 +163,28 @@ describe('LoginComponent', () => {
     expect(mockAuthService.loginWithGoogleSso).toHaveBeenCalledWith(true);
   });
 
-  describe('onTabChange', () => {
-    it('should switch to registration mode on index 1 and reset hidePassword', () => {
+  describe('setRegistrationMode', () => {
+    it('should switch to registration mode and reset hidePassword and submitted', () => {
       component.hidePassword.set(false);
-      component.onTabChange({ index: 1 } as any);
+      component.submitted.set(true);
+      component.setRegistrationMode(true);
       expect(component.isRegistrationMode()).toBe(true);
+      expect(component.hidePassword()).toBe(true);
+      expect(component.submitted()).toBe(false);
+    });
+
+    it('should switch to login mode', () => {
+      component.isRegistrationMode.set(true);
+      component.setRegistrationMode(false);
+      expect(component.isRegistrationMode()).toBe(false);
       expect(component.hidePassword()).toBe(true);
     });
 
-    it('should switch to login mode on index 0', () => {
-      component.isRegistrationMode.set(true);
-      component.onTabChange({ index: 0 } as any);
+    it('should do nothing if loading is true', () => {
+      component.loading.set(true);
+      component.isRegistrationMode.set(false);
+      component.setRegistrationMode(true);
       expect(component.isRegistrationMode()).toBe(false);
-      expect(component.hidePassword()).toBe(true);
     });
   });
 

@@ -113,7 +113,7 @@ const SHOWCASE_DICTIONARY: Record<'pl' | 'en', ShowcaseCopy> = {
     heroTitlePrefix: 'Fundament nowej generacji dla',
     heroTitleAccent: 'aplikacji SaaS.',
     heroSubtitle:
-      'Kompletny akcelerator produkcyjny łączący reaktywność Angular Signals bez Zone.js, autoryzację i bazę Cloud Firestore oraz darmową optymalizację obrazów WebP/AVIF na brzegu sieci.',
+      'Kompletny akcelerator produkcyjny łączący reaktywność Angular Signals, autoryzację i bazę Cloud Firestore oraz optymalizację obrazów WebP/AVIF.',
     ctaLogin: 'Zaloguj lub utwórz konto',
     ctaProfile: 'Twój profil',
     ctaAdmin: 'Panel administratora',
@@ -248,7 +248,7 @@ const SHOWCASE_DICTIONARY: Record<'pl' | 'en', ShowcaseCopy> = {
     heroTitlePrefix: 'Next-generation foundation for',
     heroTitleAccent: 'SaaS applications.',
     heroSubtitle:
-      'A production-ready accelerator combining Zone-free Angular Signals reactivity, Firebase Authentication & Cloud Firestore, and zero-cost WebP/AVIF edge image optimization.',
+      'A production-ready accelerator combining Angular Signals reactivity, Firebase Authentication & Cloud Firestore, and WebP/AVIF image optimization.',
     ctaLogin: 'Sign in or create account',
     ctaProfile: 'Your profile',
     ctaAdmin: 'Admin panel',
